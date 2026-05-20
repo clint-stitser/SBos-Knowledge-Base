@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The System — S-BOS Knowledge Base</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/global.css">
+</head>
+<body data-section="system">
+
+<header>
+  <a class="logo-lockup" href="../">
+    <svg class="logo-icon" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="21" cy="21" r="21" fill="rgba(255,255,255,0.15)"/>
+      <text x="21" y="28" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="22" fill="white">S</text>
+    </svg>
+    <div class="logo-text">
+      <span class="brand">Stitser Built</span>
+      <span class="sub">S-BOS Knowledge Base</span>
+    </div>
+  </a>
+  <nav class="header-nav">
+    <a class="nav-link" data-section="system"    href="../system/">System</a>
+    <a class="nav-link" data-section="workflows" href="../workflows/">Workflows</a>
+    <a class="nav-link" data-section="agents"    href="../agents/">Agents</a>
+    <a class="nav-link" data-section="roles"     href="../roles/">Roles</a>
+    <a class="nav-link" data-section="whats-new" href="../whats-new/">What's New</a>
+    <a class="nav-link" data-section="glossary"  href="../glossary/">Glossary</a>
+  </nav>
+  <button class="nav-hamburger" aria-label="Open menu">&#9776;</button>
+  <div class="header-badge">Team Resource</div>
+</header>
+
+<div class="nav-overlay">
+  <div class="nav-overlay-header">
+    <a class="logo-lockup" href="../">
+      <svg class="logo-icon" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="21" cy="21" r="21" fill="rgba(255,255,255,0.15)"/>
+        <text x="21" y="28" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="22" fill="white">S</text>
+      </svg>
+      <div class="logo-text">
+        <span class="brand">Stitser Built</span>
+        <span class="sub">S-BOS Knowledge Base</span>
+      </div>
+    </a>
+    <button class="nav-overlay-close" aria-label="Close menu">&#10005;</button>
+  </div>
+  <nav class="nav-overlay-links">
+    <a class="nav-overlay-link" data-section="system"    href="../system/">System</a>
+    <a class="nav-overlay-link" data-section="workflows" href="../workflows/">Workflows</a>
+    <a class="nav-overlay-link" data-section="agents"    href="../agents/">Agents</a>
+    <a class="nav-overlay-link" data-section="roles"     href="../roles/">Roles</a>
+    <a class="nav-overlay-link" data-section="whats-new" href="../whats-new/">What's New</a>
+    <a class="nav-overlay-link" data-section="glossary"  href="../glossary/">Glossary</a>
+  </nav>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-eyebrow">Layer 01 — The System</div>
+  <h1 class="page-hero-title">The S-BOS System</h1>
+  <p class="page-hero-subtitle">SmartSuite · Softr · Google Drive · Smartsheet · FUB — how everything connects and why it's built the way it is.</p>
+</div>
+
+<div class="orange-bar"></div>
+
+<div class="breadcrumb-bar">
+  <div class="breadcrumb">
+    <a href="../">Home</a>
+    <span class="sep">→</span>
+    <span class="cur">The System</span>
+  </div>
+</div>
+
+<!-- WHAT IS S-BOS -->
+<section>
+  <div class="section-label">Foundation</div>
+  <div class="section-title">What is S-BOS?</div>
+  <div class="prose">
+    <p>S-BOS — the Stitser Business Operating System — is the integrated technology platform that connects people, processes, data, and AI across all Stitser BUILT entities. It is not a single app. It is an orchestrated stack of purpose-built tools, each playing a defined role, wired together so information flows without friction and every team member can do their best work.</p>
+    <p>The most important design principle: <strong>Softr is the team-facing interface.</strong> Christine, Andi, Mary, and every team member access S-BOS through the Softr portal. They never need a SmartSuite seat. SmartSuite is the database underneath — powerful, structured, always up to date — but the team sees it through the clean, task-focused views that Softr provides.</p>
+    <p>Claude agents connect to S-BOS through Kompass, the MCP server that gives Claude read/write access to SmartSuite and Google APIs. When a team member invokes a Claude skill — say, "Baseline this project" — Claude is not guessing. It is reading live data, running a defined workflow, and writing structured records back into the system.</p>
+  </div>
+</section>
+
+<!-- TOOL MAP -->
+<section style="padding-top:0">
+  <div class="section-label">Infrastructure</div>
+  <div class="section-title">Tool Map</div>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-name">SmartSuite</div>
+      <div class="tool-role">Database of Record</div>
+      <div class="tool-when">All structured data — contacts, projects, transactions, tasks, pay apps, journals, and more. The single source of truth.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">Softr</div>
+      <div class="tool-role">Team Portal (S-BOS UI)</div>
+      <div class="tool-when">Daily use by Christine, Andi, Mary, and all team members. No SmartSuite seat required — Softr surfaces exactly what each role needs.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">Google Drive</div>
+      <div class="tool-role">Document Storage</div>
+      <div class="tool-when">All files: contracts, disclosures, inspection reports, photos, invoices. Linked directly to SmartSuite records for one-click access.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">Smartsheet</div>
+      <div class="tool-role">Project Schedules</div>
+      <div class="tool-when">One sheet per construction or development project, owned by Zach Roullier. Embedded in SmartSuite project records for visibility.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">Follow Up Boss</div>
+      <div class="tool-role">CRM / Client Notes</div>
+      <div class="tool-when">Client background, action plans, and transaction notes. The Practitioner and Production Manager live here during escrow.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">Kompass MCP</div>
+      <div class="tool-role">AI Connection Layer</div>
+      <div class="tool-when">The MCP server that connects Claude to SmartSuite and Google APIs. Powers every Claude agent — reads live data, writes structured records.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">Claude (via Kompass)</div>
+      <div class="tool-role">AI Assistant</div>
+      <div class="tool-when">Morning briefs, rituals, audits, and skills — invoked conversationally at claude.ai. Claude handles system tasks; you handle judgment and relationships.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ENTITY STRUCTURE -->
+<section style="background:var(--light); padding:64px 40px">
+  <div class="section-label">Organization</div>
+  <div class="section-title">Entity Structure</div>
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-name">Stitser Properties</div>
+      <div class="tool-role">Real Estate Brokerage</div>
+      <div class="tool-when">Transaction management, compliance, agent support. Primary users: Practitioners, Production Manager, Ops Manager, Broker.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">Stitser BUILT</div>
+      <div class="tool-role">Construction & Development</div>
+      <div class="tool-when">Project management, pay apps, construction schedules. Primary users: Zach (PM), Clint, Ops Manager.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">Formation Homes</div>
+      <div class="tool-role">Ground-Up Development</div>
+      <div class="tool-when">Underwriting, capital stack, pro forma modeling. Served by the Underwriting Model agent and baseline capture workflows.</div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">Assiduity / CRF</div>
+      <div class="tool-role">Finance & Compliance</div>
+      <div class="tool-when">Commission tracking, insurance, year-end audit. Ops Manager and Accountant are primary users.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE DIAGRAM -->
+<section>
+  <div class="section-label">How It Connects</div>
+  <div class="section-title">Architecture at a Glance</div>
+  <div class="arch-diagram">
+    <div class="arch-row">
+      <div class="arch-box dark">Team Members</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box orange">Softr Portal</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box">SmartSuite DB</div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-arrow" style="transform:rotate(90deg)">↕</div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-box">Google Drive</div>
+      <div class="arch-arrow">↔</div>
+      <div class="arch-box">SmartSuite DB</div>
+      <div class="arch-arrow">↔</div>
+      <div class="arch-box">Smartsheet</div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-arrow" style="transform:rotate(90deg)">↕</div>
+    </div>
+    <div class="arch-row">
+      <div class="arch-box dark">Claude AI</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box orange">Kompass MCP</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box">SmartSuite DB</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Stitser <span>Built</span> · S-BOS Knowledge Base</div>
+  <div class="footer-version">v1.0 · Internal Use Only</div>
+</footer>
+
+<script src="../assets/js/nav.js"></script>
+</body>
+</html>
