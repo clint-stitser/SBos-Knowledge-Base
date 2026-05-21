@@ -6,10 +6,87 @@
 <title>S-BOS Knowledge Base — Stitser BUILT</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/global.css">
+<style>
+/* ── LAUNCH CARDS ── */
+.launch-section {
+  padding: 64px 40px;
+  background: var(--dark);
+}
+.launch-section .section-label {
+  color: var(--orange);
+}
+.launch-section .section-title {
+  color: var(--white);
+  margin-bottom: 32px;
+}
+.launch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.launch-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-top: 4px solid var(--orange);
+  border-radius: 6px;
+  padding: 32px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  transition: background .15s, transform .15s;
+  gap: 12px;
+}
+.launch-card:hover {
+  background: rgba(255,255,255,.1);
+  transform: translateY(-2px);
+}
+.launch-card.teal { border-top-color: var(--blue); }
+.launch-card.white { border-top-color: rgba(255,255,255,.5); }
+.launch-card-eyebrow {
+  font-family: var(--font-sub);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.launch-card.teal .launch-card-eyebrow { color: #80b5c9; }
+.launch-card.white .launch-card-eyebrow { color: rgba(255,255,255,.5); }
+.launch-card-title {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.15;
+  letter-spacing: -.01em;
+}
+.launch-card-desc {
+  font-family: var(--font-sub);
+  font-size: 14px;
+  color: rgba(255,255,255,.55);
+  line-height: 1.65;
+  flex: 1;
+}
+.launch-cta {
+  font-family: var(--font-sub);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-top: 4px;
+}
+.launch-card.teal .launch-cta { color: #80b5c9; }
+.launch-card.white .launch-cta { color: rgba(255,255,255,.6); }
+
+@media (max-width: 900px) {
+  .launch-grid { grid-template-columns: 1fr; }
+  .launch-section { padding: 48px 20px; }
+}
+</style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <a class="logo-lockup" href="./">
     <svg class="logo-icon" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +110,6 @@
   <div class="header-badge">Team Resource</div>
 </header>
 
-<!-- MOBILE NAV OVERLAY -->
 <div class="nav-overlay">
   <div class="nav-overlay-header">
     <a class="logo-lockup" href="./">
@@ -63,16 +139,12 @@
   <div class="hero-content">
     <div class="hero-eyebrow">System · Workflows · Agents</div>
     <h1>Your guide to<br><span>S-BOS</span> +<br>Kompass</h1>
-    <p class="hero-desc">Everything your team needs to understand the system, follow the value chain, and work with Claude agents to get things done.</p>
-    <div class="hero-search">
-      <input type="text" placeholder="Search workflows, features, agents…">
-      <button>Search</button>
-    </div>
+    <p class="hero-desc">Everything your team needs to understand how Stitser BUILT operates — the system, the value chain, and how to work with Claude to get more done.</p>
   </div>
   <div class="hero-stats">
     <div class="stat-card">
       <div class="stat-num">3</div>
-      <div class="stat-label">Knowledge Layers</div>
+      <div class="stat-label">Presentations</div>
     </div>
     <div class="stat-card">
       <div class="stat-num">9</div>
@@ -90,16 +162,46 @@
 </div>
 <div class="orange-bar"></div>
 
-<!-- MAIN NAV CARDS -->
-<section>
+<!-- PRESENTATIONS — LAUNCH PAD -->
+<div class="launch-section">
   <div class="section-label">Start Here</div>
-  <div class="section-title">Three Layers of Knowledge</div>
+  <div class="section-title">Guided Presentations</div>
+  <div class="launch-grid">
+
+    <a class="launch-card" href="system/platform-walkthrough.html">
+      <div class="launch-card-eyebrow">Onboarding · 10 Slides</div>
+      <div class="launch-card-title">Platform Walkthrough</div>
+      <div class="launch-card-desc">New to Stitser BUILT? Start here. A step-by-step orientation through all six platform tiers — from core strategy and market position down to product lines, situations, and project pillars.</div>
+      <div class="launch-cta">Launch Walkthrough →</div>
+    </a>
+
+    <a class="launch-card teal" href="system/playbook.html">
+      <div class="launch-card-eyebrow">Strategy · 3 Views</div>
+      <div class="launch-card-title">The Playbook</div>
+      <div class="launch-card-desc">The operating framework behind every deal. Five situations, seven product lines with full investment standards, and a coverage map showing where S-BOS, Kompass, and Intacct each fit.</div>
+      <div class="launch-cta">Open The Playbook →</div>
+    </a>
+
+    <a class="launch-card white" href="system/kompass.html">
+      <div class="launch-card-eyebrow">Reference · Interactive</div>
+      <div class="launch-card-title">Kompass Reference</div>
+      <div class="launch-card-desc">The technical reference for Kompass — architecture layers, data model, surfaces, safety guardrails, role-by-role breakdown, and live system status. Everything about how the AI layer is built.</div>
+      <div class="launch-cta">Explore Kompass →</div>
+    </a>
+
+  </div>
+</div>
+
+<!-- KB SECTIONS -->
+<section>
+  <div class="section-label">Knowledge Base</div>
+  <div class="section-title">Everything in the KB</div>
   <div class="nav-grid">
     <a class="nav-card featured" href="system/">
       <div class="nav-card-number">01</div>
       <div class="nav-card-icon">🗺️</div>
       <div class="nav-card-title">The System</div>
-      <div class="nav-card-desc">SmartSuite, Softr, Google Drive, Smartsheet, FUB — how everything connects and why it's built the way it is.</div>
+      <div class="nav-card-desc">S-BOS, Kompass, Google Drive, Smartsheet, FUB — how the custom business application connects to the rest of the stack and why it's built the way it is.</div>
       <div class="nav-card-arrow">Explore →</div>
     </a>
     <a class="nav-card" href="workflows/">
@@ -231,43 +333,6 @@
   </div>
 </section>
 
-<!-- QUICK REFERENCE -->
-<div class="quick-ref">
-  <div class="section-label">Quick Reference</div>
-  <div class="section-title">Need Something Fast?</div>
-  <div class="ref-grid">
-    <div class="ref-item">
-      <div class="ref-icon">🔍</div>
-      <div class="ref-content">
-        <div class="ref-title">IREN-MD Framework</div>
-        <div class="ref-desc">Information · Request · Emotions · Needs · Materials · Decisions/Deadlines — the lens for every handoff.</div>
-      </div>
-    </div>
-    <div class="ref-item">
-      <div class="ref-icon">⚡</div>
-      <div class="ref-content">
-        <div class="ref-title">Clarify & Verify</div>
-        <div class="ref-desc">The non-negotiable step between every Supply and Receive. When in doubt, stop and confirm before moving forward.</div>
-      </div>
-    </div>
-    <div class="ref-item">
-      <div class="ref-icon">📁</div>
-      <div class="ref-content">
-        <div class="ref-title">System Tools Map</div>
-        <div class="ref-desc">Which tool does what — SmartSuite vs Smartsheet vs Google Drive vs FUB and when to use each.</div>
-      </div>
-    </div>
-    <div class="ref-item">
-      <div class="ref-icon">🙋</div>
-      <div class="ref-content">
-        <div class="ref-title">Role Responsibilities</div>
-        <div class="ref-desc">Broker · Ops MGR · Production MGR · Practitioner — DISC profiles, competencies, and stage ownership.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- FOOTER -->
 <footer>
   <div class="footer-brand">Stitser <span>Built</span> · S-BOS Knowledge Base</div>
   <div class="footer-version">v1.0 · Internal Use Only</div>

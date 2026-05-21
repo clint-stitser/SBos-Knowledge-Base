@@ -59,7 +59,7 @@
 <div class="page-hero">
   <div class="page-hero-eyebrow">Layer 01 — The System</div>
   <h1 class="page-hero-title">The S-BOS System</h1>
-  <p class="page-hero-subtitle">SmartSuite · Softr · Google Drive · Smartsheet · FUB — how everything connects and why it's built the way it is.</p>
+  <p class="page-hero-subtitle">S-BOS is the custom-built business application that runs Stitser BUILT — connected to Kompass, Google Drive, Smartsheet, and FUB.</p>
 </div>
 
 <div class="orange-bar"></div>
@@ -77,9 +77,9 @@
   <div class="section-label">Foundation</div>
   <div class="section-title">What is S-BOS?</div>
   <div class="prose">
-    <p>S-BOS — the Stitser Business Operating System — is the integrated technology platform that connects people, processes, data, and AI across all Stitser BUILT entities. It is not a single app. It is an orchestrated stack of purpose-built tools, each playing a defined role, wired together so information flows without friction and every team member can do their best work.</p>
-    <p>The most important design principle: <strong>Softr is the team-facing interface.</strong> Christine, Andi, Mary, and every team member access S-BOS through the Softr portal. They never need a SmartSuite seat. SmartSuite is the database underneath — powerful, structured, always up to date — but the team sees it through the clean, task-focused views that Softr provides.</p>
-    <p>Claude agents connect to S-BOS through Kompass, the MCP server that gives Claude read/write access to SmartSuite and Google APIs. When a team member invokes a Claude skill — say, "Baseline this project" — Claude is not guessing. It is reading live data, running a defined workflow, and writing structured records back into the system.</p>
+    <p>S-BOS — the Stitser Business Operating System — is a custom-built business application that runs every deal, project, and transaction across all Stitser BUILT entities. It is the place where the team lives: projects, tasks, compliance records, pay apps, commission tracking, and client files are all in S-BOS. Every team member accesses it directly — it's built around how Stitser operates, not the other way around.</p>
+    <p>S-BOS connects to Google Drive for document storage, Smartsheet for construction schedules, and Follow Up Boss for client relationship management. Together these tools give the team everything they need without switching contexts unnecessarily.</p>
+    <p>Claude connects to S-BOS through <strong>Kompass</strong>, the integration layer that gives Claude read/write access to live data. When a team member invokes a skill — say, "Baseline this project" — Claude is not guessing. It is reading live records from S-BOS, running a defined workflow, and writing structured data back in real time.</p>
   </div>
 </section>
 
@@ -89,34 +89,29 @@
   <div class="section-title">Tool Map</div>
   <div class="tool-grid">
     <div class="tool-card">
-      <div class="tool-name">SmartSuite</div>
-      <div class="tool-role">Database of Record</div>
-      <div class="tool-when">All structured data — contacts, projects, transactions, tasks, pay apps, journals, and more. The single source of truth.</div>
-    </div>
-    <div class="tool-card">
-      <div class="tool-name">Softr</div>
-      <div class="tool-role">Team Portal (S-BOS UI)</div>
-      <div class="tool-when">Daily use by Christine, Andi, Mary, and all team members. No SmartSuite seat required — Softr surfaces exactly what each role needs.</div>
+      <div class="tool-name">S-BOS</div>
+      <div class="tool-role">Custom Business Application</div>
+      <div class="tool-when">The team's primary workspace. Projects, transactions, tasks, pay apps, commission records, and compliance tracking all live here. Every role has a purpose-built view.</div>
     </div>
     <div class="tool-card">
       <div class="tool-name">Google Drive</div>
       <div class="tool-role">Document Storage</div>
-      <div class="tool-when">All files: contracts, disclosures, inspection reports, photos, invoices. Linked directly to SmartSuite records for one-click access.</div>
+      <div class="tool-when">All files: contracts, disclosures, inspection reports, photos, invoices. Linked directly from S-BOS records for one-click access.</div>
     </div>
     <div class="tool-card">
       <div class="tool-name">Smartsheet</div>
       <div class="tool-role">Project Schedules</div>
-      <div class="tool-when">One sheet per construction or development project, owned by Zach Roullier. Embedded in SmartSuite project records for visibility.</div>
+      <div class="tool-when">One sheet per construction or development project, owned by Zach Roullier. Linked from S-BOS project records for visibility without leaving S-BOS.</div>
     </div>
     <div class="tool-card">
       <div class="tool-name">Follow Up Boss</div>
       <div class="tool-role">CRM / Client Notes</div>
-      <div class="tool-when">Client background, action plans, and transaction notes. The Practitioner and Production Manager live here during escrow.</div>
+      <div class="tool-when">Client background, action plans, and transaction notes. The Practitioner and Production Manager live here during escrow for client communication.</div>
     </div>
     <div class="tool-card">
       <div class="tool-name">Kompass MCP</div>
       <div class="tool-role">AI Connection Layer</div>
-      <div class="tool-when">The MCP server that connects Claude to SmartSuite and Google APIs. Powers every Claude agent — reads live data, writes structured records.</div>
+      <div class="tool-when">The integration layer that connects Claude to S-BOS and Google. Powers every Claude skill — reads live records, writes structured data back in real time.</div>
     </div>
     <div class="tool-card">
       <div class="tool-name">Claude (via Kompass)</div>
@@ -162,17 +157,17 @@
     <div class="arch-row">
       <div class="arch-box dark">Team Members</div>
       <div class="arch-arrow">→</div>
-      <div class="arch-box orange">Softr Portal</div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-box">SmartSuite DB</div>
+      <div class="arch-box orange">S-BOS</div>
+      <div class="arch-arrow">↔</div>
+      <div class="arch-box">Google Drive</div>
     </div>
     <div class="arch-row">
       <div class="arch-arrow" style="transform:rotate(90deg)">↕</div>
     </div>
     <div class="arch-row">
-      <div class="arch-box">Google Drive</div>
+      <div class="arch-box">Follow Up Boss</div>
       <div class="arch-arrow">↔</div>
-      <div class="arch-box">SmartSuite DB</div>
+      <div class="arch-box orange">S-BOS</div>
       <div class="arch-arrow">↔</div>
       <div class="arch-box">Smartsheet</div>
     </div>
@@ -184,7 +179,7 @@
       <div class="arch-arrow">→</div>
       <div class="arch-box orange">Kompass MCP</div>
       <div class="arch-arrow">→</div>
-      <div class="arch-box">SmartSuite DB</div>
+      <div class="arch-box orange">S-BOS</div>
     </div>
   </div>
 </section>
