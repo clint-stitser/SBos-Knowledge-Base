@@ -83,6 +83,97 @@
   .launch-grid { grid-template-columns: 1fr; }
   .launch-section { padding: 48px 20px; }
 }
+
+/* ── KOMPASS FOUNDATION LAYER ── */
+.kompass-layer {
+  background: var(--blue);
+  border-radius: 8px;
+  padding: 28px 32px;
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  margin-bottom: 0;
+  text-decoration: none;
+  transition: filter .15s;
+}
+.kompass-layer:hover { filter: brightness(1.1); }
+.kompass-layer-badge {
+  display: inline-block;
+  font-family: var(--font-sub);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--orange);
+  background: rgba(248,153,29,.15);
+  border: 1px solid rgba(248,153,29,.35);
+  padding: 3px 8px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+.kompass-layer-title {
+  font-family: var(--font-head);
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.kompass-layer-body {
+  font-family: var(--font-sub);
+  font-size: 14px;
+  color: rgba(255,255,255,.65);
+  line-height: 1.65;
+  max-width: 680px;
+}
+.kompass-status {
+  font-family: var(--font-sub);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #7dd9a5;
+  background: rgba(125,217,165,.12);
+  border: 1px solid rgba(125,217,165,.25);
+  padding: 5px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.kompass-layer-link {
+  font-family: var(--font-sub);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.45);
+  margin-top: 14px;
+  display: block;
+}
+.kompass-connector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0 8px;
+}
+.kompass-connector-line {
+  flex: 1;
+  height: 1px;
+  background: var(--mid);
+}
+.kompass-connector-label {
+  font-family: var(--font-sub);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mid);
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .kompass-layer { flex-direction: column; gap: 16px; padding: 20px; }
+}
 </style>
 </head>
 <body>
@@ -147,8 +238,8 @@
       <div class="stat-label">Presentations</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num">9</div>
-      <div class="stat-label">Escrow Stages</div>
+      <div class="stat-num">6+</div>
+      <div class="stat-label">Live Skills</div>
     </div>
     <div class="stat-card">
       <div class="stat-num">10+</div>
@@ -218,13 +309,6 @@
       <div class="nav-card-desc">Which agents are live, what they do, how to trigger them, and where they fit in your workflow. Updated as new skills ship.</div>
       <div class="nav-card-arrow">Explore →</div>
     </a>
-    <a class="nav-card" href="roles/">
-      <div class="nav-card-number">04</div>
-      <div class="nav-card-icon">📋</div>
-      <div class="nav-card-title">Role Guides</div>
-      <div class="nav-card-desc">Practitioner, Production Manager, Ops Manager, Broker — your role-specific view of the system and your responsibilities at each stage.</div>
-      <div class="nav-card-arrow">Explore →</div>
-    </a>
     <a class="nav-card" href="whats-new/">
       <div class="nav-card-number">05</div>
       <div class="nav-card-icon">🆕</div>
@@ -242,57 +326,30 @@
   </div>
 </section>
 
-<!-- VALUE CHAIN STRIP -->
-<div class="chain-section">
-  <div class="section-label" style="color:var(--orange)">Escrow Process</div>
-  <div class="section-title">The Value Chain at a Glance</div>
-  <div class="chain-flow">
-    <a class="chain-stage active" href="workflows/file-setup.html">
-      <div class="chain-stage-num">01</div>
-      <div class="chain-stage-name">File & Project Setup</div>
-      <div class="chain-stage-audit">Audit</div>
-    </a>
-    <a class="chain-stage" href="workflows/escrow-open.html">
-      <div class="chain-stage-num">02</div>
-      <div class="chain-stage-name">Escrow Open</div>
-    </a>
-    <a class="chain-stage" href="workflows/execute-diligence.html">
-      <div class="chain-stage-num">03</div>
-      <div class="chain-stage-name">Execute Diligence</div>
-      <div class="chain-stage-audit">Audit</div>
-    </a>
-    <a class="chain-stage" href="workflows/assemble-respond.html">
-      <div class="chain-stage-num">04</div>
-      <div class="chain-stage-name">Assemble & Respond</div>
-    </a>
-    <a class="chain-stage" href="workflows/reinspections.html">
-      <div class="chain-stage-num">05</div>
-      <div class="chain-stage-name">Re-Inspections & Walkthrough</div>
-    </a>
-    <a class="chain-stage" href="workflows/pre-closing.html">
-      <div class="chain-stage-num">06</div>
-      <div class="chain-stage-name">Pre-Closing</div>
-      <div class="chain-stage-audit">Audit</div>
-    </a>
-    <a class="chain-stage" href="workflows/closing.html">
-      <div class="chain-stage-num">07</div>
-      <div class="chain-stage-name">Closing</div>
-    </a>
-    <a class="chain-stage" href="workflows/commission-distribution.html">
-      <div class="chain-stage-num">08</div>
-      <div class="chain-stage-name">Commission Distribution</div>
-    </a>
-    <a class="chain-stage" href="workflows/nesting.html">
-      <div class="chain-stage-num">09</div>
-      <div class="chain-stage-name">Nesting</div>
-    </a>
-  </div>
-</div>
-
 <!-- AGENTS -->
 <section>
   <div class="section-label">AI-Powered</div>
-  <div class="section-title">Claude Skills & Agents</div>
+  <div class="section-title">Claude Skills</div>
+
+  <!-- KOMPASS FOUNDATION -->
+  <a class="kompass-layer" href="system/kompass.html">
+    <div style="flex:1">
+      <div class="kompass-layer-badge">Required Foundation Layer</div>
+      <div class="kompass-layer-title">Kompass</div>
+      <div class="kompass-layer-body">Every Claude skill below runs through Kompass. It is the active connection between Claude and S-BOS — providing read/write access to live records so skills can pull data, execute workflows, and write results back in real time. <strong style="color:rgba(255,255,255,.85)">Kompass must be active for any skill to function.</strong> Without it, Claude has no connection to your data.</div>
+      <span class="kompass-layer-link">Open Kompass Reference →</span>
+    </div>
+    <div style="flex-shrink:0;text-align:right;">
+      <div class="kompass-status">⚡ Active</div>
+    </div>
+  </a>
+
+  <div class="kompass-connector">
+    <div class="kompass-connector-line"></div>
+    <div class="kompass-connector-label">Skills powered by Kompass</div>
+    <div class="kompass-connector-line"></div>
+  </div>
+
   <div class="agents-grid">
     <a class="agent-card" href="agents/compliance-auditor.html">
       <div class="agent-status live">Live</div>
