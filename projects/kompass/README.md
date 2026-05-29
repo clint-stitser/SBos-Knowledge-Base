@@ -68,6 +68,23 @@ projects/kompass/
 | Activity Log App ID | `69dc55333fe841263503f235` |
 | Clint's People Record ID | `683f72d0591c71a2159825b8` |
 
+### SB Training & Certifications (SmartSuite Solution: `68d480e2727607560a7f0d22`)
+
+| Item | Value |
+|------|-------|
+| Learning Tracks App ID | `68d480e2727607560a7f0d23` |
+| Courses App ID | `68d480e2727607560a7f0d2c` |
+| Lesson Catalog App ID | `68d480e2727607560a7f0d26` |
+| Progress Table App ID | `6a18ad82e630be8e82a202ea` |
+
+### First Learning Path (live records)
+
+| Item | SmartSuite Record ID |
+|------|---------------------|
+| Learning Track: S-BOS Foundations | `6a18f96229b3a4896aebdbaf` |
+| Course: System Introduction | `6a18f96cd478fe3d99c921d1` |
+| Lesson: Welcome to S-BOS | `6a18f979f33c1c8fc967bd8d` |
+
 > Full field slugs, app IDs, and API behaviors live in `specs/S-Bos_Agent___Guiding_Spec.md`.
 
 ---
