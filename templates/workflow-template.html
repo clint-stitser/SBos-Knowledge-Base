@@ -515,7 +515,7 @@ const LESSON_CONFIG = {
 const SMARTSUITE_CONFIG = {
   apiKey:        window.SMARTSUITE_API_KEY        || '',
   workspaceId:   window.SMARTSUITE_WORKSPACE      || '',
-  progressAppId: window.PROGRESS_APP_ID           || '',
+  progressAppId: '6a18ad82e630be8e82a202ea',       // Progress Table — SB Training & Certifications
   personId:      new URLSearchParams(window.location.search).get('person_id') || ''
 };
 
@@ -525,18 +525,21 @@ async function markComplete() {
   btn.textContent = 'Saving...';
   btn.disabled = true;
 
-  if (!SMARTSUITE_CONFIG.apiKey || !SMARTSUITE_CONFIG.progressAppId) {
+  if (!SMARTSUITE_CONFIG.apiKey) {
     showCompleted(); return;
   }
   try {
     const today = new Date().toISOString().split('T')[0];
     const payload = {
-      title: `${SMARTSUITE_CONFIG.personId} — ${LESSON_CONFIG.lessonTitle}`,
-      s_lesson: [LESSON_CONFIG.lessonId],
-      s_status: { value: 'complete' },
-      s_completion_date: { date: today, include_time: false },
-      s_attempt_count: 1
+      title: `${SMARTSUITE_CONFIG.personId || 'Anonymous'} — ${LESSON_CONFIG.lessonTitle}`,
+      s795f4d404: [LESSON_CONFIG.lessonId],                  // Lesson (linked)
+      s56ad0c6cc: { value: 'Completed' },                    // Status (single select)
+      s47e7db00b: { date: today, include_time: false },      // Completion Date
+      s971159143: 1                                          // Attempt Count
     };
+    if (SMARTSUITE_CONFIG.personId) {
+      payload.s43b519ec1 = [SMARTSUITE_CONFIG.personId];     // Person (linked)
+    }
     const res = await fetch(
       `https://app.smartsuite.com/api/v1/applications/${SMARTSUITE_CONFIG.progressAppId}/records/`,
       {
