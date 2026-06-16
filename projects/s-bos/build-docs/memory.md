@@ -40,6 +40,7 @@
 - **Automations: NOT API-extractable** (confirmed). 103 across 8 solutions; captured via screenshots in the live Automation Tracker, then rebuilt from intent as Postgres triggers / Edge Functions.
 - **Notes & Comments is a hub** — one note links to many People/Companies/Projects + assigns follow-ups to team members (many-to-many via junction tables).
 - **Adopting Ryan Falke's build-doc methodology** (this folder) to formalize the migration design, mid-stream via back-fill.
+- **Remote CRUD MCP (PLANNED, coding-phase module).** To let claude.ai (web/iOS) perform CRUD on Supabase — not just Claude Code via `db.mjs` — we will host a **remote MCP server** at an HTTPS URL (claude.ai only supports remote connectors, not local MCP). It must: require auth on the endpoint, hold the service key server-side, and **enforce the permission model in the server** (internal C·R·U, delete admin-only, audit-log every change, 60-day soft-delete). This is the "Claude-serviceable from anywhere" capability and a building block for the licensable product. **Host: TBD** (Supabase Edge Functions vs Railway — decide at build time). Will get a formal ADR in the Decisions Log + a Tech Spec section.
 
 ---
 

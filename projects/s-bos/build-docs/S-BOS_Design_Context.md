@@ -90,6 +90,7 @@
 | Module/cutover sequencing across 27 solutions | Roadmap | High | Clint |
 | Which tables to bring/drop/merge | Schema scope | High | Clint (via Migration Menu) |
 | Title/Type field + other un-seeded fields | Data completeness | Med | Clint |
+| Remote CRUD MCP host — Supabase Edge Functions vs Railway | Coding-phase build of the "claude.ai CRUD-from-anywhere" capability | Med (at build time) | Clint |
 
 ---
 
