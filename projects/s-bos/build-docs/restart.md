@@ -41,6 +41,12 @@ Scaffold complete: template library copied to `templates/`, and the four continu
 
 ---
 
+## Environment Notes
+
+- **GitHub connector is live** in claude.ai (2026-06-16) — session bootstrap reads build-docs directly from the repo without manual copy-paste.
+
+---
+
 ## Current File Status
 
 > Lives in `S-BOS_Design_Context.md` → File Inventory. Continuity files ✅ Active; all design docs ⏳ Not Started.
