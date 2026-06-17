@@ -114,7 +114,8 @@
 | `memory.md` | Running facts, decisions, context | ✅ Active |
 | `restart.md` | Where we stopped, next steps | ✅ Active |
 | **— Design (to back-fill) —** | | |
-| `S-BOS_Product_Design_Doc.md` | Problem, users, entities, features, workflows | ⏳ Not Started — **next** |
+| `S-BOS_Product_Design_Doc.md` | Problem, users, entities, features, workflows | 🔄 In Progress — Sections 1-2 done, **Gate 1 awaiting sign-off** |
+| `S-BOS_App_Item_Doc_Requirements.md` | Kind→required-docs convention (drives roadmap checklists) | ✅ Active |
 | `S-BOS_DB_Schema.md` | Data model (back-fill from live Supabase schema) | ⏳ Not Started |
 | `S-BOS_Technical_Spec.md` | Architecture, stack, services, state machines, events | ⏳ Not Started |
 | `S-BOS_UI_UX.md` | Design system, screens (back-fill from built UI) | ⏳ Not Started |

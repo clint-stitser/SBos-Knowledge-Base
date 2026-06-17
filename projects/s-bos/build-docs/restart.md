@@ -7,54 +7,62 @@
 
 ## Session Info
 
-- **Date:** 2026-06-11
+- **Date:** 2026-06-17
 - **Project:** S-BOS
-- **Status:** In Progress
+- **Status:** In Progress — PDD at Gate 1
 
 ---
 
 ## What We Were Doing
 
-Adopted Ryan Falke's build-doc methodology for the S-BOS migration. Scaffolded his template system into the Knowledge Base (`projects/s-bos/build-docs/`), adapted from greenfield/Windows/Desktop to our mid-stream/Mac/Claude Code/GitHub reality. Created the four continuity files (Operating Agreement, Design Context, memory, restart) populated with the real project state from everything built so far.
+Back-filling the **Product Design Doc** (`S-BOS_Product_Design_Doc.md`), Ryan's first design doc. Scope confirmed: **whole S-BOS platform, with the Biz Dev CRM module as Phase 1.** Also built the roadmap integration (App Items + per-Kind doc checklists — see below).
 
 ---
 
 ## Where We Stopped
 
-Scaffold complete: template library copied to `templates/`, and the four continuity/setup files written and populated. Nothing has been back-filled yet — the design docs are all ⏳ Not Started.
+PDD **Sections 1–2 drafted and Gate 1 checklist passed** — awaiting Clint's explicit sign-off:
+- **Problem Statement** ✅ — SmartSuite API limits + no-code bottleneck (only Clint changes structure) + no licensing path.
+- **Target Users** ✅ — Internal Staff (all roles) = Phase-1 primary; the **CRM is the platform's shared backbone** (People/Companies are polymorphic: customer/vendor/staff/investor-lender — roles are *contextual, not fixed types* → drives Core Entities). Clint = admin/builder; external + franchisees = future.
+- **Access model captured:** internal **CRU + 60-day audit/restore**, **delete = admin-only**, external **view-only on scoped elements**. (Updates recovery-plan window 30→60; refines auth roles.)
+
+Everything is on GitHub (`SBos-Knowledge-Base/projects/s-bos/build-docs/`).
 
 ---
 
 ## Next Steps (in order)
 
-1. [ ] **Back-fill the Product Design Doc (`S-BOS_Product_Design_Doc.md`)** — Ryan's recommended starting point. Reverse-engineer from the running POC + the planning docs (Atlas, specs). Go "PDD direct" (the idea is well-formed). Work it section by section: Problem → Users → Core Entities → Core Features → Workflows → Out of Scope → Success Metrics → Constraints → Timeline/Phases → Open Questions. Mark reverse-engineered facts vs. stated decisions.
-2. [ ] Back-fill DB Schema from the live Supabase schema (9 CRM tables + junctions already exist).
-3. [ ] Back-fill Technical Spec (stack is decided; capture state machines + events/side-effects — the commonly-skipped, rework-causing sections).
-4. [ ] Back-fill the Decisions Log (ADRs) from decisions already made (see memory.md → Decisions).
+1. [ ] **Gate 1 sign-off** — Clint approves Problem + Users (checklist already passes in the PDD). This is the immediate next action.
+2. [ ] **Core Entities (PDD §3)** — back-fill from the live Supabase schema (9 CRM tables + junctions). Model the **polymorphic-role** insight: People/Companies relate to projects via *role-bearing relationships*, not hard types.
+3. [ ] Core Features → User Workflows (Gate 3) → Scope/Metrics/Timeline/Open Questions (Gate 4).
+4. [ ] Then DB Schema, Technical Spec, Decisions Log (ADRs from decisions already made — see memory.md).
 
 ---
 
 ## Open Questions / Decisions Pending
 
-- Scope of the PDD: is it the **whole S-BOS platform** or **just the Biz Dev CRM module** first? (Likely: PDD covers the platform vision + the CRM module as Phase 1. Confirm at session start.)
-- Automation rebuild approach (pending screenshot capture).
+- Automation rebuild approach (103 automations captured via screenshots; not API-extractable).
+- Remote CRUD MCP host: Supabase Edge Functions vs Railway (decide at build time).
+- *(Resolved: PDD scope = platform + CRM Phase 1. Resolved: build modules now represented as App Items on the v2.4 roadmap.)*
 
 ---
 
 ## Environment Notes
 
-- **GitHub connector is live** in claude.ai (2026-06-16) — session bootstrap reads build-docs directly from the repo without manual copy-paste.
+- **GitHub connector is live** in claude.ai (2026-06-16) — sessions read build-docs directly from the repo.
+- **Two write surfaces** (Claude Code + claude.ai/iPhone) → **sync before edit, one surface per file.** The roadmap app (`sb-planning-tools` repo: `roadmap/index.html`, `server.js`) is **claude.ai-owned** — don't edit from Claude Code without syncing.
+- **Roadmap integration done:** the 6 build modules now exist as **App Item Project records** (IT/Systems dept) on the v2.4 roadmap, each with a **Build Docs checklist** of per-Kind required-doc tasks. See `S-BOS_App_Item_Doc_Requirements.md` for the Kind→docs mapping.
 
 ---
 
 ## Current File Status
 
-> Lives in `S-BOS_Design_Context.md` → File Inventory. Continuity files ✅ Active; all design docs ⏳ Not Started.
+> Lives in `S-BOS_Design_Context.md` → File Inventory. PDD = 🔄 In Progress (Gate 1 awaiting sign-off); all other design docs ⏳ Not Started.
 
 ---
 
 ## How to Resume
 
 1. Read `S-BOS_Operating_Agreement.md`, then `memory.md`, `restart.md`, `S-BOS_Design_Context.md`.
-2. Confirm PDD scope (platform vs. CRM-module-first).
-3. Say "let's go" — start the PDD back-fill, section by section.
+2. Open `S-BOS_Product_Design_Doc.md` to the Gate 1 block.
+3. Say "let's go" — first action is **Gate 1 sign-off**, then Core Entities.
