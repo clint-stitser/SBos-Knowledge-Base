@@ -2,7 +2,7 @@
 
 > **Purpose:** Keep the SmartSuite **roadmap App Items** (and their checklists, tasks, notes, tags, status) in lockstep with the build docs — from **either** surface (claude.ai or Claude Code).
 > **How "sync to both" works:** This procedure lives in GitHub, so both surfaces read it. The *writes* execute through the **SmartSuite / Kompass MCP**, which both surfaces share. GitHub = the shared instructions; Kompass MCP = the shared write path.
-> **Prerequisite:** the Kompass/SmartSuite MCP must be connected on the surface running it. Claude Code has it. **Confirm the claude.ai S-BOS Project has the Kompass connector enabled** — if not, do roadmap writes from Claude Code (or note the intended change here for the other surface to apply).
+> **Prerequisite (met):** the Kompass/SmartSuite MCP is connected on **both** surfaces — Claude Code and the claude.ai S-BOS Project (confirmed 2026-06-17). So roadmap writes work from either, including from your phone.
 
 ---
 
