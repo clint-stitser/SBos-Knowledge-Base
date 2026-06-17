@@ -94,6 +94,8 @@ At session start, read in this order before doing anything else:
 
 Then confirm current state and wait for Clint to say go. At session end: write updated `memory.md` and `restart.md` directly to the repo, and summarize what changed in a few sentences. Do this proactively.
 
+**Roadmap upkeep (proactive, every session):** if any build-doc, module, or status changed this session, run the **Roadmap Sync Procedure** (`S-BOS_Roadmap_Sync_Procedure.md`) to update the SmartSuite roadmap App Items — check off completed doc-tasks, advance status, update Kind/Stage, and file notes where warranted. Works from either surface via the shared Kompass MCP. This keeps the roadmap (`sb-planning-tools-production.up.railway.app/roadmap/`) a true live view.
+
 ---
 
 ## Red Flags — Stop and Resolve Before Coding
