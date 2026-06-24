@@ -142,7 +142,7 @@ Clint has a working personal goal-tracking infrastructure in SmartSuite (the Gam
 
 ## Discovery Inputs (from session 2026-06-24)
 
-> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 once Gate 1 is signed off. Organized into eight areas. Source documents referenced where applicable.
+> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 once Gate 1 is signed off. Organized into ten areas. Source documents referenced where applicable.
 
 ---
 
@@ -150,7 +150,7 @@ Clint has a working personal goal-tracking infrastructure in SmartSuite (the Gam
 
 - Four persistent bottom tabs: **Today / Horizon / Me / Shortcuts**
 - Me tab is a domain menu — four domain cards (Body/Being/Balance/Business), tap domain → Goals list, tap Goal → universal initiative screen
-- **Me menu sections (full list):** Body / Being / Balance / Business domains + About Me & People Around Me + Journal + Tools + Spec Sheet
+- **Me menu sections (full list):** Body / Being / Balance / Business domains + About Me & People Around Me + Big Ass Calendar + Quarterly Habit + Journal + Tools + Spec Sheet
 - Spiral and Spec Sheet accessible from top-right nav icons on any screen (not main tabs)
 - Tab bar hides entirely in Focus Day mode — the app changes posture, not just content
 
@@ -416,11 +416,12 @@ The spec sheet is built into the app as its own screen. It is the checklist of p
 
 | Feature | Principle / Framework | Tool |
 |---|---|---|
-| Big Ass Calendar (monthly) | Look how far we've come + what's coming | Google Calendar API |
+| Big Ass Calendar (year view) | Intentional year design — offense not defense | Google Calendar API |
 | Week at a Glance | Guided chunking — focus in 7-day window | Google Calendar |
-| Quarterly Habit Builder | Spaced repetition + Phases of Proficiency | SmartSuite Habits |
-| Habit streak + dot tracking | Habit Identity Loop — streak = identity proof | SmartSuite |
-| Upcoming events with domain tagging | Calendar as scoreboard for life balance | Google Calendar |
+| Quarterly Habit (one at a time) | Freud's sense of achievement + Consecutive Appetite | SmartSuite Goals |
+| Habit streak + dot tracking | Habit Identity Loop — streak = identity proof | SmartSuite Stats |
+| Misogi — year-defining event | One bold goal that defines the year — slightly terrifying | SmartSuite Goals |
+| Kevin's Rule — bimonthly adventure | Newness = alive — one thing you wouldn't normally do, every other month | SmartSuite / Calendar |
 
 **Section 3 — Tasks (Horizon Rings)**
 
@@ -496,6 +497,10 @@ The spec sheet is built into the app as its own screen. It is the checklist of p
 | Sacral Decision Model | Gut over algorithm — uh-huh / uh-uh, max two questions | Day Mode / Horizon |
 | Consecutive Appetite | One thing at a time, full completion before switching | Focus Day / Buffer |
 | Celebrate Progress (The Gap) | Acknowledge how far you've come, not just how far to go | Scoreboard / Wins |
+| Big Ass Calendar System | Designed year = remembered year — offense not defense | Plan tab |
+| Freud's Sense of Achievement | Completing a habit installs identity AND produces joy — not just behavior change | Quarterly Habit |
+| Misogi | One year-defining event — slightly terrifying, deeply personal | Big Ass Calendar |
+| Kevin's Rule | Newness is aliveness — one adventure every other month for 30 years = 180 life experiences | Big Ass Calendar |
 
 **Section 9 — Body Domain**
 
@@ -525,6 +530,7 @@ The spec sheet is built into the app as its own screen. It is the checklist of p
 | Claude API (Anthropic) | Spiral, coaching, day-mode, capture classification | claude-sonnet-4-6 |
 | Railway hosting | Separate deployment from S-BOS | Railway |
 | SmartSuite Journals/Rituals | All rituals, stacks, table talk filed here | App ID: `68f8f8fe3757414d70d94ae0` |
+| GitHub (Clint-s-Kompass) | Profile files for About Me section — read via GitHub API | GitHub MCP |
 
 ---
 
@@ -583,3 +589,89 @@ Me → About Me & People Around Me
 **Phase 2 addition:** In-app profile editing — edits save directly to Supabase (no GitHub commit required). GitHub remains the backup/version history.
 
 **Open question (flag for §9):** Gwen Gifford — relationship to Clint not explicitly stated in current profile files. Confirm whether she belongs in this section or a separate "Extended Family / Key People" section before building.
+
+---
+
+### I — Big Ass Calendar
+*Source: thebigasscalendar.com/pages/our-system — Jesse Itzler / Taylor Prokes system*
+
+**What it is:** A year-at-a-glance visual that turns time into a designed artifact. Not a scheduling tool — a meaning-making and anticipation tool. The goal is to live on offense: design the year intentionally, then follow the plan.
+
+**Core philosophy:** A great year doesn't happen by accident — it's designed. The Big Ass Calendar makes the entire year visible at once, solving Clint's object permanence challenge directly. When everything is visible, it becomes easier to say yes to what matters and no to what doesn't.
+
+**The three elements of the BAC system:**
+
+**1. The Misogi (year-defining event)**
+One bold event that will define the entire year. Slightly terrifying, deeply personal. When you look back, you'll remember the year as "the year I did that." Could be a physical challenge, a trip, a business milestone, a life bucket item. Must be within the realm of possibility but go BIG. For Clint: Downieville Downhill (Jul 23) and Grizzly 100 (Sep 5) are current candidates.
+
+**2. Kevin's Rule (bimonthly adventures)**
+Every other month, do one thing you wouldn't normally do. Not expensive — just new. A hike, a polar plunge, a cooking class, a museum. Six new experiences per year. Over 30 years = 180 life-enriching experiences that wouldn't have happened otherwise. Intentionally scheduled on the calendar — newness doesn't happen by accident.
+
+**3. Quarterly Habit** (see Section J — treated as its own feature, feeds back into the calendar visually)
+
+**Navigation location:** Me menu → "Big Ass Calendar" (own section) AND surfaces as the primary view on Free Days (Today tab shows the calendar in Free Day mode — what's coming + look how far we've come)
+
+**Two views:**
+
+**Year view (the "big ass" view):**
+- Full year on one screen — all 12 months visible simultaneously
+- Color-coded by category: Misogi events, Kevin's Rule adventures, family milestones, races, trips, phase completions, quarterly habit milestones
+- Backward layer (look how far we've come): completed events shown in a muted "achieved" color
+- Forward layer (what's coming): upcoming events shown in full color with anticipation
+- Object permanence solution: everything visible at once means nothing disappears from awareness
+
+**Month/week drill-in:**
+- Tap any month → expands to month view
+- Tap any day → surfaces event detail + Google Calendar sync
+- Add event button → tags by category (Misogi / Adventure / Family / Race / Milestone / Habit)
+
+**Data source:** Google Calendar MCP (reads scheduled events) + SmartSuite Goals (reads phase completion dates, race dates, habit milestones) + manual entries for Misogi and Kevin's Rule adventures
+
+**Relationship to Free Day:** On Free Day, the Today tab shows only the Big Ass Calendar year view (forward-looking) + the wins panel (backward-looking). No tasks, no inbox — just the designed year and how far you've come.
+
+**Spec Sheet rows added:** Misogi, Kevin's Rule, year-view calendar, backward/forward layers
+
+---
+
+### J — Quarterly Habit (one at a time)
+*Source: Big Ass Calendar system + Freud's sense of achievement + Phases of Proficiency framework*
+
+**What it is:** One new daily winning habit per quarter. One at a time — full focus, Consecutive Appetite model. Not a habit tracker in the traditional sense — a habit installation arc that ends in identity-level change and the felt sense of achievement Freud identified as a core human need.
+
+**The Freud connection:** Completing a habit arc isn't just behavioral — it produces genuine joy. The anticipation of mastery, the moment of competence, and the retrospective pride of "I did that" are what make habit-building feel meaningful rather than obligatory. The app's job is to make that arc visible and to celebrate each stage.
+
+**The five-stage habit arc (maps to Phases of Proficiency):**
+
+| Stage | Label | What it means | App behavior |
+|---|---|---|---|
+| 1 | Install | Habit chosen, first week | Daily prompt, staged learning about why this habit |
+| 2 | Beginner | Weeks 2–4, streaks building | Streak tracking, encouragement, "you're doing it" |
+| 3 | Intermediate | Month 2, consistency forming | Weekly reflection prompt, connection to domain goal |
+| 4 | Expert | Month 3, feels automatic | Reduced prompting, identity language ("you're someone who…") |
+| 5 | Complete | End of quarter | Celebration ritual, Freudian achievement moment, BAC milestone marked |
+
+**One habit at a time — why:**
+- Consecutive Appetite: Clint's digestion type is one thing at a time, full completion before switching
+- Attention dilution: multiple habits compete for the same ignition energy
+- Identity installation: one habit done fully becomes "who I am" — three habits done partially become "things I'm trying to do"
+
+**What triggers a new habit each quarter:**
+- Quarter ends (Jan 1, Apr 1, Jul 1, Oct 1)
+- Kompass surfaces a Sacral question: *"What habit would make the biggest difference this quarter?"*
+- One option suggested based on current domain GYR and Goal progress — Clint gut-checks yes/no
+- Previous habit optionally continued or promoted to "installed identity" and removed from active tracking
+
+**Staged learning (the why layer):**
+Each habit comes with a short learning sequence — 3–5 bite-sized lessons delivered over the first 2 weeks via daily reminder. For Body habits: the science behind why (e.g. why morning rides improve cortisol/testosterone ratio). For Being habits: the framework behind why (e.g. why evening journaling improves morning clarity). Learning is connected to the habit — never disconnected motivation content.
+
+**Celebration mechanics:**
+- Week 1 completion: "Day 7 — the hardest week is behind you"
+- Streak milestones: 14, 21, 30, 60, 90 days — each acknowledged with a specific message
+- Quarter completion: full celebration ritual — journal prompt, BAC milestone marked, identity statement generated ("You're now someone who [habit]"), optional Table Talk entry
+- The celebration IS the Freudian achievement moment — it has to feel real, not gamified
+
+**Data source:** SmartSuite Goals (habit as a Goal record with daily Stats) + SmartSuite Journals (celebration entries)
+
+**Current Q3 2026 habit candidate (from Body protocol):** Morning ride consistency — 3x per week minimum, targeting 5x by Race Block
+
+**Spec Sheet rows:** Quarterly Habit arc, staged learning, celebration ritual, Misogi connection, Freud's sense of achievement
