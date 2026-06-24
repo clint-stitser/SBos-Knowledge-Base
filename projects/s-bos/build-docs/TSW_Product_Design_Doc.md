@@ -551,8 +551,8 @@ The spec sheet is built into the app as its own screen. It is the checklist of p
 |---|---|---|
 | Clint | `01-user-profile/operating-manual.md` | Human Design (Sacral MG, 5/2, Channel 1-8), ADHD assessment scores, cognitive mechanics, vulnerabilities/shadows, AI interaction principles, tactical guardrails, decision-making protocol |
 | Clint | `01-user-profile/quick-reference.md` | Condensed operating manual — key reminders at a glance |
-| Clint | `01-user-profile/vivid-vision-2036.md` | 10-year vivid vision |
-| Clint | `01-user-profile/2026-commitments.md` | Current year commitments |
+| Clint | `01-user-profile/vivid-vision-2036.md` | 10-year vivid vision (also linked as Google Doc — see Vivid Vision section below) |
+| Clint | `01-user-profile/2026-commitments.md` | 1-year commitments (also linked as Google Doc — see Vivid Vision section below) |
 | Christie | `07-family/christie-stitser.md` | Full profile |
 | Avery | `07-family/avery-stitser.md` | Full profile |
 | Brynn | `07-family/brynn-stitser.md` | Full profile |
@@ -566,8 +566,8 @@ Me → About Me & People Around Me
 ├── Clint (primary — shown first)
 │   ├── Operating Manual (full, scrollable)
 │   ├── Quick Reference (condensed)
-│   ├── Vivid Vision 2036
-│   └── 2026 Commitments
+│   ├── Vivid Vision & Commitments (see dedicated sub-section below)
+│   └── [Other profile files]
 ├── Christie
 ├── Avery
 ├── Brynn
@@ -589,6 +589,68 @@ Me → About Me & People Around Me
 **Phase 2 addition:** In-app profile editing — edits save directly to Supabase (no GitHub commit required). GitHub remains the backup/version history.
 
 **Open question (flag for §9):** Gwen Gifford — relationship to Clint not explicitly stated in current profile files. Confirm whether she belongs in this section or a separate "Extended Family / Key People" section before building.
+
+---
+
+#### H1 — Vivid Vision & Annual Commitments (sub-section of About Me)
+*Source: Google Doc `1KpYWZdRgeM93V79mp0sSStE57y-f9iWKwRu5pyYcIsI` — "2026 Annual SB Plan"*
+
+**What it is:** A dedicated view inside Clint's profile that surfaces the 10-year Vivid Vision and 1-year commitments — the north star and the near-horizon in one place. Designed to be read regularly, not filed and forgotten. The document makes these intentions sticky by keeping them visible.
+
+**The document contains four layers — only two belong in the personal app:**
+
+| Layer | Belongs in Stitser Way? | Notes |
+|---|---|---|
+| Vivid Vision: January 2036 | ✅ Yes | 10-year ideal circumstances — Health, Environment, Family, Business, Wealth/Legacy |
+| 2026 Commitments | ✅ Yes | 1-year vision across Body, Being, Balance, Business with measurable targets |
+| The Manifesto + Daily Huddle | ❌ No — S-BOS | Company identity and code — business-facing |
+| Annual Initiatives & Q1 Plan | ❌ No — S-BOS | Stitser BUILT strategic plan — business-facing |
+
+**10-year Vivid Vision highlights (January 2036):**
+- Health: 50 years old, more alive and strong than a decade ago — still competing in biking, swimming, running; snowboarding, fishing, golf as rituals
+- Environment: Reno home as sanctuary + fluid movement between Reno, beach, mountains — lake house and beach house as refuges, private plane hours
+- Family: Christie and Clint in beautiful flow, "interdependence" mastered — kids successfully launched, deeply connected, stewards of the platform; grandkids welcome; deep holiday traditions
+- Business: Fully in the Allocator seat 4 days/week — no operations, no hiring, no daily "doing." Company is asset-based powerhouse, proprietary tools/tech, partners and customers see undeniable value
+- Wealth: $200K/month cash flow from assets — succession plan in place, multi-generational security + individual pursuit balanced
+- Legacy epitaph: *"Wise, Connected & Aligned, Shining Example of a Human Being"*
+
+**2026 Commitments highlights:**
+- **Morning & Evening Rituals:** Worthy of my own attention — day starts and ends with the Stitser Way ritual
+- **Body:** Cardio age 7+ years under actual (Oura), heart rate trend flat or declining, skin clear and moisturized, weight 198–203 lbs
+- **Being:** Choose to be a great man, not a nice man — connected to, worthy of, and capable of experiencing ideal circumstances — self-care as commitment, not luxury — present and connected
+- **Balance:** In flow with people I care about — embracing and celebrating the strengths of those closest to me
+- **Business:** Achieving at high level with efficient resources — all companies self-managing and self-funded — 6-month liquidity buffer — monthly strategy meetings at home — kids on salary + 401(k)
+
+**UI design for this sub-section:**
+
+```
+Clint → Vivid Vision & Commitments
+├── 🔭 10-Year Vision (January 2036)
+│   ├── Health & Vitality
+│   ├── Environment & Lifestyle
+│   ├── Family & Connection
+│   ├── Business & Career
+│   └── Wealth & Legacy
+├── 🎯 2026 Commitments
+│   ├── Rituals
+│   ├── Body
+│   ├── Being
+│   ├── Balance
+│   └── Business
+└── ✏️ Open in Google Doc → [Drive link opens natively]
+```
+
+**"Keep it alive" mechanics (from the document's own Next Steps):**
+The document itself identifies what would make these intentions stick. The app implements them:
+- **Daily Review:** A daily reminder surfaces one line from the Vivid Vision or 2026 Commitments — rotating, never the same two days in a row. Tied to the morning ritual.
+- **Annual Collage:** Flagged as a future feature — visual representation of the Vivid Vision as a mood board (Phase 2)
+- **Monthly with Christie:** A recurring calendar reminder — monthly long lunch with Christie to review and keep the vision alive (surfaced as a Kevin's Rule-style event in the BAC)
+- **Annual Update:** Each New Year, Kompass prompts a review of both the Vivid Vision and commitments — last year's vision reviewed, next year's written
+
+**Data source:** Google Doc opened natively via Drive link (no Drive API auth needed — sharing handled at Drive level per Clint's decision). GitHub repo also maintains markdown versions (`vivid-vision-2036.md` and `2026-commitments.md`) as Claude's reading copy.
+
+**Relationship to 2026 Commitment Targets:**
+The measurable 2026 commitments (198–203 lbs, cardio age 7+ years under actual, skin clear) map directly to SmartSuite Goals in the Body domain. The app connects the vision to the scoreboard — tap any commitment → see the corresponding Goal card with current progress.
 
 ---
 
@@ -689,6 +751,8 @@ Each habit comes with a short learning sequence — 3–5 bite-sized lessons del
 
 **Data source:** Google Drive deep links — each entry is a named link that opens the corresponding Drive file or folder directly. No file storage in the app itself. Phase 2: links stored in Supabase; Phase 1: links maintained as a simple structured JSON config.
 
+**Auth model (confirmed):** Links open Google Drive natively in the browser — no Drive API auth required. Sharing and access permissions are managed by Clint at the Drive level. The app is a link registry only. No Drive MCP needed for this section.
+
 **UI structure:**
 - Grouped by person and category
 - Each entry: document name + category icon + last-updated date (pulled from Drive metadata where possible) + one-tap open
@@ -714,10 +778,10 @@ Each habit comes with a short learning sequence — 3–5 bite-sized lessons del
 ```
 Key Docs
 ├── Clint
-│   ├── 🪪 Birth Certificate → [Drive link]
-│   ├── 🪪 Passport → [Drive link]
-│   ├── 🏥 Immunization Records → [Drive link]
-│   ├── ⚖️ Trust Documents → [Drive link]
+│   ├── 🪪 Birth Certificate → [Drive link — opens natively]
+│   ├── 🪪 Passport → [Drive link — opens natively]
+│   ├── 🏥 Immunization Records → [Drive link — opens natively]
+│   ├── ⚖️ Trust Documents → [Drive link — opens natively]
 │   └── ... (extensible)
 ├── Christie
 ├── Avery
@@ -736,9 +800,5 @@ Key Docs
 - Last-accessed indicator — shows when a doc was last opened from the app
 - "Copy link" option per document — for sharing without opening
 - Emergency access indicator — flag any doc as "emergency accessible" so it surfaces first under pressure
-
-> ⚠️ **Integration note:** Phase 1 implementation is a curated link registry — no Drive API auth required if links are public-within-org Drive files. If files are private, Drive MCP OAuth is required to open them. Clarify auth model before building. Phase 2: links stored in Supabase per-user record.
-
-**Open question (flag for §9):** Does Key Docs require Google Drive MCP auth to open private files, or does tapping a link open Drive natively in the browser/app? Determine before Technical Spec.
 
 **Relationship to Body section:** Health vault in the Body domain (DXA reports, blood tests, eye prescriptions, skin records) cross-references Key Docs — a DXA report filed in Body health vault can also appear as a linked doc in Key Docs under the Health category for that person. Single source of truth — surfaced in two relevant places.
