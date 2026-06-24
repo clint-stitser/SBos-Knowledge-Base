@@ -142,7 +142,7 @@ Clint has a working personal goal-tracking infrastructure in SmartSuite (the Gam
 
 ## Discovery Inputs (from session 2026-06-24)
 
-> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 once Gate 1 is signed off. Organized into seven areas. Source documents referenced where applicable.
+> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 once Gate 1 is signed off. Organized into eight areas. Source documents referenced where applicable.
 
 ---
 
@@ -150,6 +150,7 @@ Clint has a working personal goal-tracking infrastructure in SmartSuite (the Gam
 
 - Four persistent bottom tabs: **Today / Horizon / Me / Shortcuts**
 - Me tab is a domain menu — four domain cards (Body/Being/Balance/Business), tap domain → Goals list, tap Goal → universal initiative screen
+- **Me menu sections (full list):** Body / Being / Balance / Business domains + About Me & People Around Me + Journal + Tools + Spec Sheet
 - Spiral and Spec Sheet accessible from top-right nav icons on any screen (not main tabs)
 - Tab bar hides entirely in Focus Day mode — the app changes posture, not just content
 
@@ -524,3 +525,61 @@ The spec sheet is built into the app as its own screen. It is the checklist of p
 | Claude API (Anthropic) | Spiral, coaching, day-mode, capture classification | claude-sonnet-4-6 |
 | Railway hosting | Separate deployment from S-BOS | Railway |
 | SmartSuite Journals/Rituals | All rituals, stacks, table talk filed here | App ID: `68f8f8fe3757414d70d94ae0` |
+
+---
+
+### H — About Me & People Around Me
+*Sources: `01-user-profile/` + `07-family/` in Clint-s-Kompass repo*
+
+**What it is:** A dedicated section within the Me menu that surfaces full personal and family profiles — scrollable, searchable, and always available. The equivalent of a relationship and self-knowledge library living inside the app. Not a summary — the full profile for each person.
+
+**Navigation location:** Me menu → "About Me & People Around Me" (own section alongside the four domain cards, Journal, Tools, and Spec Sheet)
+
+**Data source:** GitHub — `Clint-s-Kompass` repo, markdown files fetched via GitHub API at read time.
+
+> ⚠️ **Integration note:** This is the only section of the app that reads from GitHub rather than SmartSuite. The app fetches and renders markdown files directly. This is a different integration pattern from all other sections and must be called out explicitly in the Technical Spec and Data Integration Doc. Phase 2 consideration: migrate profile content to Supabase so it's editable in-app without a GitHub commit.
+
+**Profile files (Phase 1 sources):**
+
+| Person | File | Contents |
+|---|---|---|
+| Clint | `01-user-profile/operating-manual.md` | Human Design (Sacral MG, 5/2, Channel 1-8), ADHD assessment scores, cognitive mechanics, vulnerabilities/shadows, AI interaction principles, tactical guardrails, decision-making protocol |
+| Clint | `01-user-profile/quick-reference.md` | Condensed operating manual — key reminders at a glance |
+| Clint | `01-user-profile/vivid-vision-2036.md` | 10-year vivid vision |
+| Clint | `01-user-profile/2026-commitments.md` | Current year commitments |
+| Christie | `07-family/christie-stitser.md` | Full profile |
+| Avery | `07-family/avery-stitser.md` | Full profile |
+| Brynn | `07-family/brynn-stitser.md` | Full profile |
+| Maxwell | `07-family/maxwell-stitser.md` | Full profile |
+| Gwen | `07-family/gwen-gifford.md` | Full profile |
+
+**UI structure:**
+
+```
+Me → About Me & People Around Me
+├── Clint (primary — shown first)
+│   ├── Operating Manual (full, scrollable)
+│   ├── Quick Reference (condensed)
+│   ├── Vivid Vision 2036
+│   └── 2026 Commitments
+├── Christie
+├── Avery
+├── Brynn
+├── Maxwell
+└── Gwen
+```
+
+**Features:**
+- Person selector at top — tap avatar to switch profiles
+- Full markdown content rendered per person — scrollable, not truncated
+- Search bar — searches across all profiles simultaneously (name, keyword, concept)
+- Clint's profile shown first and by default
+- Each profile shows last-updated date (pulled from GitHub file metadata)
+- Edit button per profile → opens GitHub file in browser (Phase 1) or in-app editor (Phase 2)
+- Profile completeness indicator — surfaces which family members don't yet have a full profile
+
+**Relationship to Claude:** When Claude runs any coaching session, relationship session, or day-mode suggestion, it reads these same profile files from GitHub for context. The app surface and Claude are reading from the same source. Changes to a profile file update both Claude's context and the app simultaneously.
+
+**Phase 2 addition:** In-app profile editing — edits save directly to Supabase (no GitHub commit required). GitHub remains the backup/version history.
+
+**Open question (flag for §9):** Gwen Gifford — relationship to Clint not explicitly stated in current profile files. Confirm whether she belongs in this section or a separate "Extended Family / Key People" section before building.
