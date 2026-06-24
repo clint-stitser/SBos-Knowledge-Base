@@ -142,7 +142,7 @@ Clint has a working personal goal-tracking infrastructure in SmartSuite (the Gam
 
 ## Discovery Inputs (from session 2026-06-24)
 
-> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 once Gate 1 is signed off. Organized into ten areas. Source documents referenced where applicable.
+> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 once Gate 1 is signed off. Organized into eleven areas. Source documents referenced where applicable.
 
 ---
 
@@ -150,7 +150,7 @@ Clint has a working personal goal-tracking infrastructure in SmartSuite (the Gam
 
 - Four persistent bottom tabs: **Today / Horizon / Me / Shortcuts**
 - Me tab is a domain menu — four domain cards (Body/Being/Balance/Business), tap domain → Goals list, tap Goal → universal initiative screen
-- **Me menu sections (full list):** Body / Being / Balance / Business domains + About Me & People Around Me + Big Ass Calendar + Quarterly Habit + Journal + Tools + Spec Sheet
+- **Me menu sections (full list):** Body / Being / Balance / Business domains + About Me & People Around Me + Key Docs + Big Ass Calendar + Quarterly Habit + Journal + Tools + Spec Sheet
 - Spiral and Spec Sheet accessible from top-right nav icons on any screen (not main tabs)
 - Tab bar hides entirely in Focus Day mode — the app changes posture, not just content
 
@@ -675,3 +675,70 @@ Each habit comes with a short learning sequence — 3–5 bite-sized lessons del
 **Current Q3 2026 habit candidate (from Body protocol):** Morning ride consistency — 3x per week minimum, targeting 5x by Race Block
 
 **Spec Sheet rows:** Quarterly Habit arc, staged learning, celebration ritual, Misogi connection, Freud's sense of achievement
+
+---
+
+### K — Key Docs
+*Navigation: Me menu → "Key Docs" (sibling section alongside About Me & People Around Me)*
+
+**What it is:** A curated library of important personal and family documents — surfaced as named links directly into Google Drive. Not a document storage system — a one-tap reference panel that solves the "where did I save that?" problem for life's most important files.
+
+**Core problem it solves:** Critical personal documents (birth certificates, passports, insurance, estate docs) exist in Google Drive but are buried and hard to find under pressure. When you need them — at a border, during a medical emergency, for a school enrollment — object permanence means they effectively don't exist unless they're visible. Key Docs makes them permanently findable in one place.
+
+**Navigation location:** Me menu → "Key Docs" — own section, listed directly below "About Me & People Around Me" for natural grouping
+
+**Data source:** Google Drive deep links — each entry is a named link that opens the corresponding Drive file or folder directly. No file storage in the app itself. Phase 2: links stored in Supabase; Phase 1: links maintained as a simple structured JSON config.
+
+**UI structure:**
+- Grouped by person and category
+- Each entry: document name + category icon + last-updated date (pulled from Drive metadata where possible) + one-tap open
+- Search bar — filter by name, person, or category
+- "Add doc" button — opens a simple form: name, person, category, Drive link
+
+**Category taxonomy (seed list — extensible):**
+
+| Category | Icon | Examples |
+|---|---|---|
+| Identity | 🪪 | Birth certificate, passport, Social Security card, driver's license |
+| Health | 🏥 | Immunization records, insurance cards, medical history, prescriptions |
+| Legal | ⚖️ | Trust documents, will, POA, operating agreements |
+| Financial | 💰 | Tax returns, account statements, estate inventory |
+| Property | 🏠 | Deeds, titles, HOA docs, insurance policies |
+| Education | 🎓 | Diplomas, transcripts, certifications |
+| Vehicle | 🚗 | Titles, registrations, insurance |
+| Travel | ✈️ | Passports, visas, travel insurance |
+| Other | 📄 | Anything that doesn't fit above |
+
+**Per-person structure:**
+
+```
+Key Docs
+├── Clint
+│   ├── 🪪 Birth Certificate → [Drive link]
+│   ├── 🪪 Passport → [Drive link]
+│   ├── 🏥 Immunization Records → [Drive link]
+│   ├── ⚖️ Trust Documents → [Drive link]
+│   └── ... (extensible)
+├── Christie
+├── Avery
+├── Brynn
+├── Maxwell
+├── Gwen
+└── Family (shared docs)
+    ├── 🏠 Property Deeds → [Drive folder link]
+    ├── 💰 Tax Returns → [Drive folder link]
+    └── ...
+```
+
+**Features:**
+- Person filter at top (same avatar selector pattern as About Me)
+- "Family" tab for shared documents not belonging to one person
+- Last-accessed indicator — shows when a doc was last opened from the app
+- "Copy link" option per document — for sharing without opening
+- Emergency access indicator — flag any doc as "emergency accessible" so it surfaces first under pressure
+
+> ⚠️ **Integration note:** Phase 1 implementation is a curated link registry — no Drive API auth required if links are public-within-org Drive files. If files are private, Drive MCP OAuth is required to open them. Clarify auth model before building. Phase 2: links stored in Supabase per-user record.
+
+**Open question (flag for §9):** Does Key Docs require Google Drive MCP auth to open private files, or does tapping a link open Drive natively in the browser/app? Determine before Technical Spec.
+
+**Relationship to Body section:** Health vault in the Body domain (DXA reports, blood tests, eye prescriptions, skin records) cross-references Key Docs — a DXA report filed in Body health vault can also appear as a linked doc in Key Docs under the Health category for that person. Single source of truth — surfaced in two relevant places.
