@@ -142,7 +142,7 @@ Clint has a working personal goal-tracking infrastructure in SmartSuite (the Gam
 
 ## Discovery Inputs (from session 2026-06-24)
 
-> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 once Gate 1 is signed off. Organized into eleven areas. Source documents referenced where applicable.
+> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 once Gate 1 is signed off. Organized into twelve areas. Source documents referenced where applicable.
 
 ---
 
@@ -501,6 +501,8 @@ The spec sheet is built into the app as its own screen. It is the checklist of p
 | Freud's Sense of Achievement | Completing a habit installs identity AND produces joy — not just behavior change | Quarterly Habit |
 | Misogi | One year-defining event — slightly terrifying, deeply personal | Big Ass Calendar |
 | Kevin's Rule | Newness is aliveness — one adventure every other month for 30 years = 180 life experiences | Big Ass Calendar |
+| Ebbinghaus Forgetting Curve | Spaced repetition + sleep = installation. Cramming = information, not skill. | Learning Engine |
+| Container Model | Every section exists as an invitation — empty containers have posture, not failure | Onboarding / All sections |
 
 **Section 9 — Body Domain**
 
@@ -745,60 +747,151 @@ Each habit comes with a short learning sequence — 3–5 bite-sized lessons del
 
 **What it is:** A curated library of important personal and family documents — surfaced as named links directly into Google Drive. Not a document storage system — a one-tap reference panel that solves the "where did I save that?" problem for life's most important files.
 
-**Core problem it solves:** Critical personal documents (birth certificates, passports, insurance, estate docs) exist in Google Drive but are buried and hard to find under pressure. When you need them — at a border, during a medical emergency, for a school enrollment — object permanence means they effectively don't exist unless they're visible. Key Docs makes them permanently findable in one place.
+**Auth model (confirmed):** Links open Google Drive natively in the browser — no Drive API auth required. Sharing and access permissions are managed by Clint at the Drive level. The app is a link registry only.
 
-**Navigation location:** Me menu → "Key Docs" — own section, listed directly below "About Me & People Around Me" for natural grouping
+**Navigation location:** Me menu → "Key Docs" — own section, listed directly below "About Me & People Around Me"
 
-**Data source:** Google Drive deep links — each entry is a named link that opens the corresponding Drive file or folder directly. No file storage in the app itself. Phase 2: links stored in Supabase; Phase 1: links maintained as a simple structured JSON config.
+**Data source:** Google Drive deep links. Phase 1: simple structured JSON config. Phase 2: links stored in Supabase per-user record.
 
-**Auth model (confirmed):** Links open Google Drive natively in the browser — no Drive API auth required. Sharing and access permissions are managed by Clint at the Drive level. The app is a link registry only. No Drive MCP needed for this section.
-
-**UI structure:**
-- Grouped by person and category
-- Each entry: document name + category icon + last-updated date (pulled from Drive metadata where possible) + one-tap open
-- Search bar — filter by name, person, or category
-- "Add doc" button — opens a simple form: name, person, category, Drive link
-
-**Category taxonomy (seed list — extensible):**
+**Category taxonomy:**
 
 | Category | Icon | Examples |
 |---|---|---|
-| Identity | 🪪 | Birth certificate, passport, Social Security card, driver's license |
-| Health | 🏥 | Immunization records, insurance cards, medical history, prescriptions |
-| Legal | ⚖️ | Trust documents, will, POA, operating agreements |
-| Financial | 💰 | Tax returns, account statements, estate inventory |
-| Property | 🏠 | Deeds, titles, HOA docs, insurance policies |
-| Education | 🎓 | Diplomas, transcripts, certifications |
+| Identity | 🪪 | Birth certificate, passport, Social Security card |
+| Health | 🏥 | Immunization records, insurance cards, medical history |
+| Legal | ⚖️ | Trust documents, will, POA |
+| Financial | 💰 | Tax returns, account statements |
+| Property | 🏠 | Deeds, titles, HOA docs |
+| Education | 🎓 | Diplomas, transcripts |
 | Vehicle | 🚗 | Titles, registrations, insurance |
 | Travel | ✈️ | Passports, visas, travel insurance |
 | Other | 📄 | Anything that doesn't fit above |
 
-**Per-person structure:**
+**Features:** Person selector (same pattern as About Me), Family tab for shared docs, last-accessed indicator, copy-link option, emergency-access flag (surfaces these first under pressure).
 
-```
-Key Docs
-├── Clint
-│   ├── 🪪 Birth Certificate → [Drive link — opens natively]
-│   ├── 🪪 Passport → [Drive link — opens natively]
-│   ├── 🏥 Immunization Records → [Drive link — opens natively]
-│   ├── ⚖️ Trust Documents → [Drive link — opens natively]
-│   └── ... (extensible)
-├── Christie
-├── Avery
-├── Brynn
-├── Maxwell
-├── Gwen
-└── Family (shared docs)
-    ├── 🏠 Property Deeds → [Drive folder link]
-    ├── 💰 Tax Returns → [Drive folder link]
-    └── ...
-```
+**Relationship to Body section:** Health vault DXA/blood/eye records cross-reference here — single source of truth, surfaced in two relevant places.
 
-**Features:**
-- Person filter at top (same avatar selector pattern as About Me)
-- "Family" tab for shared documents not belonging to one person
-- Last-accessed indicator — shows when a doc was last opened from the app
-- "Copy link" option per document — for sharing without opening
-- Emergency access indicator — flag any doc as "emergency accessible" so it surfaces first under pressure
+---
 
-**Relationship to Body section:** Health vault in the Body domain (DXA reports, blood tests, eye prescriptions, skin records) cross-references Key Docs — a DXA report filed in Body health vault can also appear as a linked doc in Key Docs under the Health category for that person. Single source of truth — surfaced in two relevant places.
+### L — Container Model & Learning Engine
+
+> ⚠️ **Cross-product note:** This section applies to both **Stitser Way** (personal app) and **S-BOS** (business app). The Learning Engine and Container Model are a shared design principle. When S-BOS builds its onboarding and skill installation layer, it follows the same spec. Reference this section in the S-BOS PDD when that feature is scoped.
+
+---
+
+#### L1 — The Container Model (empty state design)
+
+**The core principle:** The app does not require the user to arrive fully formed. Every section exists from day one — visible, real, and present. Empty containers are not broken features or missing data. They are invitations. The machine installs you into clarity over time.
+
+**Visual design — three layers, all present simultaneously:**
+
+| Layer | What it does | Visual treatment |
+|---|---|---|
+| 1. Soft glow / shimmer | Present but not urgent — the container exists and is waiting | Subtle animated shimmer on the card border, gold-tinted background |
+| 2. Clear empty state + single invitation tap | One clear call to action — no confusion about what to do | Large, friendly prompt text. One button: "Build this →" |
+| 3. Progress ring / completion indicator | Shows % of profile built across all containers — visible at the Me menu level | Ring around each section icon in the Me menu. Fills as containers are completed. |
+
+**The three layers work together:** The glow says "this exists." The empty state says "here's how to fill it." The progress ring says "look how far you've come." None of these create pressure — they create orientation.
+
+**Empty state posture — what it says, not what's missing:**
+
+Every empty container opens with a short "why this matters" statement before the build prompt. Not a feature description — a human reason.
+
+Examples:
+
+| Container | Empty state message |
+|---|---|
+| Vivid Vision | *"You can't move toward something you haven't named. Ten minutes here shapes the next ten years."* |
+| Annual Commitments | *"What does this year look like at its best? Not a to-do list — a felt sense of who you're becoming."* |
+| Quarterly Habit | *"One habit, fully installed, changes more than ten habits half-started. What's the one?"* |
+| Misogi | *"What would you do this year if you knew you'd look back and say — I can't believe I did that?"* |
+| Family Profile (Brynn) | *"Brynn is in your life every day. The more you understand her wiring, the better you can show up for her."* |
+| Body Goals | *"Your body is the machine that runs everything else. Where does it stand right now?"* |
+| Key Docs | *"The documents that matter most are the hardest to find in a crisis. Ten minutes now saves hours later."* |
+
+**Build flow (same pattern for every container):**
+1. User taps empty container
+2. "Why this matters" card appears (brief, human, connected to principles)
+3. Uh-huh → Claude launches guided build session for that container
+4. Claude asks questions conversationally, one at a time (never a form)
+5. Output is filed to the right destination (GitHub, SmartSuite, Drive link registry)
+6. Container fills in — placeholder resolves to real content
+7. Progress ring on the Me menu updates
+8. Celebration moment: "First one built — the machine is starting."
+
+**Refresh cycles (containers aren't built once):**
+
+| Container | Refresh trigger |
+|---|---|
+| Vivid Vision | Annual — New Year prompt |
+| Annual Commitments | Annual — January; quarterly check-in |
+| Family Profiles | Event-driven — Relationship Coach session produces update suggestion |
+| Quarterly Habit | Quarter end (Jan 1, Apr 1, Jul 1, Oct 1) |
+| Misogi | Annual — set at start of year, reviewed at midpoint |
+| Key Docs | User-triggered — add/update as docs change |
+| Body Goals | Phase advancement — each new phase prompts goal review |
+
+---
+
+#### L2 — The Learning Engine (staged installation, spaced repetition)
+
+*Source: Calmio app onboarding — "Entering the Journey" lesson sequence (19-slide format). Screenshots provided 2026-06-24. The Ebbinghaus forgetting curve and spaced repetition science underpin this entire layer.*
+
+**The core principle:** Information given once is not a skill. Skills are installed through spaced repetition + sleep. One concept per day, a sleep between each, and the gap between sessions is not empty time — it's the part doing the work.
+
+**The neuroscience (from Calmio's onboarding — adopted as design canon):**
+
+- **The forgetting curve (Ebbinghaus, 1885):** Memory decays steeply after learning, then levels off. Spaced repetition — a little practice, a sleep, a little more — flattens the curve permanently. Each revisit rebuilds the curve from a higher baseline.
+- **Sleep as the training session:** Overnight, the brain replays the day at high speed, strengthening connections it flagged as worth keeping. A skill learned yesterday feels more yours today — without extra practice. A night of poor sleep is a missed training session.
+- **Prefrontal cortex → basal ganglia migration:** New skills live in the prefrontal cortex (effortful, costs focus). With repetition + sleep, they migrate to the basal ganglia (automatic, fires without asking). That's what "it got easier" actually is.
+- **Cramming backfires:** Overloads the prefrontal cortex (stops encoding halfway). Skips the sleep gap (weak wiring). Exhausts tomorrow-you (avoidance sets in). The feeling of "I'm getting somewhere" after a long session is often the last real learning in that session.
+
+**Application to Stitser Way — what this means in practice:**
+
+Every habit, framework, and skill in the app is introduced through a staged learning sequence. Not a wall of text. Not a video. A sequence of single-concept cards delivered one per day, with sleep between each, connected directly to the goal or habit being installed.
+
+**The lesson format (modeled on Calmio's UI):**
+
+| Element | Design spec |
+|---|---|
+| One concept per card | Single idea. Maximum 3–4 sentences. No scrolling required. |
+| Progress indicator | "17 / 20" at top — user knows exactly where they are |
+| Named, bounded lessons | Each lesson has a title that names the concept: "Why one-a-day changes your brain" — not "Chapter 3" |
+| Time estimate per lesson | "13 min" — sets expectation, reduces resistance |
+| Single "Next" button | No choices. No friction. One direction. |
+| Completion checkmark | Visual proof of showing up — the Habit Identity Loop in UI form |
+| Chapter overview with bullet previews | Shows what's coming and why it matters before the user commits |
+| Journey metaphor (not "course") | Language of becoming, not learning. Progress grows through small moments of showing up. |
+| Visual celebration artifact | Calmio uses a garden — each flower blooms for a lesson finished. Stitser Way equivalent: TBD (could be a mountain, a trail, a scoreboard with personal meaning) |
+
+**The 6-hour safety rail (Calmio's mechanic — adopt for Stitser Way):**
+
+After a lesson is completed, the next lesson is held for approximately 6 hours. Not to slow the user down — as a safety rail for real life. The brain works on days, not hours. Three lessons back-to-back in one evening wires almost nothing. The 6-hour wait is there for when life scrambles the schedule, not for finishing faster. One per day stays the goal.
+
+**Where the Learning Engine fires in Stitser Way:**
+
+| Context | What the engine teaches |
+|---|---|
+| Quarterly Habit (first 2 weeks) | The science behind why this specific habit matters — 3–5 lessons, one per day, delivered via daily reminder |
+| Body protocol (Foundation phase) | Why sleep > exercise for fat loss, why alcohol is the primary visceral fat driver, why protein timing matters, why waist-to-height beats BMI — one concept per day |
+| New container build (onboarding) | The framework behind what's being built — e.g., when building Vivid Vision, first lesson is "Why a written vision changes what you notice" |
+| Spiral (first use) | The Ebbinghaus + sleep science as context for why one Spiral per day is more powerful than three in a row |
+| Relationship Coach (first family profile) | What Human Design is, why wiring matters, why knowing someone's type changes how you show up |
+| S-BOS skill installation (see below) | Every new S-BOS skill introduced to a team member follows the same staged learning arc |
+
+**Cross-product application — S-BOS:**
+
+> ⚠️ **S-BOS PDD flag:** The Learning Engine is not unique to the personal app. Every S-BOS skill (Pay App, Baseline Capture, Compliance Audit, etc.) when introduced to a new team member (Christine, Andi, or future hires) should follow the staged installation model. Not a training document. Not a video walkthrough. A sequence of named, bounded lessons — one per day, 6-hour safety rail, completion indicator, visual celebration. The same neuroscience that installs a habit installs a workflow skill. When S-BOS onboarding is scoped in the S-BOS PDD, reference this section as the design standard.
+
+**What the Learning Engine is NOT:**
+- Not a content library to browse — it's a delivery sequence with pacing built in
+- Not optional — it fires automatically when a new container is built or a new habit is started
+- Not permanent — lessons graduate from "learning" to "installed." Once the skill is in the basal ganglia (automated, unconscious competence), the lesson sequence ends and the habit just runs
+
+**Progress visualization (the garden equivalent):**
+The visual celebration artifact for Stitser Way's learning engine is not yet decided. Candidates:
+- A mountain trail — each lesson adds a step; the summit is habit completion
+- A scoreboard with personal meaning (Body domain: a bike climb profile — each lesson brings you closer to the top)
+- A simple streak counter with milestone acknowledgments (less visual, more direct)
+
+> Open question for §9: What visual metaphor resonates most for the learning progress artifact? Decide before UI/UX doc is written.
