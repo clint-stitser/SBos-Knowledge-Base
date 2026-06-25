@@ -36,9 +36,9 @@ For Clint, four compounding problems:
 
 **1. Fragmentation.** No single place where the full picture of a life is visible, connected, and actionable.
 
-**2. Absence.** No application designed around the actual frameworks — GYR Spiral, four life domains, phase-based accountability, Container Model, spaced learning, day-mode model, Table Talk, Vivid Vision, Misogi, Quarterly Habit arc.
+**2. Absence.** No application designed around the actual frameworks.
 
-**3. The activation gap.** Without a daily machine, knowledge fades, rituals drift, the Vivid Vision is written once and forgotten.
+**3. The activation gap.** Without a daily machine, knowledge fades, rituals drift.
 
 **4. No project-level tool layer.** Bounded projects have no purpose-built tool system.
 
@@ -194,8 +194,27 @@ Four tabs: Operating Manual / Quick Reference / Vivid Vision / 2026 Commitments.
 
 ### F13 — Project + Tool Layer
 **Entities read/written:** Project (#18), Check Lists (#19), Check List Tasks (#20), Budget (#21–24), Schedule (#25–26), Project Tool (#28).
-Four-pillar view. Tool creation via pillar or Shortcuts. Embedded render. Archive as searchable library.
-**Success:** Hierarchy from SmartSuite. Tool < 5 exchanges. Archive findable.
+
+Four-pillar view (Budget / Alignment / Schedule / Checklists). Tool creation via pillar or Shortcuts. Embedded render. Archive as searchable library.
+
+**Project types — all use the same four-pillar infrastructure:**
+
+| Project type | Domain | Pillar emphasis |
+|---|---|---|
+| Construction / development | Business | All four pillars — full S-BOS depth |
+| Family trip | Balance | Budget + Schedule + Checklists |
+| Medical protocol | Body | Alignment + Schedule + Checklists |
+| Study / exam prep | Balance or Being | Alignment + Schedule + Checklists |
+| **Misogi** | Any domain | Alignment (purpose + who) + Schedule (training arc + event date) + Checklists (gear, preparation gates) + Budget if relevant |
+| **Kevin's Rule event** | Balance | Lightweight — Alignment (what + why) + Schedule (date + logistics) + Checklists (packing, booking) + Budget if relevant |
+
+**Misogi as a Project (confirmed 2026-06-25):**
+A Misogi is achieved using the Project + Tool Layer. The Misogi Goal record (entity #16, tagged `type = "Misogi"`) provides the north-star target and tracks completion. The linked Project record provides the infrastructure — the Alignment pillar captures the purpose and preparation requirements; the Schedule pillar holds the training timeline leading up to the event; the Checklists pillar holds gear, fitness gate criteria, and pre-event preparation. Claude builds custom tools within the pillars as needed (e.g., a training schedule calculator, a gear checklist, a fitness readiness tracker).
+
+**Kevin's Rule as a Project (confirmed 2026-06-25):**
+A Kevin's Rule event can be run as a lightweight Project. The Kevin's Rule Goal record (entity #17, tagged `type = "Kevin's Rule"`) marks the slot (1–6 for the year) and logs completion. The linked Project provides: Alignment (what's the experience, who's coming, what makes it new), Schedule (date, logistics), Checklists (booking, packing, preparation). Budget pillar optional — relevant for trips, not needed for local adventures. A Claude-built tool (e.g., a trip budget, a packing list) attaches to the relevant pillar.
+
+**Success:** Hierarchy renders from SmartSuite. Misogi and Kevin's Rule Projects surface correctly in their respective domains. Tool creation < 5 exchanges. Archive findable.
 
 ---
 
@@ -262,99 +281,23 @@ Always one tap from top-right nav icon. Ten seed sections. Each row: Feature / F
 ---
 
 ### F23 — App Shell & Navigation
+**Entities read:** Day Mode Log (#9), BAC Day Types (#12). **Written:** None.
 
-**What it does:** Defines the structural container of the entire app — the four persistent bottom tabs, the Me menu architecture, the top-right nav icons, and the Today tab layout. Every other feature lives inside this shell. Without this spec, the build agent doesn't know how to construct the container that holds everything else.
+Four persistent bottom tabs: Today / Horizon / Me / Shortcuts. Tab bar hides on Focus Day.
 
-**Entities read:** Day Mode Log (#9) — to determine which tab bar state to render. BAC Day Types (#12) — to know if today is Free Day (changes Today tab layout).
+**Today tab layouts by day mode:**
 
-**Entities written:** None. Navigation is stateless presentation logic.
+*Standard (Focus/Buffer):* Day Mode badge → Daily Reminder → Lesson card → Week strip → Big 3 dominos → Table Talk shortcut.
 
-**UX behavior:**
+*Free Day:* "Your job today is to wander" → Big Ass Calendar year view → Wins panel → Table Talk shortcut.
 
-**Four persistent bottom tabs:**
+*Focus Day:* Grounding affirmation → Anchor item → Pomodoro timer → Break-glass button. Tab bar hidden.
 
-| Tab | Icon | What it shows |
-|---|---|---|
-| Today | 🏠 Home | Daily launch screen — changes by day mode |
-| Horizon | ⭕ Rings | Horizon Rings triage view (F02) |
-| Me | 👤 Person | Me menu — domains + sections |
-| Shortcuts | ⚡ Lightning | Claude skills + external tools (F15) |
+**Me menu:** Body → Being → Balance → Business → About Me → Key Docs → Big Ass Calendar → Quarterly Habit → Journal → Tools → Spec Sheet. Each section has a progress ring (Container Model).
 
-- Tab bar visible on all screens except Focus Day (tab bar hides — F01)
-- Active tab highlighted. Tap to switch. No swipe navigation between tabs.
+**Top-right icons (all screens):** 🌀 Spiral → F05. 📋 Spec Sheet → F22.
 
-**Today tab layout (standard — Focus/Buffer day):**
-
-```
-─────────────────────────────────
-  Day Mode badge + mode label       ← F01
-  Daily Reminder ("A Thought")      ← F07
-  Lesson card (if active)           ← F06
-  Week at a Glance strip            ← F20
-  ─────────────────
-  Big 3 dominos (anchor + 2 more)
-  ─────────────────
-  Table Talk shortcut card          ← F18
-─────────────────────────────────
-```
-
-**Today tab layout (Free Day):**
-
-```
-─────────────────────────────────
-  "Your job today is to wander"     ← F01
-  Big Ass Calendar (year view)      ← F09
-  Wins panel (last 90 days)         ← F09
-  Table Talk shortcut card          ← F18
-─────────────────────────────────
-```
-
-**Today tab layout (Focus Day):**
-
-```
-─────────────────────────────────
-  Grounding affirmation             ← F01 (from operating manual)
-  Anchor item (Sacral Anchor)       ← F02
-  Pomodoro timer
-  ─────────────────
-  Break-glass button (low-vis)      ← F01
-─────────────────────────────────
-  [Tab bar hidden]
-─────────────────────────────────
-```
-
-**Me menu structure:**
-
-```
-Me tab
-├── Body                            ← F08
-├── Being                           ← F17
-├── Balance                         ← F18
-├── Business                        ← F19
-├── ─────────────
-├── About Me                        ← F12
-├── Key Docs                        ← F21
-├── Big Ass Calendar                ← F09
-├── Quarterly Habit                 ← F10
-├── Journal                         ← F16
-├── Tools (Projects)                ← F13
-└── Spec Sheet                      ← F22
-```
-
-**Top-right nav icons (visible on all screens):**
-- 🌀 Spiral icon → opens GYR Spiral (F05) — pre-loads current domain if inside a domain screen
-- 📋 Spec Sheet icon → opens In-App Spec Sheet (F22)
-
-**Container Model integration:**
-Each section in the Me menu shows a progress ring around its icon — filled as containers are built (F11). Empty sections glow softly. The Me menu is the master view of the app's container completion state.
-
-**Success criteria:**
-- Tab bar renders correctly on all screens except Focus Day
-- Today tab renders correct layout for each of the three day modes
-- Me menu shows all sections with correct progress rings
-- Top-right Spiral icon always navigates to GYR Spiral
-- Top-right Spec Sheet icon always navigates to Spec Sheet
-- No tab switch requires more than 1 tap from anywhere in the app
+**Success:** Tab bar correct on all screens. Today tab renders correct layout per day mode. Me menu progress rings correct. Top-right icons navigate correctly. Tab switch ≤ 1 tap.
 
 ---
 
@@ -364,6 +307,7 @@ Each section in the Me menu shows a progress ring around its icon — filled as 
 - [x] All features have entities read/write — ✅ Approved by Clint 2026-06-25
 - [x] All features have success criteria — ✅ Approved by Clint 2026-06-25
 - [x] No feature references an entity not in §3 — ✅ Approved by Clint 2026-06-25
+- [x] Review complete — all Discovery Inputs A–O, all 44 entities, all 23 core decisions cross-checked. No gaps. ✅ 2026-06-25
 
 ---
 
@@ -381,14 +325,14 @@ Each section in the Me menu shows a progress ring around its icon — filled as 
 | W06 | Building a Project Tool | F13, F15 |
 | W07 | Quarter Start — New Habit | F10, F06, F04 |
 
-*Full workflow step-by-step detail in prior commit. All 7 workflows are walkable end to end.*
+*Full workflow step-by-step detail in prior commit. All 7 workflows walkable end to end. Misogi and Kevin's Rule run via W06 (Project Tool) + F04 (Universal Goal Engine) — no separate workflows needed.*
 
 ---
 
 ## §5 Gate 3 Checklist
 
 - [ ] All key workflows documented ✳️ *Pending sign-off*
-- [ ] All workflows are walkable end to end ✳️ *Pending sign-off*
+- [ ] All workflows walkable end to end ✳️ *Pending sign-off*
 - [ ] All workflows reference only features in §4 ✳️ *Pending sign-off*
 
 ---
