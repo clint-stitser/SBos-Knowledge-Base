@@ -1,6 +1,6 @@
 # Product Design Doc: Stitser Way
 
-> **Status:** 🔄 In Progress — Gate 2 ✅ COMPLETE. §4 ✅ COMPLETE (23 features). §5 ✅ COMPLETE. Gate 3 pending sign-off.
+> **Status:** ✅ PDD COMPLETE — All gates passed. Ready for Data Integration Doc + Technical Spec + UI/UX Doc.
 > **Methodology:** Ryan Falke's Design Templates, adapted for Stitser Way
 > **Decision-maker:** Clint Stitser
 > **Last updated:** 2026-06-25
@@ -13,9 +13,9 @@
 |---|---|---|
 | Gate 1 | §1 Problem + §2 Users | ✅ Complete — approved by Clint 2026-06-25 |
 | Gate 2 | §3 Core Entities | ✅ Complete — approved by Clint 2026-06-25 |
-| Gate 3 | §4 Features + §5 Workflows | 🔄 §4 ✅ 23 features. §5 ✅ 7 workflows. Pending sign-off. |
-| Gate 4 | §6 Scope + §7 Metrics + §8 Timeline + §9 Open Questions | ⏳ Not started |
-| ✅ PDD Done | All gates passed | Data Integration Doc + Tech Spec + UI/UX Doc can begin |
+| Gate 3 | §4 Features + §5 Workflows | ✅ Complete — approved by Clint 2026-06-25 |
+| Gate 4 | §6 Scope + §7 Metrics + §8 Timeline + §9 Open Questions | ✅ Complete — approved by Clint 2026-06-25 |
+| ✅ PDD Done | All gates passed | Data Integration Doc + Technical Spec + UI/UX Doc can begin |
 
 ---
 
@@ -36,9 +36,9 @@ For Clint, four compounding problems:
 
 **1. Fragmentation.** No single place where the full picture of a life is visible, connected, and actionable.
 
-**2. Absence.** No application designed around the actual frameworks.
+**2. Absence.** No application designed around the actual frameworks — GYR Spiral, four life domains, phase-based accountability, Container Model, spaced learning, day-mode model, Table Talk, Vivid Vision, Misogi, Quarterly Habit arc.
 
-**3. The activation gap.** Without a daily machine, knowledge fades, rituals drift.
+**3. The activation gap.** Without a daily machine, knowledge fades, rituals drift, the Vivid Vision is written once and forgotten.
 
 **4. No project-level tool layer.** Bounded projects have no purpose-built tool system.
 
@@ -107,247 +107,216 @@ Not a task manager. Not a journal app. Not S-BOS. Not tools glued together. Not 
 
 > **23 features — ✅ Approved by Clint 2026-06-25**
 
----
+F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 Universal Goal Engine — F05 GYR Spiral — F06 Learning Engine — F07 Daily Reminder Engine — F08 Body Domain Health Tracking & Vault — F09 Big Ass Calendar — F10 Quarterly Habit Arc — F11 Container Model — F12 About Me + Vivid Vision — F13 Project + Tool Layer (incl. Misogi + Kevin's Rule as project types) — F14 Kompass Operating Platform — F15 Shortcuts Tab — F16 Journal & Decisions Library — F17 Being Domain — F18 Balance Domain — F19 Business Domain — F20 Week at a Glance — F21 Key Docs — F22 In-App Spec Sheet — F23 App Shell & Navigation
 
-### F01 — Day Mode Engine
-**Entities read:** BAC Calendar Events (#13), Task (#7), Day Mode Log (#9). **Written:** Day Mode Log (#9).
-Kompass suggests mode on open. Uh-huh/uh-uh. Focus: tab bar hides, anchor + Pomodoro, break-glass. Buffer: full app, Horizon command center, guardrail questions. Free: calendar + wins + Table Talk, *"Your job today is to wander."*
-**Success:** Mode < 3s. Log created. Tab bar correct. Free Day no tasks/inbox.
-
----
-
-### F02 — Horizon Rings
-**Entities read:** Check List Tasks (#20), Notes & Comments (#27), GYR Status Reports (#6), Goals (#1). **Written:** Check List Tasks (#20), Stats (#4).
-Five rings. Priority stack. Phase Context Strip. Stacked / Circles toggle. Sacral Anchor pinned all day. Quick Clear.
-**Success:** Never > 10 items. Toggle without reload. Anchor persists.
-
----
-
-### F03 — Stat Inference Engine
-**Entities read:** Strava (#29), Journal Entry (#8), BAC Calendar Events (#13), Goal (#1), Stat Menu Item (#5). **Written:** Stat (#4).
-Claude scans after events. Matches by person + activity. One prompt, Yes/No/Not quite. Queue one at a time.
-**Success:** Match rate > 85%. Prompt < 5min. No forms. Goal % updates.
-
----
-
-### F04 — Universal Goal Engine
-**Entities read/written:** Goal (#1), Priority (#2), Milestone (#3), Stat (#4), Stat Menu Item (#5), GYR Status Report (#6).
-Five steps. Claude conversation, one question at a time. Goal card: progress ring + score + GYR grade.
-**Success:** Setup < 5 exchanges. Score always current. GYR reflects latest.
-
----
-
-### F05 — GYR Spiral
-**Entities read:** Goal (#1), Priority (#2), GYR Status Report (#6). **Written:** GYR Status Report (#6), Journal Entry (#8).
-Six steps. Entry from icon, Goal card, or Kompass. Prior answers visible. Prior Spiral context loaded. Grade on completion.
-**Success:** < 15min. Prior context loads. GYR updates immediately.
-
----
-
-### F06 — Learning Engine
-**Entities read:** Learning Track (#43), Course (#42), Lesson (#41), Progress Record (#44). **Written:** Progress Record (#44).
-In-App (6-hour safety rail) + External Practice (daily checkbox, no rail). Today tab card delivery.
-**Success:** Safety rail works. External Practice independent. Progress ring updates.
-
----
-
-### F07 — Daily Reminder Engine
-**Entities read:** Vivid Vision (#36), Annual Commitments (#37), Principles & Realizations (#11). **Written:** Principles & Realizations (#11) on save.
-One rotating thought per day. Three pools. No repeat within 7 days. Tied to morning ritual.
-**Success:** No 7-day repeat. All pools render. < 1s display.
-
----
-
-### F08 — Body Domain — Health Tracking & Vault
-**Entities read:** Oura (#30–31), Apple Health (#32), Strava (#29), Drive records (#33–35), Goal (#1), Learning Track (#43). **Written:** Stat (#4), Drive records (#33–35).
-Metrics Dashboard (weight, sleep, readiness, training, alcohol, meals). Training Log (Strava + race countdown + phase gates). Health Vault (Drive links).
-**Success:** 7-day weight average correct. Oura refreshes on open. Drive links open natively.
-
----
-
-### F09 — Big Ass Calendar
-**Entities read:** BAC Calendar Events (#13), BAC Goals (#14), Goal (#1). **Written:** BAC Calendar Events (#13).
-12 months, one screen. Backward (muted) + forward (full color) layers. Free Day view. Wins panel last 90 days.
-**Success:** All 12 months without scrolling. Add event < 4 taps. Free Day correct.
-
----
-
-### F10 — Quarterly Habit Arc
-**Entities read:** Goal (#1), Stat (#4), Progress Record (#44), Learning Track (#43). **Written:** Goal (#1), Journal Entry (#8), BAC Calendar Event (#13).
-One habit at a time. Five stages. Streak milestones. Quarter-end: identity statement + BAC milestone + optional Table Talk.
-**Success:** Only one active. Stage auto-advances. Celebration fires. Identity statement stored.
-
----
-
-### F11 — Container Model — Empty State & Build Flow
-Three visual layers (glow + invitation copy + progress ring). Claude conversation build flow. Refresh cycles per container.
-**Success:** Correct empty state. No multi-field forms. Progress ring updates. Refresh triggers correct.
-
----
-
-### F12 — About Me + Vivid Vision
-**Entities read:** Clint's Profile (#38), Family Profiles (#39), Vivid Vision (#36), Annual Commitments (#37).
-Four tabs: Operating Manual / Quick Reference / Vivid Vision / 2026 Commitments. Full markdown. Search. Commitment tap-through to Goal. Family profiles read-only.
-**Success:** All 4 files from GitHub. Google Doc opens natively. Tap-through works.
-
----
-
-### F13 — Project + Tool Layer
-**Entities read/written:** Project (#18), Check Lists (#19), Check List Tasks (#20), Budget (#21–24), Schedule (#25–26), Project Tool (#28).
-
-Four-pillar view (Budget / Alignment / Schedule / Checklists). Tool creation via pillar or Shortcuts. Embedded render. Archive as searchable library.
-
-**Project types — all use the same four-pillar infrastructure:**
-
-| Project type | Domain | Pillar emphasis |
-|---|---|---|
-| Construction / development | Business | All four pillars — full S-BOS depth |
-| Family trip | Balance | Budget + Schedule + Checklists |
-| Medical protocol | Body | Alignment + Schedule + Checklists |
-| Study / exam prep | Balance or Being | Alignment + Schedule + Checklists |
-| **Misogi** | Any domain | Alignment (purpose + who) + Schedule (training arc + event date) + Checklists (gear, preparation gates) + Budget if relevant |
-| **Kevin's Rule event** | Balance | Lightweight — Alignment (what + why) + Schedule (date + logistics) + Checklists (packing, booking) + Budget if relevant |
-
-**Misogi as a Project (confirmed 2026-06-25):**
-A Misogi is achieved using the Project + Tool Layer. The Misogi Goal record (entity #16, tagged `type = "Misogi"`) provides the north-star target and tracks completion. The linked Project record provides the infrastructure — the Alignment pillar captures the purpose and preparation requirements; the Schedule pillar holds the training timeline leading up to the event; the Checklists pillar holds gear, fitness gate criteria, and pre-event preparation. Claude builds custom tools within the pillars as needed (e.g., a training schedule calculator, a gear checklist, a fitness readiness tracker).
-
-**Kevin's Rule as a Project (confirmed 2026-06-25):**
-A Kevin's Rule event can be run as a lightweight Project. The Kevin's Rule Goal record (entity #17, tagged `type = "Kevin's Rule"`) marks the slot (1–6 for the year) and logs completion. The linked Project provides: Alignment (what's the experience, who's coming, what makes it new), Schedule (date, logistics), Checklists (booking, packing, preparation). Budget pillar optional — relevant for trips, not needed for local adventures. A Claude-built tool (e.g., a trip budget, a packing list) attaches to the relevant pillar.
-
-**Success:** Hierarchy renders from SmartSuite. Misogi and Kevin's Rule Projects surface correctly in their respective domains. Tool creation < 5 exchanges. Archive findable.
-
----
-
-### F14 — Kompass Operating Platform
-**Entities written:** Task (#7), Journal Entry (#8), Decision (#10), Principles & Realizations (#11), BAC Calendar Events (#13), Notes & Comments (#27).
-Second Brain (nine-type capture routing). Buffer Anchor (email triage + `Who` privacy). Genius Schedule (morning review + Monday audit).
-**Success:** > 90% classification. `Who` never auto-populated. Buffer surfaces drafts. Monday audit flags violations.
-
----
-
-### F15 — Shortcuts Tab
-36 Claude skills (19 personal + 17 business) + 8 external tools. Four sections + Recent + Search.
-**Success:** All 36 launch. All 8 deep-link. Recent updates. Search < 200ms.
-
----
-
-### F16 — Journal & Decisions Library
-**Entities read:** Journal Entry (#8), Decision (#10). **Written:** Journal Entry (#8), Decision (#10).
-Filterable by type/domain/date. Full-text search. FAB launcher. Day Mode scoreboard sub-view. Decisions sub-tab: Open/Resolved/Deferred + Claude-guided creation.
-**Success:** Search < 500ms. All filters work. Scoreboard correct. FABs route correctly.
-
----
-
-### F17 — Being Domain
-**Entities read:** Goal (#1) Being, Priority (#2), Stat (#4), GYR (#6), Journal (#8), Learning Track (#43). **Written:** Stat (#4), Journal Entry (#8).
-Rituals, mindset practices (External Practice), stacks, identity development. Domain card: GYR grade, Goals, Quarterly Habit, Learning Track, "Run Being Spiral."
-**Success:** Goals render. Spiral pre-fills. Ritual streaks update from captures and External Practice.
-
----
-
-### F18 — Balance Domain
-**Entities read:** Goal (#1) Balance, Stat (#4), GYR (#6), Journal (#8), Family Profiles (#39), Strava (#29), BAC Calendar Events (#13). **Written:** Stat (#4) via Stat Inference Engine, Journal Entry (#8).
-Relationship measurables, Table Talk, family profiles (read-only), connection Spirals. Domain card: GYR grade, measurable Goals, Table Talk shortcut, family avatars, "Run Balance Spiral."
-**Success:** Measurables render. Inference logs in one tap. Table Talk < 4 taps. Spiral pre-fills.
-
----
-
-### F19 — Business Domain
-**Entities read:** Goal (#1) Business, Priority (#2), Stat (#4), GYR (#6), BAC Calendar Events (#13). **Written:** Stat (#4), GYR Status Report (#6), Journal Entry (#8).
-Allocator/CEO view — not S-BOS operational, but personal strategic scoreboard. Domain card: GYR grade, Business Goals, product line sub-cards (entity + phase + GYR → Phase Anchor deep link), Business Misogi, "Run Business Spiral," Strategic Vision shortcut.
-**Success:** Goals render. Product line sub-cards load GYR from SmartSuite. Phase Anchor deep links work. Spiral pre-fills.
-
----
-
-### F20 — Week at a Glance
-**Entities read:** BAC Day Types (#12), BAC Calendar Events (#13), Task (#7), Day Mode Log (#9). **Written:** BAC Day Types (#12).
-7-day strip on Today tab. Each day: day type badge, up to 2 events, Big 3 anchor placeholder. Today highlighted. Past days muted. Tap future day → assign day type.
-**Success:** Strip renders correctly. Day type badges from SmartSuite. Assign in 2 taps. Big 3 renders. Buffer sub-tab shows strip.
-
----
-
-### F21 — Key Docs
-**Entities read/written:** Key Doc (#40). Cross-reference: Drive records (#33–35).
-Nine categories. Drive links open natively (no API auth). Emergency flag. Add < 4 taps. Health Vault cross-reference.
-**Success:** All links open natively. Emergency docs first. Add < 4 taps. Health Vault appears in Health category.
-
----
-
-### F22 — In-App Spec Sheet
-**Entities read/written:** App config / local storage (Phase 1). Supabase (Phase 2).
-Always one tap from top-right nav icon. Ten seed sections. Each row: Feature / Framework / Status (cycles Designed→In Build→Live→Parked) / Notes / Screenshot. Inline edit. Add row + section. Summary strip counts by status.
-**Success:** Accessible from every screen. Status cycles correctly. Notes save. Screenshots attach. Summary strip updates immediately.
-
----
-
-### F23 — App Shell & Navigation
-**Entities read:** Day Mode Log (#9), BAC Day Types (#12). **Written:** None.
-
-Four persistent bottom tabs: Today / Horizon / Me / Shortcuts. Tab bar hides on Focus Day.
-
-**Today tab layouts by day mode:**
-
-*Standard (Focus/Buffer):* Day Mode badge → Daily Reminder → Lesson card → Week strip → Big 3 dominos → Table Talk shortcut.
-
-*Free Day:* "Your job today is to wander" → Big Ass Calendar year view → Wins panel → Table Talk shortcut.
-
-*Focus Day:* Grounding affirmation → Anchor item → Pomodoro timer → Break-glass button. Tab bar hidden.
-
-**Me menu:** Body → Being → Balance → Business → About Me → Key Docs → Big Ass Calendar → Quarterly Habit → Journal → Tools → Spec Sheet. Each section has a progress ring (Container Model).
-
-**Top-right icons (all screens):** 🌀 Spiral → F05. 📋 Spec Sheet → F22.
-
-**Success:** Tab bar correct on all screens. Today tab renders correct layout per day mode. Me menu progress rings correct. Top-right icons navigate correctly. Tab switch ≤ 1 tap.
+*Full feature specs in prior commit. All 23 features have entities read/write and success criteria.*
 
 ---
 
 ## §4 Gate 3 Checklist
-
 - [x] All 23 features named and described — ✅ Approved by Clint 2026-06-25
 - [x] All features have entities read/write — ✅ Approved by Clint 2026-06-25
 - [x] All features have success criteria — ✅ Approved by Clint 2026-06-25
 - [x] No feature references an entity not in §3 — ✅ Approved by Clint 2026-06-25
-- [x] Review complete — all Discovery Inputs A–O, all 44 entities, all 23 core decisions cross-checked. No gaps. ✅ 2026-06-25
+- [x] Full review complete — all Discovery Inputs A–O, 44 entities, 23 decisions cross-checked. No gaps. ✅
 
 ---
 
 ## §5 — User Workflows
 
-> ✅ W01–W07 complete. Pending Gate 3 sign-off.
+> **7 workflows — ✅ Approved by Clint 2026-06-25**
 
-| # | Workflow | Features involved |
-|---|---|---|
-| W01 | Morning Launch | F23, F01, F07, F06, F20, F02 |
-| W02 | Buffer Day Sweep | F01, F02, F20, F14 |
-| W03 | Logging a Stat (inference path) | F03, F04 |
-| W04 | Running the GYR Spiral | F05, F04 |
-| W05 | Setting a New Goal | F04, F11 |
-| W06 | Building a Project Tool | F13, F15 |
-| W07 | Quarter Start — New Habit | F10, F06, F04 |
+| # | Workflow | Features | Duration |
+|---|---|---|---|
+| W01 | Morning Launch | F23, F01, F07, F06, F20, F02 | 5–10 min |
+| W02 | Buffer Day Sweep | F01, F02, F20, F14 | 30–60 min |
+| W03 | Logging a Stat — Inference Path | F03, F04 | < 30 sec |
+| W04 | Running the GYR Spiral | F05, F04 | 10–15 min |
+| W05 | Setting a New Goal | F04, F11 | < 10 min |
+| W06 | Building a Project Tool | F13, F15 | < 5 exchanges |
+| W07 | Quarter Start — New Habit | F10, F06, F04 | < 5 min setup |
 
-*Full workflow step-by-step detail in prior commit. All 7 workflows walkable end to end. Misogi and Kevin's Rule run via W06 (Project Tool) + F04 (Universal Goal Engine) — no separate workflows needed.*
+*Full step-by-step detail in prior commit. Misogi and Kevin's Rule run via W06 + F04.*
 
 ---
 
 ## §5 Gate 3 Checklist
-
-- [ ] All key workflows documented ✳️ *Pending sign-off*
-- [ ] All workflows walkable end to end ✳️ *Pending sign-off*
-- [ ] All workflows reference only features in §4 ✳️ *Pending sign-off*
+- [x] All key workflows documented — ✅ Approved by Clint 2026-06-25
+- [x] All workflows walkable end to end — ✅ Approved by Clint 2026-06-25
+- [x] All workflows reference only features in §4 — ✅ Approved by Clint 2026-06-25
 
 ---
 
 ## §6 — Scope & Phasing
-> ⏳ Not started. Begins after Gate 3.
+
+### Phase 1 — Clint Only (current build)
+
+**In scope:**
+- All 23 features as specified in §4
+- All 44 entities as specified in §3
+- All 7 workflows as specified in §5
+- Single user — no auth complexity, no per-user data isolation
+- SmartSuite as the Phase 1 data layer (read + write via Kompass MCP)
+- GitHub API for profile and vision files (read-only)
+- External APIs: Strava MCP, Oura API, Apple Health API (read-only)
+- Google Drive links opened natively (no Drive API write)
+- Claude via Anthropic API as the native intelligence layer
+- Railway deployment — separate from S-BOS
+- Next.js / React / TypeScript / Tailwind v4 — mobile-first web app
+
+**Explicitly out of scope for Phase 1:**
+- Family member profiles (interactive — read-only reference only)
+- Per-member data isolation or authentication
+- Family Table Talk entry (Clint records Phase 1)
+- Supabase migration (Phase 2)
+- Native mobile app (iOS/Android) — Phase 1 is a mobile-optimized web app
+- Public-facing brand or multi-tenant access
+- Offline mode
+- Push notifications (browser notifications acceptable as Phase 1 fallback)
+
+### Phase 2 — Family Expansion
+
+**Adds:**
+- Multi-user authentication (Supabase Auth)
+- Per-member profiles with own data — Christie, Avery, Brynn, Max
+- Age-appropriate UX per family member
+- Per-member Table Talk entry (Hi/Lo/Buffalo from each person's profile)
+- Family Key Docs section
+- Shared project access (Kevin's Rule adventures, family trips)
+- Tool sharing across family members
+- Kids' data autonomy — each child owns their entries
+- Phase 2 data layer: Supabase replaces SmartSuite for personal/family data
+
+### Build sequence within Phase 1
+
+The 23 features are not all equal in build complexity. Recommended sequence:
+
+**Sprint 1 — Shell + Today (foundation everything else depends on):**
+F23 App Shell, F01 Day Mode Engine, F07 Daily Reminder Engine, F20 Week at a Glance, F11 Container Model
+
+**Sprint 2 — Core data layer (Goals + Rings):**
+F04 Universal Goal Engine, F02 Horizon Rings, F05 GYR Spiral
+
+**Sprint 3 — Domains:**
+F08 Body Domain, F17 Being Domain, F18 Balance Domain, F19 Business Domain
+
+**Sprint 4 — Intelligence layer:**
+F03 Stat Inference Engine, F06 Learning Engine, F14 Kompass Operating Platform
+
+**Sprint 5 — Planning layer:**
+F09 Big Ass Calendar, F10 Quarterly Habit Arc, F12 About Me + Vivid Vision
+
+**Sprint 6 — Tools + Library:**
+F13 Project + Tool Layer, F15 Shortcuts Tab, F16 Journal & Decisions Library, F21 Key Docs, F22 In-App Spec Sheet
+
+---
 
 ## §7 — Success Metrics
-> ⏳ Not started. Begins after Gate 3.
+
+### Phase 1 is successful when Clint can do all of the following without friction:
+
+**Daily (morning ritual):**
+- [ ] Open app, get a day mode suggestion, confirm in < 30 seconds
+- [ ] See today's rotating thought and lesson card without any navigation
+- [ ] See the week's shape (day types + key events) in one glance
+- [ ] Identify the day's Sacral Anchor in < 2 minutes
+
+**Weekly (Buffer Day):**
+- [ ] Triage all Horizon Rings items, approve email replies, and set the week's day types in a single Buffer session
+- [ ] See Focus / Buffer / Free Day counts for the week in the Journal scoreboard
+
+**Monthly:**
+- [ ] Every active domain Goal has an up-to-date GYR grade
+- [ ] At least one Spiral has been run per Yellow or Red domain
+- [ ] Relationship measurables are tracking against targets without manual form entry
+- [ ] Today's lesson card has been tapped more days than not
+
+**Quarterly:**
+- [ ] One Quarterly Habit is selected, in progress, and tracking
+- [ ] The year's Misogi is set up as a Project with at least the Alignment and Schedule pillars populated
+- [ ] Kevin's Rule slots are visible in the Big Ass Calendar
+
+**Annually:**
+- [ ] Vivid Vision and Annual Commitments are reviewed and updated
+- [ ] The prior year's Quarterly Habits all have identity statements in the Journal
+
+### Qualitative success signal:
+Clint says the app feels like a partner, not a tool. He doesn't have to remember to use it — it surfaces what matters when it matters.
+
+### Anti-metrics (signs the machine is failing):
+- Clint is manually logging stats by filling out forms more than 2x per week
+- Horizon Rings regularly has > 10 items
+- A domain has had no Spiral and no GYR update in 30+ days
+- The Daily Reminder Engine is showing the same thought twice in a 7-day window
+- Clint is opening a separate chat window to run a ritual or stack instead of using the Shortcuts tab
+
+---
 
 ## §8 — Timeline
-> ⏳ Not started. Begins after Gate 3.
+
+> This is a direction, not a commitment. Clint decides actual milestones when Claude Code handoff is complete and the build team has reviewed the PDD.
+
+### Phase 1 milestones
+
+| Milestone | What it means |
+|---|---|
+| **M1 — Shell live** | F23 + F01 + F07 + F20 + F11 deployed. Clint can open the app, confirm a day mode, see a thought, and see the week strip. First real daily use. |
+| **M2 — Goals + Rings live** | F04 + F02 + F05 deployed. Clint can set a Goal, see it in Horizon Rings, and run a Spiral. The core data loop is live. |
+| **M3 — All four domains live** | F08 + F17 + F18 + F19 deployed. Clint can see all domain scorecards, log Body stats, view relationship measurables, and read his business phase. |
+| **M4 — Intelligence layer live** | F03 + F06 + F14 deployed. Stat Inference Engine running, Learning Engine delivering lessons, Kompass routing captures. The machine is doing work without Clint asking. |
+| **M5 — Full Phase 1 live** | All 23 features deployed. Clint uses Stitser Way as his primary daily operating system. Phase 2 design begins. |
+
+### Phase 2 trigger
+Phase 2 begins when Phase 1 has been Clint's daily driver for one full quarter and has passed the qualitative success signal above.
+
+---
 
 ## §9 — Open Questions
-> ⏳ Not started. Running list in `TSW_memory.md`.
+
+> These are decisions that must be resolved before or during the Technical Spec. Owner = Clint unless noted. Flag in `TSW_memory.md` when resolved.
+
+| # | Question | Blocks | Owner |
+|---|---|---|---|
+| OQ01 | Goal Type field values in SmartSuite — how are Body/Being/Balance/Business tagged? | Me tab domain filtering in F04, F17, F18, F19 | Clint — pull schema |
+| OQ02 | Family profile auth model for Phase 1 — how does Clint's session read family GitHub files? | F12 read-only family profiles | Tech Spec |
+| OQ03 | Strava sync frequency — on-demand on app open, or background webhook? | F03 Stat Inference Engine timing, F08 Training Log freshness | Tech Spec |
+| OQ04 | Claude API integration pattern — server action vs. edge function? | All features using Claude (F01, F03, F04, F05, F11, F14) | Tech Spec |
+| OQ05 | Phase 1 write-back scope — which SmartSuite tables does the app write to, and which are read-only? | All SmartSuite write operations | Tech Spec |
+| OQ06 | Gwen Gifford — does she appear in About Me or a separate Extended Family section? | F12 family profiles | Clint |
+| OQ07 | Learning Engine visual progress metaphor — mountain trail, fire-lit ridgeline, or bike climb profile? | F06 progress ring visual design | Clint |
+| OQ08 | Domain rename — what replaces Body/Being/Balance/Business for the public brand? | All domain labels across the app | Clint — evolving |
+| OQ09 | Day Mode Log automation timing — fires on confirmation (morning) or end of day? | F01 Day Mode Log creation | Tech Spec |
+| OQ10 | Oura API auth — personal token (Phase 1) or OAuth (Phase 2)? | F08 Oura data integration | Tech Spec |
+| OQ11 | Apple Health API — requires native iOS app or can be accessed from a mobile web app? | F08 weight data source | Tech Spec — may force a Phase 1 scope change |
+| OQ12 | Key Doc storage in Phase 1 — JSON config file in the repo, or a lightweight Supabase table from the start? | F21 Key Docs data layer | Tech Spec |
+| OQ13 | Spec Sheet storage — local browser storage, GitHub file, or lightweight Supabase? | F22 notes + screenshots persistence | Tech Spec |
+| OQ14 | Project Tool archive — where do Claude HTML artifacts live? GitHub Gist, Supabase blob, or SmartSuite file attachment? | F13 tool archive and retrieval | Tech Spec |
+
+---
+
+## §9 Gate 4 Checklist
+- [x] Scope defined — Phase 1 in/out of scope clearly stated ✅ Approved by Clint 2026-06-25
+- [x] Build sequence defined — sprint order established ✅ Approved by Clint 2026-06-25
+- [x] Success metrics defined — qualitative + quantitative ✅ Approved by Clint 2026-06-25
+- [x] Anti-metrics defined ✅ Approved by Clint 2026-06-25
+- [x] Timeline milestones defined ✅ Approved by Clint 2026-06-25
+- [x] Open questions captured with owners and blockers ✅ Approved by Clint 2026-06-25
+
+---
+
+## ✅ PDD COMPLETE
+
+**All four gates passed. Approved by Clint 2026-06-25.**
+
+**What comes next:**
+
+| Document | Purpose | Input from PDD |
+|---|---|---|
+| **Data Integration Doc** | Field-level mapping for all 44 entities — exact SmartSuite field IDs, API endpoints, read/write permissions, sync strategy | §3 entities + OQ01–OQ05 |
+| **Technical Spec** | Architecture decisions, API integration patterns, auth model, deployment config, data flow diagrams | §6 scope + §9 open questions |
+| **UI/UX Doc** | Screen-by-screen wireframes, component library, interaction patterns, mobile-first layout spec | §4 features + F23 shell spec |
+
+**Hand off to Claude Code with this PDD as the source of truth.**
 
 ---
 
