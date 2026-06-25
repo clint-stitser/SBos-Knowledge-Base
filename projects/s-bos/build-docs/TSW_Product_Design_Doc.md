@@ -88,13 +88,18 @@ Not a task manager. Not a journal app. Not S-BOS. Not tools glued together. Not 
 **Tasks composite:** Check List Tasks + Notes & Comments + GYR follow-ups (#7)
 **SB Project MGT:** Projects (#18–26), Notes & Comments (#27)
 **Claude artifact:** Project Tool (#28)
-**External APIs:** Strava (#29), Oura Sleep (#30), Oura Readiness (#31), Oura Weight (#32 — replaces Apple Health direct)
+**External APIs:** Strava (#29), Oura Sleep (#30), Oura Readiness (#31), Oura Weight (#32)
 **Drive links:** Body Scan (#33), Bloodwork (#34), Eye Prescription (#35)
 **GitHub:** Vivid Vision (#36), Annual Commitments (#37), Clint's Profile (#38), Family Profiles (#39)
 **App config:** Key Doc (#40)
 **SB Training & Certifications:** Lesson (#41), Course (#42), Learning Track (#43), Progress Record (#44)
 
-> **Entity #32 clarification (2026-06-25):** Originally specified as "Apple Health Weight Record." Resolved to "Oura Weight Record" — Oura natively syncs weight from Apple Health. Clint logs weight via Siri → Apple Health → Oura syncs automatically → Stitser Way pulls from Oura REST API. Single integration point. No iOS companion needed. Apple Health remains the input device; Oura is the data source.
+> **Goal entity — Domain field (confirmed 2026-06-25):**
+> Field name: Domain. Field ID: `s5deb9616e`. Type: Multi-select. Values: Body / Being / Balance / Business.
+> Table: Game App Goals `6824d4d1885a8769bd2dfc0d`.
+> **Data population required before Sprint 2:** Existing Goal records have no Domain value applied yet. Must be tagged before the app can filter Goals by domain. Options: (a) Clint manually tags each Goal in SmartSuite, or (b) Claude Code script batch-tags from context. Do before Sprint 2 starts.
+
+> **Entity #32 clarification (2026-06-25):** Originally "Apple Health Weight Record." Updated to "Oura Weight Record" — Oura natively syncs weight from Apple Health. Single integration point. No iOS companion needed.
 
 ---
 
@@ -109,9 +114,7 @@ Not a task manager. Not a journal app. Not S-BOS. Not tools glued together. Not 
 
 > **23 features — ✅ Approved by Clint 2026-06-25**
 
-F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 Universal Goal Engine — F05 GYR Spiral — F06 Learning Engine — F07 Daily Reminder Engine — F08 Body Domain Health Tracking & Vault — F09 Big Ass Calendar — F10 Quarterly Habit Arc — F11 Container Model — F12 About Me + Vivid Vision — F13 Project + Tool Layer (incl. Misogi + Kevin's Rule as project types) — F14 Kompass Operating Platform — F15 Shortcuts Tab — F16 Journal & Decisions Library — F17 Being Domain — F18 Balance Domain — F19 Business Domain — F20 Week at a Glance — F21 Key Docs — F22 In-App Spec Sheet — F23 App Shell & Navigation
-
-*Full feature specs in prior commit. All 23 features have entities read/write and success criteria.*
+F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 Universal Goal Engine — F05 GYR Spiral — F06 Learning Engine — F07 Daily Reminder Engine — F08 Body Domain Health Tracking & Vault — F09 Big Ass Calendar — F10 Quarterly Habit Arc — F11 Container Model — F12 About Me + Vivid Vision — F13 Project + Tool Layer — F14 Kompass Operating Platform — F15 Shortcuts Tab — F16 Journal & Decisions Library — F17 Being Domain — F18 Balance Domain — F19 Business Domain — F20 Week at a Glance — F21 Key Docs — F22 In-App Spec Sheet — F23 App Shell & Navigation
 
 ---
 
@@ -149,58 +152,26 @@ F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 
 
 ## §6 — Scope & Phasing
 
-### Phase 1 — Clint Only (current build)
+### Phase 1 — Clint Only
 
-**In scope:**
-- All 23 features as specified in §4
-- All 44 entities as specified in §3
-- All 7 workflows as specified in §5
-- Single user — no auth complexity, no per-user data isolation
-- SmartSuite as the Phase 1 data layer (read + write via Kompass MCP)
-- GitHub API for profile and vision files (read-only)
-- External APIs: Strava MCP, Oura REST API (single PAT — covers sleep, readiness, activity, HR, SpO2, and weight)
-- Google Drive links opened natively (no Drive API write)
-- Claude via Anthropic API as the native intelligence layer
-- Railway deployment — separate from S-BOS
-- Next.js / React / TypeScript / Tailwind v4 — mobile-first web app
+**In scope:** All 23 features, 44 entities, 7 workflows. Single user. SmartSuite data layer via Kompass MCP. Oura REST API (PAT). Strava MCP. GitHub API (read-only). Google Drive links (native, no API). Claude via Anthropic API. Railway. Next.js / React / TypeScript / Tailwind v4 — mobile-first.
 
-**Health data architecture (confirmed 2026-06-25):**
-Oura is the single health data aggregator. Weight is logged by Clint via Siri → Apple Health, then automatically synced to Oura. Stitser Way pulls all health data (sleep, readiness, activity, weight) from a single Oura REST API integration. No iOS companion. No HealthKit bridge. One PAT, one integration point.
-
+**Health data architecture:**
 ```
-Siri → Apple Health (weight log)
-         ↓ automatic Oura sync
-       Oura (aggregates sleep + readiness + activity + weight)
-         ↓ REST API pull (PAT, Railway env var)
-       Railway backend
-         ↓ on app open / morning routine sweep
-       Stitser Way app + Claude
-         ↓ silent stat creation (trusted source — no prompt)
-       Stats table (SmartSuite) → Goal % metric updated
+Siri → Apple Health → Oura sync (automatic)
+  → Oura REST API (PAT, Railway env var)
+  → Railway backend (on app open / morning sweep)
+  → Stitser Way + Claude
+  → Stats table → Goal % updated (silent — no prompt)
 ```
 
-Weight stats from Oura are logged silently — no inference prompt needed. Trusted source. Stat Inference Engine (F03) prompts are reserved for relationship measurables where context (who was involved) cannot be inferred automatically.
+**Out of scope for Phase 1:** Family profiles (interactive), per-member auth, family Table Talk, Supabase migration, native mobile app, iOS HealthKit companion, offline mode, push notifications, public/multi-tenant.
 
-**Explicitly out of scope for Phase 1:**
-- Family member profiles (interactive — read-only reference only)
-- Per-member data isolation or authentication
-- Family Table Talk entry (Clint records Phase 1)
-- Supabase migration (Phase 2)
-- Native mobile app (iOS/Android) — Phase 1 is a mobile-optimized web app
-- iOS HealthKit companion (not needed — Oura handles weight sync)
-- Public-facing brand or multi-tenant access
-- Offline mode
-- Push notifications (browser notifications acceptable as Phase 1 fallback)
-
-### Phase 2 — Family Expansion
-
-**Adds:** Multi-user auth (Supabase), per-member profiles, age-appropriate UX, family Table Talk, family Key Docs, shared projects, tool sharing, kids' data autonomy.
-
-### Build sequence within Phase 1
+### Build sequence
 
 **Sprint 1 — Shell + Today:** F23, F01, F07, F20, F11
-**Sprint 2 — Goals + Rings:** F04, F02, F05
-**Sprint 3 — Domains (incl. Oura integration):** F08, F17, F18, F19
+**Sprint 2 — Goals + Rings:** F04, F02, F05 *(tag Goal domains before this sprint)*
+**Sprint 3 — Domains + Oura:** F08, F17, F18, F19
 **Sprint 4 — Intelligence layer:** F03, F06, F14
 **Sprint 5 — Planning layer:** F09, F10, F12
 **Sprint 6 — Tools + Library:** F13, F15, F16, F21, F22
@@ -209,19 +180,13 @@ Weight stats from Oura are logged silently — no inference prompt needed. Trust
 
 ## §7 — Success Metrics
 
-**Daily:** Mode confirmed < 30s. Thought + lesson visible without navigation. Week shape in one glance. Sacral Anchor < 2min.
-
-**Weekly:** Full Buffer session clears Horizon Rings + email + day types. Day Mode scoreboard correct.
-
-**Monthly:** All domain Goals have current GYR grades. Relationship measurables tracking without forms. Lesson card tapped more days than not.
-
-**Quarterly:** One active Quarterly Habit. Misogi as Project. Kevin's Rule slots in BAC.
-
-**Annually:** Vivid Vision + Commitments reviewed. Prior Quarterly Habits have identity statements.
-
-**Qualitative signal:** The app feels like a partner, not a tool.
-
-**Anti-metrics:** Forms > 2x/week. Horizon Rings > 10 items. Domain no Spiral in 30+ days. Same thought twice in 7 days. Separate chat window for rituals.
+**Daily:** Mode < 30s. Thought + lesson visible. Week shape at a glance. Sacral Anchor < 2min.
+**Weekly:** Buffer clears Rings + email + day types. Scoreboard correct.
+**Monthly:** All Goals have GYR grades. Measurables tracking without forms. Lesson tapped more days than not.
+**Quarterly:** One active Habit. Misogi as Project. Kevin's Rule in BAC.
+**Annually:** Vivid Vision reviewed. Identity statements for past Habits.
+**Qualitative:** App feels like a partner, not a tool.
+**Anti-metrics:** Forms > 2x/week. Rings > 10 items. No Spiral in 30+ days. Same thought twice in 7 days. Separate chat for rituals.
 
 ---
 
@@ -229,13 +194,13 @@ Weight stats from Oura are logged silently — no inference prompt needed. Trust
 
 | Milestone | What it means |
 |---|---|
-| M1 — Shell live | F23 + F01 + F07 + F20 + F11. First real daily use. |
-| M2 — Goals + Rings live | F04 + F02 + F05. Core data loop live. |
-| M3 — All four domains live | F08 + F17 + F18 + F19. Oura integration live. All domain scorecards visible. |
-| M4 — Intelligence layer live | F03 + F06 + F14. Machine doing work without being asked. |
-| M5 — Full Phase 1 live | All 23 features. Stitser Way is primary daily OS. Phase 2 design begins. |
+| M1 — Shell live | F23 + F01 + F07 + F20 + F11. First daily use. |
+| M2 — Goals + Rings live | F04 + F02 + F05. Core data loop. |
+| M3 — All four domains live | F08 + F17 + F18 + F19. Oura live. |
+| M4 — Intelligence layer live | F03 + F06 + F14. Machine working autonomously. |
+| M5 — Full Phase 1 live | All 23 features. Primary daily OS. Phase 2 begins. |
 
-Phase 2 trigger: one full quarter as daily driver + qualitative success signal passed.
+Phase 2 trigger: one full quarter as daily driver + qualitative signal passed.
 
 ---
 
@@ -243,31 +208,32 @@ Phase 2 trigger: one full quarter as daily driver + qualitative success signal p
 
 | # | Question | Blocks | Status |
 |---|---|---|---|
-| OQ01 | Goal Type field values in SmartSuite — how are domains tagged? | Domain filtering F04, F17–F19 | ⏳ Clint — pull schema |
+| OQ01 | **Domain field confirmed — `s5deb9616e`, multi-select, Body/Being/Balance/Business. Existing Goal records unpopulated — must be tagged before Sprint 2.** | Domain filtering F04, F17–F19 | ✅ Field confirmed. ⚠️ Data population pending before Sprint 2. |
 | OQ02 | Family profile auth for Phase 1 | F12 | ⏳ Tech Spec |
-| OQ03 | Strava sync frequency — on-demand or background webhook? | F03, F08 | ⏳ Tech Spec |
+| OQ03 | Strava sync frequency | F03, F08 | ⏳ Tech Spec |
 | OQ04 | Claude API integration — server action vs. edge function? | All Claude features | ⏳ Tech Spec |
 | OQ05 | Phase 1 write-back scope — which SmartSuite tables? | All write operations | ⏳ Tech Spec |
 | OQ06 | Gwen Gifford — About Me or Extended Family? | F12 | ⏳ Clint |
-| OQ07 | Learning Engine visual metaphor | F06 visual design | ⏳ Clint |
-| OQ08 | Domain rename for public brand | All domain labels | ⏳ Clint — evolving |
+| OQ07 | Learning Engine visual metaphor | F06 | ⏳ Clint |
+| OQ08 | Domain rename for public brand | All labels | ⏳ Clint — evolving |
 | OQ09 | Day Mode Log automation timing | F01 | ⏳ Tech Spec |
-| OQ10 | **Oura as single health aggregator — confirmed 2026-06-25.** PAT stored as Railway env var. Claude Code builds Oura REST integration covering sleep, readiness, activity, HR, SpO2, and weight (synced from Apple Health). Pull on app open + morning routine sweep. Weight stats logged silently — trusted source, no inference prompt. | F08 | ✅ Resolved |
-| OQ11 | **Apple Health — no direct integration needed — confirmed 2026-06-25.** Clint logs weight via Siri → Apple Health → Oura syncs automatically. No iOS companion. No HealthKit bridge. Oura REST API is the only health integration. Phase 1 scope simplified. | F08 | ✅ Resolved |
-| OQ12 | Key Doc storage — JSON config vs. Supabase? | F21 | ⏳ Tech Spec |
+| OQ10 | **Oura PAT confirmed. Single REST integration — sleep, readiness, activity, HR, SpO2, weight. Pull on app open + morning sweep. Weight logged silently.** | F08 | ✅ Resolved 2026-06-25 |
+| OQ11 | **No iOS companion needed. Oura syncs weight from Apple Health automatically. Single integration point.** | F08 | ✅ Resolved 2026-06-25 |
+| OQ12 | Key Doc storage — JSON vs. Supabase? | F21 | ⏳ Tech Spec |
 | OQ13 | Spec Sheet storage — local, GitHub, or Supabase? | F22 | ⏳ Tech Spec |
-| OQ14 | Project Tool archive — GitHub Gist, Supabase blob, or SmartSuite attachment? | F13 | ⏳ Tech Spec |
+| OQ14 | Project Tool archive — Gist, Supabase blob, or SmartSuite attachment? | F13 | ⏳ Tech Spec |
 
 ---
 
 ## §9 Gate 4 Checklist
-- [x] Scope defined ✅ Approved by Clint 2026-06-25
-- [x] Build sequence defined ✅ Approved by Clint 2026-06-25
-- [x] Success metrics defined ✅ Approved by Clint 2026-06-25
-- [x] Anti-metrics defined ✅ Approved by Clint 2026-06-25
-- [x] Timeline milestones defined ✅ Approved by Clint 2026-06-25
-- [x] Open questions captured ✅ Approved by Clint 2026-06-25
-- [x] OQ10 + OQ11 resolved 2026-06-25
+- [x] Scope defined ✅
+- [x] Build sequence defined ✅
+- [x] Success metrics defined ✅
+- [x] Anti-metrics defined ✅
+- [x] Timeline milestones defined ✅
+- [x] Open questions captured ✅
+- [x] OQ01 field confirmed — data population flagged ✅
+- [x] OQ10 + OQ11 resolved ✅
 
 ---
 
@@ -275,13 +241,13 @@ Phase 2 trigger: one full quarter as daily driver + qualitative success signal p
 
 **All four gates passed. Approved by Clint 2026-06-25.**
 
-| Document | Purpose | Input from PDD |
-|---|---|---|
-| **Data Integration Doc** | Field-level mapping for all 44 entities | §3 + OQ01–OQ05 |
-| **Technical Spec** | Architecture, API patterns, auth, deployment | §6 + §9 |
-| **UI/UX Doc** | Screen wireframes, components, mobile-first layout | §4 + F23 |
+| Document | Purpose |
+|---|---|
+| **Data Integration Doc** | Field-level mapping — §3 + resolved OQs |
+| **Technical Spec** | Architecture, APIs, auth, deployment — §6 + §9 |
+| **UI/UX Doc** | Wireframes, components, mobile-first — §4 + F23 |
 
-**Hand off to Claude Code with this PDD as the source of truth.**
+**Hand off to Claude Code with this PDD as source of truth.**
 
 ---
 
