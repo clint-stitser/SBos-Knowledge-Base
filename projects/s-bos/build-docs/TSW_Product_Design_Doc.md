@@ -197,27 +197,35 @@ The data store for tracking progression from conscious incompetence to subconsci
 
 | Entity | Table | Role in the arc |
 |---|---|---|
-| **Lesson** (#41) | Lesson Catalog `68d480e2727607560a7f0d26` | Atomic learning unit — one concept, delivered as a Calmio-style card in the app. One per day, 6-hour safety rail. |
-| **Course** (#42) | Courses `68d480e2727607560a7f0d2c` | A structured sequence of Lessons for one phase of the arc (e.g., the "Foundation" phase of the Body protocol). |
-| **Learning Track** (#43) | Learning Tracks/Certifications `68d480e2727607560a7f0d23` | The full installation arc for a skill or habit — from Install through Subconscious Competence. A Learning Track contains multiple Courses. |
-| **Progress Record** (#44) | Progress Table `6a18ad82e630be8e82a202ea` | Clint's live position in any Learning Track — which lesson he's on, which phase, completion percentage, date started. |
+| **Lesson** (#41) | Lesson Catalog `68d480e2727607560a7f0d26` | Atomic learning unit — one concept, one card. Two types: In-App (delivered as a Calmio-style card, 6-hour safety rail) and External Practice (a daily checkbox prompt). |
+| **Course** (#42) | Courses `68d480e2727607560a7f0d2c` | A structured sequence of Lessons for one phase of the arc. |
+| **Learning Track** (#43) | Learning Tracks/Certifications `68d480e2727607560a7f0d23` | The full installation arc from Install through Subconscious Competence. Contains multiple Courses. |
+| **Progress Record** (#44) | Progress Table `6a18ad82e630be8e82a202ea` | Clint's live position — which lesson, which phase, completion %, date started, streak for external practice. |
+
+**Lesson types — two kinds (confirmed 2026-06-25):**
+
+| Type | How it's delivered | How progress is logged | Safety rail |
+|---|---|---|---|
+| **In-App Lesson** | Calmio-style card in the app — text, one concept, Next button | Automatically on completion | 6-hour rail — next lesson held until next day's slot |
+| **External Practice** | Daily checkbox prompt — *"Did you do your Calmio session today?"* | One-tap Yes / Skip. No content in the app — just the boolean. | No safety rail — it's a daily check-in, not a lesson delivery |
+
+**What External Practice tracking does NOT capture:** what happened in the external app, any content, duration, or quality. Only *that* it happened. The external app (Calmio, Duolingo, a coaching platform) owns the content and experience. Stitser Way owns the arc-level accountability — did the practice happen today, what's the streak, is the Learning Track on pace.
 
 **How the arc maps to Phases of Proficiency:**
 
 ```
 Learning Track = "Body Protocol: Fat Loss & MTB Performance"
   Course 1 = Foundation Phase    (Install → Beginner)
-    Lesson 1 = Why sleep outperforms exercise for fat loss
-    Lesson 2 = The cortisol/testosterone triangle
-    Lesson 3 = Why alcohol is the primary visceral fat driver
+    Lesson 1 = In-App: Why sleep outperforms exercise for fat loss
+    Lesson 2 = In-App: The cortisol/testosterone triangle
+    Lesson 3 = In-App: Why alcohol is the primary visceral fat driver
+    Lesson 4 = External: Daily Calmio session (checkbox)
     ...
   Course 2 = Engine Phase        (Intermediate → Expert)
   Course 3 = Race Block Phase    (Expert → Subconscious Competence)
 ```
 
-**External learning excluded (confirmed 2026-06-25):** Only in-app lesson completion is tracked in the Progress Record. Books, external apps, coaches, courses — not logged here. The Progress Record reflects what the machine delivered and Clint completed inside Stitser Way.
-
-**Cross-product note:** SB Training & Certifications is also the data store for S-BOS team member skill installation (Pay App, Compliance Audit, etc.). The same four tables serve both products. Stitser Way uses it for personal domain skills and habits; S-BOS uses it for business operational skills.
+**Cross-product note:** SB Training & Certifications serves both Stitser Way (personal domain skills and habits) and S-BOS (business operational skills — Pay App, Compliance Audit, etc.). Same four tables, two audiences.
 
 **Vivid Vision + Annual Commitments:** GitHub source of truth. App reads via GitHub API. Also feed Daily Reminder Engine.
 
@@ -229,7 +237,7 @@ Learning Track = "Body Protocol: Fat Loss & MTB Performance"
 - [x] No orphan entities — ✅ Approved by Clint 2026-06-25
 - [x] Phase 1 / Phase 2 boundary clear — ✅ Approved by Clint 2026-06-25
 
-> **Note:** Four entities (41–44) added post-approval. These were missing from the original Gate 2 submission. Gate 2 remains closed — these additions are clarifications, not scope changes. Flag for review if Clint disagrees.
+> **Note:** Entities 41–44 and External Practice lesson type added post-approval. Clarifications, not scope changes.
 
 ---
 
@@ -308,7 +316,7 @@ Goal tagged `type = "Quarterly Habit"`. Five-stage arc. Staged learning via Lear
 JSON config → Supabase. Drive links open natively. Nine categories. Emergency flag.
 
 ### L — Container Model & Learning Engine *(Phase 1)*
-Three-layer empty state. Claude-guided build. Ebbinghaus / Calmio model. 6-hour safety rail. Data store: SB Training & Certifications — Lesson / Course / Learning Track / Progress Record (entities 41–44).
+Three-layer empty state. Claude-guided build. Ebbinghaus / Calmio model. 6-hour safety rail for In-App Lessons. No safety rail for External Practice checkboxes. Data store: SB Training & Certifications — Lesson / Course / Learning Track / Progress Record (entities 41–44).
 
 ### M — Brand Identity & Positioning
 Stitser Way (working name). Sage-Architect-Builder. Austrian fire / Kronerer developing. Full detail in `03-stitser-way/messaging.md`.
