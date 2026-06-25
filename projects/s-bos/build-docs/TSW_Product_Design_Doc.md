@@ -23,29 +23,37 @@
 
 ### The problem
 
-Clint has a working personal goal-tracking infrastructure in SmartSuite (the Game App — Goals, Priorities, Stats, GYR, Milestones). A Softr portal surfaces it today. But the Softr UI has three fundamental limitations:
+Most people who believe in intentional living have the same experience: the knowledge exists, the desire exists, and the tools exist — but they live in pieces. A habit tracker here. A journal there. Goals in a spreadsheet. Reminders on a sticky note. Coaching in a chat window. Training data in an app that doesn't talk to anything else. And at the center of it all, a person who has to manually hold the whole system together in their head every day.
 
-1. **No LLM integration.** Claude cannot be woven into the daily experience — no Spiral processing, no day-mode suggestions, no coaching, no context-aware reminders. Claude lives in a separate chat window and has no awareness of what's happening in the data.
+For Clint, this produces three compounding problems:
 
-2. **No family profiles.** Softr cannot support per-member profiles with age-appropriate autonomy. The personal app needs to serve Clint differently than it serves Brynn or Max — and each family member needs to own and enter their own data.
+**1. Fragmentation.** The infrastructure exists — SmartSuite holds the goals and GYR data, Claude runs the rituals and stacks, Google Calendar holds the year, Strava holds the training, GitHub holds the family profiles. But none of these surfaces know what the others are doing. There is no single place where the full picture of a life is visible, connected, and actionable.
 
-3. **Softr constraints.** UI is limited to Softr's component library. Mobile experience is compromised. Navigation, day-mode behavior, dual-view screens (e.g., Horizon Rings stacked/circles toggle), and the universal Goal card pattern cannot be built without fighting the platform.
+**2. Absence.** There is no application designed around the actual frameworks and principles of intentional living — the GYR Spiral, the four life domains, phase-based accountability, the Container Model, spaced learning, the day-mode model, Brynn's Table Talk ritual, the Vivid Vision, the Misogi, the Quarterly Habit arc. These frameworks exist in Clint's operating system. They do not exist as a coherent, daily-use product.
+
+**3. The activation gap.** Even with the knowledge and the frameworks, sustained installation requires a daily machine. Without it, great insights fade. Goals go untracked. Rituals drift. The GYR Spiral runs once, then gets forgotten. The Vivid Vision is written in January and not looked at until December. The knowledge is there — but there is no system that installs it into the body, the habits, and the daily rhythm, one concept at a time, until it becomes identity.
+
+### The solution in one sentence
+
+> *"The app is a machine that procedurally produces a better life. You don't need to arrive fully formed. The machine installs you into clarity over time."*
 
 ### What a good solution looks like
 
-- A mobile-first web app that surfaces the existing SmartSuite Game App data through a purpose-built UI
-- Claude integrated natively — the Spiral runs inside the app, day-mode is suggested and confirmed in-app, coaching appears in context
-- Family profiles with per-member data ownership
-- Day-mode aware: the app changes posture based on Focus / Buffer / Free day type
-- Every life domain (Body, Being, Balance, Business) has goals, phases, progress tracking, rituals, and Claude-assisted processing — all in one place
-- Built on the same Railway/Supabase stack as S-BOS so it can migrate off SmartSuite when that infrastructure is ready
+A single application that integrates the entire practice of intentional living — bringing together the principles, tools, rituals, tracking, coaching, and family coordination that Clint has built over years — into one coherent daily experience. A machine, not a collection of tools. One that:
+
+- Surfaces the right information at the right time based on day type, domain status, and what's alive
+- Installs frameworks and knowledge through staged, spaced learning — not information dumps
+- Connects every domain of life (Body, Being, Balance, Business) to goals, phases, habits, and progress in one place
+- Integrates Claude natively as the coaching, processing, and suggestion layer — not as a separate chat window
+- Serves Clint first, and by extension his family, with each member owning their own data and experience
 
 ### What this is NOT
 
-- Not a replacement for S-BOS (the business operating system — that's a separate app)
-- Not a new data model — the SmartSuite Game App infrastructure is preserved and extended
-- Not a native mobile app (Phase 1 is a mobile-optimized web app)
-- Not a multi-tenant product (Phase 1 is personal, for the Stitser family only)
+- Not a task manager — tasks are one input among many
+- Not a journal app — journaling is one output among many
+- Not a replacement for S-BOS — that is the business operating system; this is the personal one
+- Not a collection of tools glued together — it is a machine with a single coherent logic
+- Not finished when the data is entered — it is always working, always suggesting, always tending
 
 ---
 
@@ -176,7 +184,7 @@ Three modes: **Focus Day / Buffer Day / Free Day**
 
 **Buffer Day:** Full app visible. Horizon Rings is the command center. Three sub-tabs: Horizon / Email / Big 3. Two guardrail questions on any commitment decision.
 
-**Free Day:** Calendar + wins + Table Talk prompt only. No tasks, no inbox. Mandate: “Your job today is to wander.” Kompass off.
+**Free Day:** Calendar + wins + Table Talk prompt only. No tasks, no inbox. Mandate: "Your job today is to wander." Kompass off.
 
 **Week architecture:** Focus Day (meetings only if serving named initiative) / Buffer Day Tue (team meeting anchor) / Buffer Day Wed (dev meeting anchor) / Free Day (zero business)
 
@@ -218,20 +226,20 @@ Living design doc built into the app. 10 sections, 60+ feature rows. Feature / P
 
 Full profiles for Clint (4 files) + Christie, Avery, Brynn, Maxwell, Gwen. Data source: GitHub `Clint-s-Kompass` repo via GitHub API — the only section not reading from SmartSuite. Person selector, full markdown render, search across all profiles, last-updated date, edit opens GitHub natively.
 
-**H1 — Vivid Vision & Annual Commitments:** 10-year vision + 1-year commitments surfaced inside Clint’s profile. Google Doc opens natively (Drive link, no API auth). Daily rotating reminder tied to morning ritual. Annual update prompt each New Year.
+**H1 — Vivid Vision & Annual Commitments:** 10-year vision + 1-year commitments surfaced inside Clint's profile. Google Doc opens natively (Drive link, no API auth). Daily rotating reminder tied to morning ritual. Annual update prompt each New Year.
 
 ---
 
 ### I — Big Ass Calendar
 *Source: thebigasscalendar.com*
 
-Year-at-a-glance visual. Three elements: Misogi (year-defining event) + Kevin’s Rule (bimonthly adventures) + Quarterly Habit. Two views: full-year color-coded (backward “look how far” layer + forward “what’s coming” layer) + month/week drill-in. Surfaces on Free Day Today tab.
+Year-at-a-glance visual. Three elements: Misogi (year-defining event) + Kevin's Rule (bimonthly adventures) + Quarterly Habit. Two views: full-year color-coded (backward "look how far" layer + forward "what's coming" layer) + month/week drill-in. Surfaces on Free Day Today tab.
 
 ---
 
 ### J — Quarterly Habit
 
-One habit at a time — Consecutive Appetite model. Five-stage arc: Install → Beginner → Intermediate → Expert → Complete. Freud’s sense of achievement at completion. Staged learning (3–5 lessons, one per day, first 2 weeks). Celebration at 7/14/21/30/60/90 days + quarter end. Identity statement generated at completion.
+One habit at a time — Consecutive Appetite model. Five-stage arc: Install → Beginner → Intermediate → Expert → Complete. Freud's sense of achievement at completion. Staged learning (3–5 lessons, one per day, first 2 weeks). Celebration at 7/14/21/30/60/90 days + quarter end. Identity statement generated at completion.
 
 ---
 
@@ -243,7 +251,7 @@ Google Drive link registry for critical personal and family documents. Links ope
 
 ### L — Container Model & Learning Engine
 
-**L1 — Container Model:** Three-layer empty state (soft glow + clear invitation + progress ring). Every container has a “why this matters” message before the build prompt. Build flow: Claude-guided conversation → filed to right destination → container fills → progress ring updates → celebration. Refresh cycles per container type.
+**L1 — Container Model:** Three-layer empty state (soft glow + clear invitation + progress ring). Every container has a "why this matters" message before the build prompt. Build flow: Claude-guided conversation → filed to right destination → container fills → progress ring updates → celebration. Refresh cycles per container type.
 
 **L2 — Learning Engine:** Ebbinghaus forgetting curve + spaced repetition + sleep as the training session. One concept per card. Named bounded lessons with time estimates. Single Next button. 6-hour safety rail. Fires on: Quarterly Habit install, Body protocol, new container build, first Spiral, first family profile, S-BOS skill onboarding (cross-product).
 
@@ -256,10 +264,10 @@ Google Drive link registry for critical personal and family documents. Links ope
 
 **Identity archetype confirmed:** Sage-Architect-Builder — someone who sees clearly, designs intentionally, builds and tends daily. Embodied through pursuit, never finished. Starting posture is gratitude, not combat.
 
-**Closest identity noun:** The Steward — one who tends what’s been entrusted from a place of gratitude. First instinct after research (Clint): *“The Steward’s Way.”* Steward synonyms explored: Keeper (top candidate), Cultivator, Tender. Sovereign/Craftsman/Author — all over-claimed, avoid.
+**Closest identity noun:** The Steward — one who tends what's been entrusted from a place of gratitude. First instinct after research (Clint): *"The Steward's Way."* Steward synonyms explored: Keeper (top candidate), Cultivator, Tender. Sovereign/Craftsman/Author — all over-claimed, avoid.
 
 **Austrian heritage thread (developing — not yet named):**
-Clint’s Austrian heritage is the authentic source of the brand identity — the same instinct that produced “Kompass” as a product name. The Austrian Sacred Heart Fire tradition (Herz-Jesu-Feuer / Bergfeuer / Sonnwendfeuer), witnessed firsthand at the 2026 summer solstice in Tyrol, is the most resonant brand story found:
+Clint's Austrian heritage is the authentic source of the brand identity — the same instinct that produced "Kompass" as a product name. The Austrian Sacred Heart Fire tradition (Herz-Jesu-Feuer / Bergfeuer / Sonnwendfeuer), witnessed firsthand at the 2026 summer solstice in Tyrol, is the most resonant brand story found:
 
 - **Tradition origin:** 1796, Tyrolean communities vow to tend their land and renew the vow annually by lighting fires on every peak simultaneously
 - **The Kronerer:** In Oberammergau, 15 elite men hold the ancient right to light the crown fire on the summit — a title earned through generational training, selection, and grit. This is the most resonant identity archetype found.
@@ -272,18 +280,18 @@ Clint’s Austrian heritage is the authentic source of the brand identity — th
   - There is always another peak = pursuit, not destination
   - The Kronerer = the earned identity
 - **Names explored:** Bergfeuer, Bergfeurer, Kronerer, Krone, Krone Way, Feura, Luma Way, Feuerhüter, Lichtweg. None landed as *the one* in this session.
-- **Session conclusion (Clint):** “I like the identity of Bergfeurer but not the abrasive names. German can be a tough and abrupt language.” Played with Kronerer phonetic variants. Running with Stitser Way as placeholder while the fire identity develops organically.
+- **Session conclusion (Clint):** "I like the identity of Bergfeurer but not the abrasive names. German can be a tough and abrupt language." Played with Kronerer phonetic variants. Running with Stitser Way as placeholder while the fire identity develops organically.
 
 **Confirmed positioning statements:**
-- *“The app is a machine that procedurally produces a better life. You don’t need to arrive fully formed. The machine installs you into clarity over time.”*
-- *“No need to be a warrior. You don’t even need to explore. With the world’s intelligence at your fingertips, you can be a sage builder of your life.”*
+- *"The app is a machine that procedurally produces a better life. You don't need to arrive fully formed. The machine installs you into clarity over time."*
+- *"No need to be a warrior. You don't even need to explore. With the world's intelligence at your fingertips, you can be a sage builder of your life."*
 
 **Domain rename in development (differentiating from Warriors Way CORE 4):**
-First instinct: *“Your money, your mind, your people, your Mecca.”* Direction is right — personal, possessive, aspirational. Words not yet final.
+First instinct: *"Your money, your mind, your people, your Mecca."* Direction is right — personal, possessive, aspirational. Words not yet final.
 
 **Next steps for identity:**
 - Continue playing with Kronerer/Bergfeurer phonetic variants (2 syllables or less, warm not abrasive, smooth in English)
 - Test the fire-lit ridgeline as the visual progress metaphor in app prototype
 - Trademark/domain clearance when a name lands
-- Test “I am a ___” with Brynn, Christie, and 5 strangers who believe in intentional living
+- Test "I am a ___" with Brynn, Christie, and 5 strangers who believe in intentional living
 - Explore multi-brand potential: Stitser Way as family platform, public brand using fire identity once it lands
