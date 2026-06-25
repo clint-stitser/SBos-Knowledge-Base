@@ -1,6 +1,6 @@
 # Product Design Doc: Stitser Way
 
-> **Status:** 🔄 In Progress — Gate 2 ✅ COMPLETE. §4 Core Features in progress (18 features).
+> **Status:** 🔄 In Progress — Gate 2 ✅ COMPLETE. §4 Core Features in progress (20 features).
 > **Methodology:** Ryan Falke's Design Templates, adapted for Stitser Way
 > **Decision-maker:** Clint Stitser
 > **Last updated:** 2026-06-25
@@ -105,7 +105,7 @@ Not a task manager. Not a journal app. Not S-BOS. Not tools glued together. Not 
 
 ## §4 — Core Features
 
-> **18 features.** Each spec: what it does, entities read/write, UX behavior, success criteria.
+> **20 features.** Each spec: what it does, entities read/write, UX behavior, success criteria.
 
 ---
 
@@ -129,7 +129,7 @@ Not a task manager. Not a journal app. Not S-BOS. Not tools glued together. Not 
 
 ### F02 — Horizon Rings
 
-**What it does:** Surfaces the most important items from projects, goals, and follow-ups. Max 7–10 items.
+**What it does:** Surfaces the most important items from projects, goals, and follow-ups. Max 7–10 items. The daily triage view — answers *"What needs my attention right now?"*
 
 **Entities read:** Check List Tasks (#20), Notes & Comments (#27), GYR Status Reports (#6), Goals (#1).
 **Entities written:** Check List Tasks (#20) status. Stats (#4) Sacral Anchor.
@@ -312,122 +312,146 @@ Not a task manager. Not a journal app. Not S-BOS. Not tools glued together. Not 
 
 ### F16 — Journal & Decisions Library
 
-**What it does:** A unified, searchable, filterable library of every Journal Entry (rituals, stacks, Spirals, Table Talk, free writes, Day Mode Logs) and every Decision record — the permanent record of Clint's inner life and choices.
+**What it does:** Unified searchable library of every Journal Entry (rituals, stacks, Spirals, Table Talk, free writes, Day Mode Logs) and every Decision record.
 
 **Entities read:** Journal Entry (#8), Decision (#10).
-**Entities written:** Journal Entry (#8) — new entries. Decision (#10) — new decisions.
+**Entities written:** Journal Entry (#8) new entries. Decision (#10) new decisions.
 
-**UX behavior:**
+**Journal Library:** Filterable by type, domain, date range. Full-text search. FAB launcher. Day Mode scoreboard sub-view (Focus/Buffer/Free counts by week/month/quarter).
 
-**Journal Library:**
-- Me menu → "Journal" — chronological feed, most recent first
-- Filter by type: All / Rituals / Stacks / Spirals / Table Talk / Free Write / Day Mode Log / Project Debrief
-- Filter by domain: All / Body / Being / Balance / Business
-- Filter by date range: This week / This month / This year / Custom
-- Full-text search across all journal content
-- Each entry: type icon, date, domain tag, first line → tap to expand
-- FAB: new journal session → type picker → Claude-guided or free-form
-- **Day Mode scoreboard sub-view:** Focus / Buffer / Free Day counts by week, month, quarter
+**Decisions sub-tab:** Open / Resolved / Deferred status. Claude-guided creation: What's the question? What are the options? What does your gut say?
 
-**Decisions Library (sub-tab):**
-- All Decision records from SmartSuite `68feda0035fd19c93de8d757`
-- Each: title, date, status (Open / Resolved / Deferred), domain
-- Filter by status + domain
-- Tap: full record with context, options, outcome
-- FAB: new decision → Claude guides: What's the question? What are the options? What does your gut say?
-- Resolved decisions archived but searchable
-
-**What this is NOT:** Not a social feed. Not the Today tab. The Today tab shows today's ritual and lesson — the Journal is the full historical library.
-
-**Success criteria:**
-- Full-text search < 500ms
-- All filter combinations work correctly
-- Day Mode scoreboard shows correct counts per period
-- New entry FAB routes to correct table with correct type + domain tags
-- New decision FAB routes to Decisions table correctly
+**Success criteria:** Full-text search < 500ms. All filters work. Day Mode scoreboard correct. FABs route to correct tables.
 
 ---
 
 ### F17 — Being Domain
 
-**What it does:** Surfaces Clint's inner life domain — Goals and progress for mindset, presence, spiritual/emotional development, and rituals. Being is about who Clint is becoming internally.
+**What it does:** Inner life domain — Goals and progress for mindset, presence, spiritual/emotional development, and rituals. Who Clint is becoming internally.
 
 **Entities read:** Goal (#1) domain=Being, Priority (#2), Stat (#4), GYR Status Report (#6), Journal Entry (#8), Learning Track (#43).
-**Entities written:** Stat (#4) — Being stat logs. Journal Entry (#8) — ritual completions and stacks.
+**Entities written:** Stat (#4) Being stat logs. Journal Entry (#8) ritual completions and stacks.
 
-**What belongs in Being:**
-- Rituals (morning/evening ritual streaks)
-- Mindset practices (meditation, breathwork — tracked via External Practice checkboxes)
-- Emotional processing (stacks, Being-domain Spirals)
-- Identity and character development (being a great man, not just a nice one)
-- Principles and realizations accumulation
-- Presence and connection quality
+**What belongs:** Morning/evening ritual streaks. Mindset practices (External Practice checkboxes). Emotional processing (stacks, Being Spirals). Identity development. Principles accumulation.
 
-**UX behavior:**
+**UX behavior:** Being domain card: GYR grade, active Goals with progress rings, Quarterly Habit if Being-domain, Learning Track if Being-domain, "Run Being Spiral" button.
 
-**Being domain card (Me tab):**
-- GYR grade indicator — overall Being status
-- Active Being Goals with progress rings (e.g., "Morning Ritual Streak: 14 days," "Stack completions: 3/month")
-- Quarterly Habit shown if Being-domain
-- Active Learning Track shown if Being-domain (e.g., Calmio practice)
-- "Run Being Spiral" button — Spiral pre-loaded with Being domain
+**Stat logging:** Via External Practice checkboxes or journal inference. Claude prompts before any manual form.
 
-**Stat logging for Being:** Primarily via External Practice checkboxes (Calmio) or journal capture inference (Kompass classifies ritual completion mentions as stat logs). Claude prompts before any manual form.
-
-**Success criteria:**
-- Being Goals render correctly in Me tab domain card
-- Spiral pre-fills with Being domain on button tap
-- Ritual streak stats update from journal captures and External Practice logs
-- Being Learning Tracks surface correct daily lesson
+**Success criteria:** Goals render in Me tab. Spiral pre-fills Being domain. Ritual streaks update from External Practice and journal captures.
 
 ---
 
 ### F18 — Balance Domain
 
-**What it does:** Surfaces Clint's relational domain — Goals and progress for family coordination, relationships, and connection. Balance measures how well Clint tends the people entrusted to him.
+**What it does:** Relational domain — Goals and progress for family coordination, relationships, and connection. How well Clint tends the people entrusted to him.
 
-**Entities read:** Goal (#1) domain=Balance, Stat (#4), GYR Status Report (#6), Journal Entry (#8), Family Profiles (#39), Strava Activity (#29), BAC Calendar Events (#13).
-**Entities written:** Stat (#4) — relationship measurables via Stat Inference Engine (F03) primarily. Journal Entry (#8) — Table Talk entries.
+**Entities read:** Goal (#1) domain=Balance, Stat (#4), GYR Status Report (#6), Journal Entry (#8), Family Profiles (#39), Strava (#29), BAC Calendar Events (#13).
+**Entities written:** Stat (#4) relationship measurables via Stat Inference Engine (F03). Journal Entry (#8) Table Talk.
 
-**What belongs in Balance:**
-- Relationship measurables — quantitative goals for time with each family member
-- Table Talk — dinner ritual, recorded by Clint
-- Family profile context — who each person is, how they're wired
-- Connection quality — Spiral assessments of relational health
-- Shared experiences (Kevin's Rule events often involve family)
+**What belongs:** Relationship measurables (rides with Max, dates with Christie). Table Talk. Family profile context. Connection quality Spirals. Shared experiences.
+
+**UX behavior:** Balance card: GYR grade, relationship measurable Goals with progress, Table Talk shortcut, "Run Balance Spiral" button, family member avatars (read-only).
+
+**Table Talk:** Add: date → Hi → Lo → Buffalo → save. Phase 1: Clint logs. Phase 2: per-member.
+
+**Success criteria:** Measurables render with current count/target. Stat Inference Engine logs in one tap. Table Talk < 4 taps. Spiral pre-fills Balance domain.
+
+---
+
+### F19 — Business Domain
+
+**What it does:** Surfaces Clint's external mission domain — Goals and progress for his role as allocator/CEO across all Stitser BUILT product lines, personal financial objectives, and business phase advancement. Business is the work Clint is building in the world, tracked from his personal vantage point — not the operational S-BOS view but the strategic CEO view.
+
+**Entities read:** Goal (#1) domain=Business, Priority (#2), Stat (#4), GYR Status Report (#6), Goal (#1) tagged Misogi (domain=Business), Goal (#1) tagged Kevin's Rule if Business-adjacent, BAC Calendar Events (#13) — business milestones.
+
+**Entities written:** Stat (#4) — Business stat logs (revenue milestones, cash flow targets, product line metrics). GYR Status Report (#6) — Business domain Spirals. Journal Entry (#8) — Business domain entries, project debriefs, strategic vision sessions.
+
+**What belongs in Business:**
+- Personal business Goals (allocator seat metrics, cash flow targets, company milestones)
+- GYR status per product line — Clint's read of each company's health from his CEO seat
+- Phase anchor progress — where each Stitser BUILT product line sits in its phase arc
+- Business Misogi — the one business-defining goal for the year (e.g., completing a specific development, reaching a revenue milestone)
+- Strategic vision sessions (logged as Journal entries via the Strategic Vision skill)
+- Project Debrief entries for completed business initiatives
 
 **UX behavior:**
 
-**Balance domain card (Me tab):**
-- GYR grade indicator — overall Balance status
-- Relationship measurable Goals with progress: *"Rides with Max Q3: 3/10"*, *"Dates with Christie: 2/3 this month"*
-- Table Talk history shortcut — last 7 entries or add new
-- "Run Balance Spiral" button — Spiral pre-loaded with Balance domain
-- Family member avatars — tap to view read-only profile
+**Business domain card (Me tab):**
+- GYR grade indicator — overall Business status from Clint's most recent Business Spiral
+- Active Business Goals with progress rings (e.g., "Allocator Seat: 4 days/week," "6-month liquidity buffer")
+- Product line sub-cards — one per active Stitser BUILT entity showing:
+  - Entity name + current phase
+  - GYR status from most recent GYR Report for that entity
+  - Tap → Phase Anchor deep link (opens Railway app)
+- Business Misogi shown if set — progress toward the year-defining business goal
+- "Run Business Spiral" button — Spiral pre-loaded with Business domain
+- "Strategic Vision" shortcut → opens Strategic Vision Claude skill in Shortcuts tab
 
-**Relationship measurables model:**
-- Each measurable = Balance Goal with custom Stat Menu Item
-- Logged via Stat Inference Engine (F03) — Claude notices Strava rides or journal mentions and prompts
-- Manual fallback: long-press Goal card → "Log one now" → single-tap confirmation
-- Progress: current count / target, rolling period (quarter or month per goal)
+**Product line GYR view:**
+- Each product line (Formation Homes, BUILT construction, Arbitrage CFO, brokerage, etc.) shown as a row
+- GYR status pulled from the most recent GYR Status Report for that entity
+- Tap product line → opens Phase Anchor for full phase detail
+- This is Clint's scoreboard for the empire — not operational detail, just the allocator's snapshot
 
-**Table Talk sub-section:**
-- Chronological feed of all Table Talk journal entries
-- Add new: date → Hi (best thing today) → Lo (hardest thing today) → Buffalo (surprise) → save
-- Phase 1: Clint logs for the whole family. Phase 2: each person logs their own.
+**Stat logging for Business:** Business stats are typically milestones and phase completions rather than daily logs. Claude prompts when a journal entry or capture mentions a business achievement. Manual log available for specific measurables (cash flow position, days in allocator seat per week).
 
 **Success criteria:**
-- Relationship measurable Goals render with correct current count / target
-- Stat Inference Engine logs correctly with one tap
-- Table Talk add flow < 4 taps
-- Family profile avatars load from GitHub and open read-only markdown
-- Balance Spiral pre-fills with Balance domain on button tap
+- Business Goals render correctly in Me tab domain card
+- Product line sub-cards load GYR status from SmartSuite correctly
+- Phase Anchor deep links open correctly for each product line
+- Business Spiral pre-fills with Business domain on button tap
+- Strategic Vision shortcut navigates to correct Shortcuts skill
+
+---
+
+### F20 — Week at a Glance
+
+**What it does:** Shows the shape of the current week — day types (Focus/Buffer/Free), key scheduled events, and Big 3 placeholders — as a lightweight 7-day strip. Answers *"What does this week look like as a whole?"* The middle layer between the Big Ass Calendar (year view) and Horizon Rings (today's items). Distinct from both.
+
+**Entities read:** BAC Day Types (#12) — day type assignments for the week. BAC Calendar Events (#13) — key events. Task (#7) — Big 3 anchors if set. Day Mode Log (#9) — days already logged this week.
+
+**Entities written:** BAC Day Types (#12) — when Clint assigns or changes a day type for an upcoming day.
+
+**UX behavior:**
+
+**The strip:**
+- 7-day horizontal strip — Mon through Sun, current week
+- Each day shows:
+  - Day type badge (Focus 🎯 / Buffer ⚡ / Free 🌿 / Unassigned ○)
+  - Up to 2 key BAC Calendar Events as chips (e.g., "Team meeting", "Date night")
+  - Big 3 anchor if set for that day — greyed if not yet set
+  - Today highlighted with a stronger border
+- Past days (earlier this week) shown in muted/completed state
+- Tap any future day → assign or change day type (uh-huh/uh-uh, same Sacral mechanic)
+
+**Where it lives:**
+- On the Today tab — below the Day Mode badge, above the Big 3 dominos
+- Also accessible from the Buffer Day sub-tab "Big 3" — where the week shape is most useful for planning
+
+**Relationship to Buffer Day Sweep:**
+The Buffer Day Sweep (a workflow, not a feature) uses the Week at a Glance as its visual anchor — Clint reviews the week strip, confirms or adjusts day types for remaining days, and sets Big 3 anchors for Focus Days ahead. The strip is the view; the Buffer Day Sweep is the process that populates it.
+
+**Relationship to Big Ass Calendar:**
+Week at a Glance is the zoomed-in view of the BAC. Tapping a week in the BAC year or month view jumps to the Week at a Glance for that week.
+
+**What this is NOT:**
+- Not a full calendar — no time-blocking, no hour-by-hour view
+- Not a task list — Horizon Rings handles tasks
+- Not a scheduling tool — Google Calendar handles scheduling
+
+**Success criteria:**
+- 7-day strip renders correctly with today highlighted
+- Day type badges reflect current BAC Day Types records
+- Tap to assign day type completes in 2 taps
+- Big 3 anchors render correctly when set
+- Buffer Day sub-tab correctly shows the week strip as planning context
 
 ---
 
 ## §4 Gate 3 Checklist
 
-- [ ] All 18 features named and described ✳️ *Pending sign-off*
+- [ ] All 20 features named and described ✳️ *Pending sign-off*
 - [ ] All features have entities read/write ✳️ *Pending sign-off*
 - [ ] All features have success criteria ✳️ *Pending sign-off*
 - [ ] No feature references an entity not in §3 ✳️ *Pending sign-off*
