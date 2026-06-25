@@ -9,106 +9,77 @@
 
 - **Date:** 2026-06-25
 - **Project:** Stitser Way
-- **Status:** Design Phase — Gate 1 ✅ Gate 2 ✅. Gate 3 in progress (§4 Core Features next).
-- **Context:** Clint on a 9-hour flight. Variable wifi. Target: work through §4 + §5, reach Claude Code handoff before landing.
+- **Status:** ✅ PDD COMPLETE. All four gates passed. Claude Code handoff ready.
 
 ---
 
 ## What We Did This Session
 
-1. **Established the full project** from scratch — 5 continuity files, 2 messaging docs, all discovery inputs A–N captured in the PDD.
-2. **Gate 1 signed off** — Problem Statement rewritten with 4 compounding problems (Fragmentation, Absence, Activation Gap, No Project Tool Layer). Machine quote as the solution anchor. §2 Target Users phased (Phase 1 = Clint only).
-3. **Gate 2 signed off** — 44 Core Entities defined with real SmartSuite app IDs from live schema pull. Key decisions:
-   - Goals are universal tag-based (Quarterly Habit / Misogi / Kevin’s Rule = Goal records)
-   - Tasks pull from three sources (Check List Tasks + Notes & Comments + GYR follow-ups)
-   - Day Mode → Journal Entry via automation (dashboard print tag pattern)
-   - Vivid Vision + Annual Commitments → GitHub as source of truth
-   - Bills & Invoices confirmed Phase 1 (Europe trip budget live)
-   - SB Training & Certifications confirmed as installation arc data store
-   - Two lesson types: In-App (6-hour safety rail) + External Practice (daily checkbox, no safety rail)
-4. **Discovery Input O added** — Stat Inference Engine: Claude scans Strava/journals/calendar and surfaces one-tap log prompts for Balance Goals. No new entities. No forms.
-5. **Health data layer added** — Oura (sleep + readiness), Apple Health (weight), Strava (training). Drive links for Body Scan / Bloodwork / Eye Prescription (Health Vault).
-6. **Phase model confirmed** — Phase 1 = Clint only. Family entirely Phase 2. Architecture supports expansion.
-7. **Brand identity captured** — Austrian fire tradition (Herz-Jesu-Feuer / Bergfeuer). Kronerer as most resonant archetype. Running with Stitser Way as placeholder.
+1. **Reviewed and updated §1 Problem Statement** — rewrote as four compounding problems (Fragmentation, Absence, Activation Gap, No Project Tool Layer). Added Machine quote as solution anchor. Gate 1 signed off.
+
+2. **Completed §3 Core Entities** — 44 entities with real SmartSuite app IDs from live schema pull. Key decisions: Goals as universal tag-based entity, Tasks from three sources, Day Mode → Journal automation, Vivid Vision → GitHub source of truth, Bills & Invoices Phase 1, SB Training & Certifications as installation arc store, two lesson types, External Practice checkbox, Misogi + Kevin's Rule as project types. Gate 2 signed off.
+
+3. **Wrote §4 Core Features** — 23 features, each with entities read/write, UX behavior, and success criteria. Full systematic cross-check against all Discovery Inputs, entities, and decisions — no gaps found. Gate 3 §4 signed off.
+
+4. **Wrote §5 User Workflows** — 7 workflows walkable end to end. Gate 3 §5 signed off.
+
+5. **Wrote Gate 4** — §6 Scope (Phase 1 in/out of scope, build sequence), §7 Success Metrics (daily/weekly/monthly/quarterly/annual + qualitative signal + anti-metrics), §8 Timeline (5 milestones + Phase 2 trigger), §9 Open Questions (14 questions with owners and blockers). Gate 4 signed off.
+
+6. **Brand identity work** — Austrian Sacred Heart Fire tradition (Herz-Jesu-Feuer / Bergfeuer) confirmed as brand story. Kronerer as most resonant identity archetype. Names explored: Bergfeuer, Kronerer, Krone, Feura, Luma Way — none landed. Running with Stitser Way. Sage Builder quote and Steward's Way direction captured in messaging doc.
+
+7. **Messaging docs updated** — `Clint-s-Kompass/03-stitser-way/messaging.md` — fire tradition analogies, brand story, Kronerer identity notes.
 
 ---
 
 ## Where We Stopped
 
-**Gate 2 complete. §4 Core Features not yet started.**
-
-All 44 entities defined. Entity map clean. Phase boundary clear. Ready to write §4.
+**PDD is complete. Ready for Claude Code handoff.**
 
 ---
 
 ## Next Steps (in order)
 
-1. [ ] **§4 Core Features** — formalize every confirmed design decision into a feature spec with: name, what it does, entities it reads/writes, success criteria. Work through the 15 major features systematically.
-2. [ ] **§5 User Workflows** — walk through 5–7 key daily flows end to end: morning launch, buffer session, logging a stat, running the Spiral, setting a new goal, building a project tool.
-3. [ ] **Gate 3 sign-off** — Clint approves §4 + §5.
-4. [ ] **Gate 4** — §6 Scope + §7 Metrics + §8 Timeline + §9 Open Questions.
-5. [ ] **PDD Done** — Data Integration Doc + Technical Spec + UI/UX Doc can begin.
-6. [ ] **Claude Code handoff** — target before end of flight.
+1. [ ] **Claude Code handoff** — provide the PDD as the source of truth. Claude Code builds the app starting with Sprint 1 (Shell + Today).
+2. [ ] **Data Integration Doc** — field-level mapping for all 44 entities. Resolves OQ01–OQ05 first.
+3. [ ] **Technical Spec** — architecture decisions, API patterns, auth model, deployment config.
+4. [ ] **UI/UX Doc** — screen-by-screen wireframes, component library, mobile-first layout spec.
+5. [ ] **Resolve OQ11 (Apple Health API)** — confirm whether accessible from mobile web app before Sprint 3.
+6. [ ] **Resolve OQ01 (Goal Type field values)** — pull SmartSuite schema before Sprint 2.
+7. [ ] **Brand identity** — continue Kronerer/fire identity development. Trademark + domain clearance when a name lands.
 
 ---
 
-## §4 Feature List (seed — to be formalized)
+## Open Questions (resolve before building)
 
-The following 15 features need specs written in §4:
-
-| # | Feature | Source |
-|---|---|---|
-| 1 | Day Mode Engine | Discovery Input B |
-| 2 | Horizon Rings | Discovery Input C |
-| 3 | Stat Inference Engine | Discovery Input O |
-| 4 | Universal Goal Engine | Discovery Input E |
-| 5 | GYR Spiral | Discovery Input F (Spec Sheet §6) |
-| 6 | Learning Engine (In-App + External Practice) | Discovery Input L |
-| 7 | Daily Reminder Engine | §3 Key Clarifications |
-| 8 | Body Domain — Health Tracking & Vault | Discovery Inputs (Body protocol) |
-| 9 | Big Ass Calendar | Discovery Input I |
-| 10 | Quarterly Habit Arc | Discovery Input J |
-| 11 | Container Model — Empty State & Build Flow | Discovery Input L |
-| 12 | About Me + Vivid Vision | Discovery Input H |
-| 13 | Project + Tool Layer | Discovery Input N |
-| 14 | Kompass Operating Platform (Capture, Buffer, Genius Schedule) | Discovery Input D |
-| 15 | Shortcuts Tab | Discovery Input F |
+- **OQ01** Goal Type field values (blocks Sprint 2 domain filtering)
+- **OQ02** Family profile auth model
+- **OQ03** Strava sync frequency
+- **OQ04** Claude API integration pattern
+- **OQ05** Phase 1 write-back scope
+- **OQ06** Gwen Gifford section placement
+- **OQ07** Learning Engine visual metaphor
+- **OQ08** Domain rename
+- **OQ09** Day Mode Log automation timing
+- **OQ10** Oura API auth model
+- **OQ11** Apple Health API — mobile web accessible? (may force scope change)
+- **OQ12** Key Doc storage layer
+- **OQ13** Spec Sheet storage layer
+- **OQ14** Project Tool archive location
 
 ---
 
-## Open Questions (running list for §9)
+## Claude Code Handoff Briefing
 
-- Goal Type field values in SmartSuite (blocks domain filtering in Me tab)
-- Family profile auth model for Phase 1
-- Strava sync frequency
-- Claude API integration pattern (server action vs edge function)
-- Phase 1 write-back scope — which tables, which fields
-- Gwen Gifford — About Me vs Extended Family section
-- Learning Engine visual progress metaphor — mountain trail? ridgeline? bike climb?
-- Kronerer identity — smooth English variant
-- Domain rename for public brand
-- UX entry point for project tool creation
-- Day Mode Log automation timing
+When starting a Claude Code session, provide this context:
+
+> "You are building Stitser Way — a personal operating system web app for Clint Stitser. The full Product Design Doc is at `SBos-Knowledge-Base/projects/s-bos/build-docs/TSW_Product_Design_Doc.md`. Read it before writing any code. The tech stack is Next.js / React / TypeScript / Tailwind v4, mobile-first, deployed on Railway. SmartSuite is the Phase 1 data layer via the Kompass MCP. Start with Sprint 1: F23 App Shell + F01 Day Mode Engine + F07 Daily Reminder Engine + F20 Week at a Glance + F11 Container Model. The app must feel like a machine, not a collection of tools. Every interaction is a conversation or a tap — never a form."
 
 ---
 
-## Environment Notes
+## Environment
 
-- GitHub connector live in claude.ai
-- SmartSuite schema pulled 2026-06-25 — all 5 solutions confirmed
-- 44 entities in PDD §3 with real app IDs
-- Messaging doc at `Clint-s-Kompass/03-stitser-way/messaging.md`
-- S-BOS PDD still at Gate 1 — separate track
-
----
-
-## How to Resume
-
-1. Read `TSW_Operating_Agreement.md`, `TSW_memory.md`, `TSW_restart.md`, `TSW_Design_Context.md`
-2. Open `TSW_Product_Design_Doc.md` to §4
-3. Say “let’s go” — first action is writing §4 Core Features
-4. Work through the 15 features above systematically
-5. Then §5 User Workflows (5–7 key daily flows)
-6. Then Gate 3 sign-off
-7. Then Gate 4
-8. Then Claude Code handoff
+- GitHub connector: live in claude.ai
+- SmartSuite schema: pulled 2026-06-25 — all 5 solutions confirmed
+- PDD: `SBos-Knowledge-Base/projects/s-bos/build-docs/TSW_Product_Design_Doc.md`
+- Messaging: `Clint-s-Kompass/03-stitser-way/messaging.md`
+- S-BOS PDD: still at Gate 1, separate track
