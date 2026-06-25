@@ -158,7 +158,7 @@ F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 
 - Single user — no auth complexity, no per-user data isolation
 - SmartSuite as the Phase 1 data layer (read + write via Kompass MCP)
 - GitHub API for profile and vision files (read-only)
-- External APIs: Strava MCP, Oura API, Apple Health API (read-only)
+- External APIs: Strava MCP, Oura REST API (PAT), Apple HealthKit bridge (read-only)
 - Google Drive links opened natively (no Drive API write)
 - Claude via Anthropic API as the native intelligence layer
 - Railway deployment — separate from S-BOS
@@ -180,127 +180,85 @@ F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 
 - Multi-user authentication (Supabase Auth)
 - Per-member profiles with own data — Christie, Avery, Brynn, Max
 - Age-appropriate UX per family member
-- Per-member Table Talk entry (Hi/Lo/Buffalo from each person's profile)
+- Per-member Table Talk entry
 - Family Key Docs section
-- Shared project access (Kevin's Rule adventures, family trips)
+- Shared project access
 - Tool sharing across family members
-- Kids' data autonomy — each child owns their entries
+- Kids' data autonomy
 - Phase 2 data layer: Supabase replaces SmartSuite for personal/family data
 
 ### Build sequence within Phase 1
 
-The 23 features are not all equal in build complexity. Recommended sequence:
-
-**Sprint 1 — Shell + Today (foundation everything else depends on):**
-F23 App Shell, F01 Day Mode Engine, F07 Daily Reminder Engine, F20 Week at a Glance, F11 Container Model
-
-**Sprint 2 — Core data layer (Goals + Rings):**
-F04 Universal Goal Engine, F02 Horizon Rings, F05 GYR Spiral
-
-**Sprint 3 — Domains:**
-F08 Body Domain, F17 Being Domain, F18 Balance Domain, F19 Business Domain
-
-**Sprint 4 — Intelligence layer:**
-F03 Stat Inference Engine, F06 Learning Engine, F14 Kompass Operating Platform
-
-**Sprint 5 — Planning layer:**
-F09 Big Ass Calendar, F10 Quarterly Habit Arc, F12 About Me + Vivid Vision
-
-**Sprint 6 — Tools + Library:**
-F13 Project + Tool Layer, F15 Shortcuts Tab, F16 Journal & Decisions Library, F21 Key Docs, F22 In-App Spec Sheet
+**Sprint 1 — Shell + Today:** F23, F01, F07, F20, F11
+**Sprint 2 — Goals + Rings:** F04, F02, F05
+**Sprint 3 — Domains:** F08, F17, F18, F19
+**Sprint 4 — Intelligence layer:** F03, F06, F14
+**Sprint 5 — Planning layer:** F09, F10, F12
+**Sprint 6 — Tools + Library:** F13, F15, F16, F21, F22
 
 ---
 
 ## §7 — Success Metrics
 
-### Phase 1 is successful when Clint can do all of the following without friction:
+**Daily:** Mode confirmed < 30s. Thought + lesson visible without navigation. Week shape in one glance. Sacral Anchor < 2min.
 
-**Daily (morning ritual):**
-- [ ] Open app, get a day mode suggestion, confirm in < 30 seconds
-- [ ] See today's rotating thought and lesson card without any navigation
-- [ ] See the week's shape (day types + key events) in one glance
-- [ ] Identify the day's Sacral Anchor in < 2 minutes
+**Weekly:** Full Buffer session clears Horizon Rings, email queue, and sets day types. Day Mode scoreboard shows correct counts.
 
-**Weekly (Buffer Day):**
-- [ ] Triage all Horizon Rings items, approve email replies, and set the week's day types in a single Buffer session
-- [ ] See Focus / Buffer / Free Day counts for the week in the Journal scoreboard
+**Monthly:** All domain Goals have current GYR grades. Relationship measurables tracking without forms. Lesson card tapped more days than not.
 
-**Monthly:**
-- [ ] Every active domain Goal has an up-to-date GYR grade
-- [ ] At least one Spiral has been run per Yellow or Red domain
-- [ ] Relationship measurables are tracking against targets without manual form entry
-- [ ] Today's lesson card has been tapped more days than not
+**Quarterly:** One active Quarterly Habit. Misogi set up as Project. Kevin's Rule slots visible in BAC.
 
-**Quarterly:**
-- [ ] One Quarterly Habit is selected, in progress, and tracking
-- [ ] The year's Misogi is set up as a Project with at least the Alignment and Schedule pillars populated
-- [ ] Kevin's Rule slots are visible in the Big Ass Calendar
+**Annually:** Vivid Vision + Commitments reviewed and updated. Prior Quarterly Habits have identity statements.
 
-**Annually:**
-- [ ] Vivid Vision and Annual Commitments are reviewed and updated
-- [ ] The prior year's Quarterly Habits all have identity statements in the Journal
+**Qualitative signal:** Clint says the app feels like a partner, not a tool.
 
-### Qualitative success signal:
-Clint says the app feels like a partner, not a tool. He doesn't have to remember to use it — it surfaces what matters when it matters.
-
-### Anti-metrics (signs the machine is failing):
-- Clint is manually logging stats by filling out forms more than 2x per week
-- Horizon Rings regularly has > 10 items
-- A domain has had no Spiral and no GYR update in 30+ days
-- The Daily Reminder Engine is showing the same thought twice in a 7-day window
-- Clint is opening a separate chat window to run a ritual or stack instead of using the Shortcuts tab
+**Anti-metrics:** Forms filled manually > 2x/week. Horizon Rings > 10 items regularly. Domain with no Spiral in 30+ days. Same daily thought appearing twice in 7 days. Opening separate chat window to run a ritual.
 
 ---
 
 ## §8 — Timeline
 
-> This is a direction, not a commitment. Clint decides actual milestones when Claude Code handoff is complete and the build team has reviewed the PDD.
-
-### Phase 1 milestones
-
 | Milestone | What it means |
 |---|---|
-| **M1 — Shell live** | F23 + F01 + F07 + F20 + F11 deployed. Clint can open the app, confirm a day mode, see a thought, and see the week strip. First real daily use. |
-| **M2 — Goals + Rings live** | F04 + F02 + F05 deployed. Clint can set a Goal, see it in Horizon Rings, and run a Spiral. The core data loop is live. |
-| **M3 — All four domains live** | F08 + F17 + F18 + F19 deployed. Clint can see all domain scorecards, log Body stats, view relationship measurables, and read his business phase. |
-| **M4 — Intelligence layer live** | F03 + F06 + F14 deployed. Stat Inference Engine running, Learning Engine delivering lessons, Kompass routing captures. The machine is doing work without Clint asking. |
-| **M5 — Full Phase 1 live** | All 23 features deployed. Clint uses Stitser Way as his primary daily operating system. Phase 2 design begins. |
+| M1 — Shell live | F23 + F01 + F07 + F20 + F11. First real daily use. |
+| M2 — Goals + Rings live | F04 + F02 + F05. Core data loop live. |
+| M3 — All four domains live | F08 + F17 + F18 + F19. All domain scorecards visible. |
+| M4 — Intelligence layer live | F03 + F06 + F14. Machine doing work without being asked. |
+| M5 — Full Phase 1 live | All 23 features. Stitser Way is primary daily OS. Phase 2 design begins. |
 
-### Phase 2 trigger
-Phase 2 begins when Phase 1 has been Clint's daily driver for one full quarter and has passed the qualitative success signal above.
+Phase 2 trigger: Phase 1 has been Clint's daily driver for one full quarter and passed the qualitative success signal.
 
 ---
 
 ## §9 — Open Questions
 
-> These are decisions that must be resolved before or during the Technical Spec. Owner = Clint unless noted. Flag in `TSW_memory.md` when resolved.
-
-| # | Question | Blocks | Owner |
+| # | Question | Blocks | Status |
 |---|---|---|---|
-| OQ01 | Goal Type field values in SmartSuite — how are Body/Being/Balance/Business tagged? | Me tab domain filtering in F04, F17, F18, F19 | Clint — pull schema |
-| OQ02 | Family profile auth model for Phase 1 — how does Clint's session read family GitHub files? | F12 read-only family profiles | Tech Spec |
-| OQ03 | Strava sync frequency — on-demand on app open, or background webhook? | F03 Stat Inference Engine timing, F08 Training Log freshness | Tech Spec |
-| OQ04 | Claude API integration pattern — server action vs. edge function? | All features using Claude (F01, F03, F04, F05, F11, F14) | Tech Spec |
-| OQ05 | Phase 1 write-back scope — which SmartSuite tables does the app write to, and which are read-only? | All SmartSuite write operations | Tech Spec |
-| OQ06 | Gwen Gifford — does she appear in About Me or a separate Extended Family section? | F12 family profiles | Clint |
-| OQ07 | Learning Engine visual progress metaphor — mountain trail, fire-lit ridgeline, or bike climb profile? | F06 progress ring visual design | Clint |
-| OQ08 | Domain rename — what replaces Body/Being/Balance/Business for the public brand? | All domain labels across the app | Clint — evolving |
-| OQ09 | Day Mode Log automation timing — fires on confirmation (morning) or end of day? | F01 Day Mode Log creation | Tech Spec |
-| OQ10 | Oura API auth — personal token (Phase 1) or OAuth (Phase 2)? | F08 Oura data integration | Tech Spec |
-| OQ11 | Apple Health API — requires native iOS app or can be accessed from a mobile web app? | F08 weight data source | Tech Spec — may force a Phase 1 scope change |
-| OQ12 | Key Doc storage in Phase 1 — JSON config file in the repo, or a lightweight Supabase table from the start? | F21 Key Docs data layer | Tech Spec |
-| OQ13 | Spec Sheet storage — local browser storage, GitHub file, or lightweight Supabase? | F22 notes + screenshots persistence | Tech Spec |
-| OQ14 | Project Tool archive — where do Claude HTML artifacts live? GitHub Gist, Supabase blob, or SmartSuite file attachment? | F13 tool archive and retrieval | Tech Spec |
+| OQ01 | Goal Type field values in SmartSuite — how are domains tagged? | Domain filtering F04, F17–F19 | ⏳ Clint — pull schema |
+| OQ02 | Family profile auth for Phase 1 — how does Clint read family GitHub files? | F12 | ⏳ Tech Spec |
+| OQ03 | Strava sync frequency — on-demand or background webhook? | F03 timing, F08 freshness | ⏳ Tech Spec |
+| OQ04 | Claude API integration — server action vs. edge function? | All Claude features | ⏳ Tech Spec |
+| OQ05 | Phase 1 write-back scope — which SmartSuite tables? | All write operations | ⏳ Tech Spec |
+| OQ06 | Gwen Gifford — About Me or Extended Family section? | F12 | ⏳ Clint |
+| OQ07 | Learning Engine visual metaphor — mountain trail, ridgeline, or climb profile? | F06 visual design | ⏳ Clint |
+| OQ08 | Domain rename for public brand? | All domain labels | ⏳ Clint — evolving |
+| OQ09 | Day Mode Log automation timing — morning or end of day? | F01 | ⏳ Tech Spec |
+| OQ10 | **Oura API — personal access token (PAT) confirmed for Phase 1.** Claude Code builds the REST integration. PAT stored as Railway env variable. Endpoints: daily sleep, readiness, activity, HR, SpO2. | F08 | ✅ Resolved 2026-06-25 |
+| OQ11 | **Apple Health — HealthKit bridge confirmed for Phase 1.** HealthKit cannot be accessed from a mobile web app directly. Claude Code builds a lightweight iOS companion (Swift/React Native) that reads HealthKit and pushes data to the Railway backend via a simple REST endpoint. The web app reads weight data from Railway — not HealthKit directly. Phase 1 scope unchanged. | F08 weight data | ✅ Resolved 2026-06-25 |
+| OQ12 | Key Doc storage — JSON config vs. lightweight Supabase? | F21 | ⏳ Tech Spec |
+| OQ13 | Spec Sheet storage — local, GitHub, or Supabase? | F22 | ⏳ Tech Spec |
+| OQ14 | Project Tool archive — GitHub Gist, Supabase blob, or SmartSuite attachment? | F13 | ⏳ Tech Spec |
 
 ---
 
 ## §9 Gate 4 Checklist
-- [x] Scope defined — Phase 1 in/out of scope clearly stated ✅ Approved by Clint 2026-06-25
-- [x] Build sequence defined — sprint order established ✅ Approved by Clint 2026-06-25
-- [x] Success metrics defined — qualitative + quantitative ✅ Approved by Clint 2026-06-25
+- [x] Scope defined ✅ Approved by Clint 2026-06-25
+- [x] Build sequence defined ✅ Approved by Clint 2026-06-25
+- [x] Success metrics defined ✅ Approved by Clint 2026-06-25
 - [x] Anti-metrics defined ✅ Approved by Clint 2026-06-25
 - [x] Timeline milestones defined ✅ Approved by Clint 2026-06-25
-- [x] Open questions captured with owners and blockers ✅ Approved by Clint 2026-06-25
+- [x] Open questions captured ✅ Approved by Clint 2026-06-25
+- [x] OQ10 + OQ11 resolved 2026-06-25
 
 ---
 
@@ -308,13 +266,11 @@ Phase 2 begins when Phase 1 has been Clint's daily driver for one full quarter a
 
 **All four gates passed. Approved by Clint 2026-06-25.**
 
-**What comes next:**
-
 | Document | Purpose | Input from PDD |
 |---|---|---|
-| **Data Integration Doc** | Field-level mapping for all 44 entities — exact SmartSuite field IDs, API endpoints, read/write permissions, sync strategy | §3 entities + OQ01–OQ05 |
-| **Technical Spec** | Architecture decisions, API integration patterns, auth model, deployment config, data flow diagrams | §6 scope + §9 open questions |
-| **UI/UX Doc** | Screen-by-screen wireframes, component library, interaction patterns, mobile-first layout spec | §4 features + F23 shell spec |
+| **Data Integration Doc** | Field-level mapping for all 44 entities | §3 + OQ01–OQ05 |
+| **Technical Spec** | Architecture, API patterns, auth, deployment | §6 + §9 |
+| **UI/UX Doc** | Screen wireframes, components, mobile-first layout | §4 + F23 |
 
 **Hand off to Claude Code with this PDD as the source of truth.**
 
