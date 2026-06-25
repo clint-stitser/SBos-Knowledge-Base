@@ -3,7 +3,7 @@
 > **Status:** 🔄 In Progress — Section 1 drafted, Gate 1 pending sign-off
 > **Methodology:** Ryan Falke's Design Templates, adapted for Stitser Way
 > **Decision-maker:** Clint Stitser
-> **Last updated:** 2026-06-24
+> **Last updated:** 2026-06-25
 
 ---
 
@@ -33,18 +33,21 @@ For Clint, this produces three compounding problems:
 
 **3. The activation gap.** Even with the knowledge and the frameworks, sustained installation requires a daily machine. Without it, great insights fade. Goals go untracked. Rituals drift. The GYR Spiral runs once, then gets forgotten. The Vivid Vision is written in January and not looked at until December. The knowledge is there — but there is no system that installs it into the body, the habits, and the daily rhythm, one concept at a time, until it becomes identity.
 
+**4. No project-level tool layer.** Life is not just habits and domains — it contains bounded projects with specific, temporary needs. A trip to Europe needs a budget. A child's ear infection needs a medication schedule. A test needs a study app. Today, these tools are either cobbled together manually, outsourced to generic apps, or not built at all. There is no system that spins up a purpose-built Claude tool for a specific project stage, tracks it through completion, and archives it for future reference or sharing.
+
 ### The solution in one sentence
 
 > *"The app is a machine that procedurally produces a better life. You don't need to arrive fully formed. The machine installs you into clarity over time."*
 
 ### What a good solution looks like
 
-A single application that integrates the entire practice of intentional living — bringing together the principles, tools, rituals, tracking, coaching, and family coordination that Clint has built over years — into one coherent daily experience. A machine, not a collection of tools. One that:
+A single application that integrates the entire practice of intentional living — bringing together the principles, tools, rituals, tracking, coaching, family coordination, and project-level tool-building that Clint has built over years — into one coherent daily experience. A machine, not a collection of tools. One that:
 
 - Surfaces the right information at the right time based on day type, domain status, and what's alive
 - Installs frameworks and knowledge through staged, spaced learning — not information dumps
 - Connects every domain of life (Body, Being, Balance, Business) to goals, phases, habits, and progress in one place
-- Integrates Claude natively as the coaching, processing, and suggestion layer — not as a separate chat window
+- Integrates Claude natively as the coaching, processing, suggestion, and tool-building layer — not a separate chat window
+- Allows Claude to build custom tools for bounded projects — scoped to the project, used through its lifecycle, archived or shared on completion
 - Serves Clint first, and by extension his family, with each member owning their own data and experience
 
 ### What this is NOT
@@ -54,6 +57,7 @@ A single application that integrates the entire practice of intentional living �
 - Not a replacement for S-BOS — that is the business operating system; this is the personal one
 - Not a collection of tools glued together — it is a machine with a single coherent logic
 - Not finished when the data is entered — it is always working, always suggesting, always tending
+- Not limited to recurring life domains — bounded projects with temporary, Claude-built tools are a first-class citizen
 
 ---
 
@@ -148,9 +152,9 @@ A single application that integrates the entire practice of intentional living �
 
 ---
 
-## Discovery Inputs (from session 2026-06-24)
+## Discovery Inputs (from session 2026-06-24 / 2026-06-25)
 
-> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 once Gate 1 is signed off. Organized into thirteen areas.
+> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 once Gate 1 is signed off. Organized into fourteen areas.
 
 ---
 
@@ -258,40 +262,83 @@ Google Drive link registry for critical personal and family documents. Links ope
 ---
 
 ### M — Brand Identity & Positioning
-*Source: Identity research session 2026-06-24. Full research reports in `TSW_messaging.md` (Clint-s-Kompass) and artifact docs.*
 
 **Working name:** Stitser Way — a good placeholder that may stand the test of time.
 
-**Identity archetype confirmed:** Sage-Architect-Builder — someone who sees clearly, designs intentionally, builds and tends daily. Embodied through pursuit, never finished. Starting posture is gratitude, not combat.
+**Identity archetype confirmed:** Sage-Architect-Builder. Starting posture is gratitude, not combat. Embodied through daily pursuit, never finished.
 
-**Closest identity noun:** The Steward — one who tends what's been entrusted from a place of gratitude. First instinct after research (Clint): *"The Steward's Way."* Steward synonyms explored: Keeper (top candidate), Cultivator, Tender. Sovereign/Craftsman/Author — all over-claimed, avoid.
+**Closest identity noun:** The Steward. Steward synonyms explored: Keeper (top candidate), Cultivator, Tender. Sovereign/Craftsman/Author — over-claimed, avoid.
 
-**Austrian heritage thread (developing — not yet named):**
-Clint's Austrian heritage is the authentic source of the brand identity — the same instinct that produced "Kompass" as a product name. The Austrian Sacred Heart Fire tradition (Herz-Jesu-Feuer / Bergfeuer / Sonnwendfeuer), witnessed firsthand at the 2026 summer solstice in Tyrol, is the most resonant brand story found:
-
-- **Tradition origin:** 1796, Tyrolean communities vow to tend their land and renew the vow annually by lighting fires on every peak simultaneously
-- **The Kronerer:** In Oberammergau, 15 elite men hold the ancient right to light the crown fire on the summit — a title earned through generational training, selection, and grit. This is the most resonant identity archetype found.
-- **The analogies (full detail in messaging doc):**
-  - The climb = daily practice and habit installation
-  - Generational knowledge = the Learning Engine
-  - Every peak lit simultaneously = all four life domains tended at once
-  - The fire as beacon = leadership and legacy
-  - The vow renewed = annual ritual and recommitment
-  - There is always another peak = pursuit, not destination
-  - The Kronerer = the earned identity
-- **Names explored:** Bergfeuer, Bergfeurer, Kronerer, Krone, Krone Way, Feura, Luma Way, Feuerhüter, Lichtweg. None landed as *the one* in this session.
-- **Session conclusion (Clint):** "I like the identity of Bergfeurer but not the abrasive names. German can be a tough and abrupt language." Played with Kronerer phonetic variants. Running with Stitser Way as placeholder while the fire identity develops organically.
+**Austrian heritage thread (developing):** Herz-Jesu-Feuer / Bergfeuer / Sonnwendfeuer as brand story. Kronerer as most resonant identity archetype. Names explored: Bergfeuer, Kronerer, Krone Way, Feura, Luma Way — none landed. Running with Stitser Way as placeholder.
 
 **Confirmed positioning statements:**
 - *"The app is a machine that procedurally produces a better life. You don't need to arrive fully formed. The machine installs you into clarity over time."*
 - *"No need to be a warrior. You don't even need to explore. With the world's intelligence at your fingertips, you can be a sage builder of your life."*
 
-**Domain rename in development (differentiating from Warriors Way CORE 4):**
-First instinct: *"Your money, your mind, your people, your Mecca."* Direction is right — personal, possessive, aspirational. Words not yet final.
+**Domain rename in development:** First instinct: *"Your money, your mind, your people, your Mecca."* Direction right — words not yet final.
 
-**Next steps for identity:**
-- Continue playing with Kronerer/Bergfeurer phonetic variants (2 syllables or less, warm not abrasive, smooth in English)
-- Test the fire-lit ridgeline as the visual progress metaphor in app prototype
-- Trademark/domain clearance when a name lands
-- Test "I am a ___" with Brynn, Christie, and 5 strangers who believe in intentional living
-- Explore multi-brand potential: Stitser Way as family platform, public brand using fire identity once it lands
+**Full detail:** `03-stitser-way/messaging.md` in Clint-s-Kompass repo.
+
+---
+
+### N — Project-Based Tool Layer (Claude-Built Tools)
+
+**What it is:** A project-scoped tool-building system where Claude builds custom mini-apps, trackers, checklists, and schedulers for bounded life projects. Tools are created for a specific project stage, used through that stage's lifecycle, then archived for future reference or sharing with others. This is distinct from the recurring life domain framework (Body/Being/Balance/Business) — it handles the temporary, bounded, specific needs that arise throughout life.
+
+**The core insight:** Not everything in life is a habit or a domain. Some things are projects — bounded in time, specific in need, complete when done. A trip to Europe isn't a Body goal. An ear infection isn't a Being ritual. An AP Chemistry test isn't a Business phase gate. These need their own tools, purpose-built for their stage, scoped to their project.
+
+**Project hierarchy (SmartSuite S-BOS project infrastructure as data source):**
+
+```
+Master Project     → School Year 2026–27
+  Child Project    → AP Chemistry
+    Grandchild     → Midterm Exam — Oct 15
+      Tool         → Claude-built study app: flashcard quiz + spaced review schedule
+
+Master Project     → Europe Trip — Summer 2027
+  Child Project    → Budget
+    Tool           → Claude-built trip budget tracker with categories + running total
+  Child Project    → Itinerary
+    Tool           → Claude-built day-by-day schedule with logistics
+
+Master Project     → Ear Infection — Max, Jun 2026
+  Child Project    → Treatment Protocol
+    Tool           → Claude-built medication schedule: amoxicillin dosage + timing reminders
+```
+
+**Tool lifecycle — four stages:**
+
+| Stage | What happens | App behavior |
+|---|---|---|
+| **Create** | Claude builds the tool scoped to the project stage | User describes the need → Claude generates the tool → tool attaches to the project |
+| **Active** | Tool is in use for the duration of the project stage | Tool accessible from project card, surfaces in Horizon Rings if tasks are attached |
+| **Complete** | Project stage ends, tool has served its purpose | Tool marked complete, project stage closes |
+| **Archived** | Tool stored for future reference or sharing | Accessible from project archive, shareable with other users or family members |
+
+**Tool types (Claude generates based on need — not a fixed menu):**
+
+| Type | Example |
+|---|---|
+| Tracker | Trip budget, weight during a protocol, medication doses |
+| Checklist | Packing list, pre-race checklist, medication schedule |
+| Study app | Flashcard quiz, spaced review schedule, concept summary |
+| Scheduler | Day-by-day itinerary, treatment timeline, exam prep calendar |
+| Calculator | Budget with categories, dosage calculator, grade projector |
+| Reference | Research summary, rules for a sport, recipe scaled for group |
+
+**Data model (confirmed):** Projects live in the existing S-BOS SmartSuite project infrastructure — Master Project → Child Project → Grandchild Project hierarchy. Tools are Claude artifacts attached to a project record. Phase 1: tools stored as Claude artifact HTML files linked to the SmartSuite project record. Phase 2: tool storage migrates to Supabase alongside the rest of the data layer.
+
+**Relationship to the rest of the app:**
+- Projects surface in **Horizon Rings** — active project tasks appear in the rings by due date and urgency
+- Projects belong to a **life domain** — a school project is Balance (family/kids), a trip is Balance or Being, a medical protocol is Body
+- Completed tools go to the **Archive** — accessible from the project record and browsable in a tool library
+- Shareable tools flow through **Family Profiles** — a study app built for Avery can be shared with Brynn for a similar test
+
+**The archive as a library:** Over time, the collection of completed Claude-built tools becomes a personal library — a study app for AP Chemistry could be adapted for AP Biology; a medication schedule for one ear infection becomes the template for the next. The archive is searchable by project type, domain, family member, and tool type.
+
+**What this is NOT:**
+- Not S-BOS project management — S-BOS handles business projects (construction, development, brokerage). This handles personal/family projects.
+- Not a pre-built app library — Claude builds each tool fresh for the specific need. The archive stores the outputs, not a catalog of templates.
+- Not permanent infrastructure — tools have a lifecycle and are expected to be completed and archived, not maintained indefinitely.
+
+**Open question (flag for §9):** What is the UX for creating a new tool? Is it: (a) tap into a project → "Build a tool for this stage" → Claude conversation, or (b) a Claude skill trigger from anywhere ("build me a tool for...") → attaches to the project? Both may be valid entry points.
