@@ -1,6 +1,6 @@
 # Product Design Doc: Stitser Way
 
-> **Status:** 🔄 In Progress — Gate 2 ✅ COMPLETE. Gate 3 (§4 Features + §5 Workflows) next.
+> **Status:** 🔄 In Progress — Gate 2 ✅ COMPLETE. §4 Core Features in progress.
 > **Methodology:** Ryan Falke's Design Templates, adapted for Stitser Way
 > **Decision-maker:** Clint Stitser
 > **Last updated:** 2026-06-25
@@ -13,7 +13,7 @@
 |---|---|---|
 | Gate 1 | §1 Problem + §2 Users | ✅ Complete — approved by Clint 2026-06-25 |
 | Gate 2 | §3 Core Entities | ✅ Complete — approved by Clint 2026-06-25 |
-| Gate 3 | §4 Features + §5 Workflows | ⏳ Next |
+| Gate 3 | §4 Features + §5 Workflows | 🔄 In progress |
 | Gate 4 | §6 Scope + §7 Metrics + §8 Timeline + §9 Open Questions | ⏳ Not started |
 | ✅ PDD Done | All gates passed | Data Integration Doc + Tech Spec + UI/UX Doc can begin |
 
@@ -21,15 +21,10 @@
 
 ## Phase Model
 
-> **Confirmed 2026-06-25.** Phase 1 is for Clint only. Family is entirely Phase 2.
-
 | Phase | Users | What gets built |
 |---|---|---|
 | **Phase 1** | Clint only | Full personal OS — all four domains, rituals, Goal engine, Horizon Rings, Day Mode, Spiral, Big Ass Calendar, Quarterly Habit, Key Docs, Projects, Tools, Health data layer |
 | **Phase 2** | Family members | Each family member gets their own profile, data, and experience. Built on the validated Phase 1 machine. |
-
-**Table Talk nuance:** Phase 1 — Clint records the conversation. Phase 2 — per-member entry.
-**About Me nuance:** Clint's 4 GitHub files are Phase 1. Family profiles are read-only in Phase 1, interactive in Phase 2.
 
 ---
 
@@ -37,17 +32,15 @@
 
 ### The problem
 
-Most people who believe in intentional living have the same experience: the knowledge exists, the desire exists, and the tools exist — but they live in pieces. A habit tracker here. A journal there. Goals in a spreadsheet. Reminders on a sticky note. Coaching in a chat window. Training data in an app that doesn't talk to anything else. And at the center of it all, a person who has to manually hold the whole system together in their head every day.
+Most people who believe in intentional living have the same experience: the knowledge exists, the desire exists, and the tools exist — but they live in pieces. For Clint, this produces four compounding problems:
 
-For Clint, this produces four compounding problems:
+**1. Fragmentation.** No single place where the full picture of a life is visible, connected, and actionable.
 
-**1. Fragmentation.** The infrastructure exists — SmartSuite holds the goals and GYR data, Claude runs the rituals and stacks, Google Calendar holds the year, Strava holds the training, GitHub holds the family profiles. But none of these surfaces know what the others are doing. There is no single place where the full picture of a life is visible, connected, and actionable.
+**2. Absence.** No application designed around the actual frameworks — GYR Spiral, four life domains, phase-based accountability, Container Model, spaced learning, day-mode model, Table Talk, Vivid Vision, Misogi, Quarterly Habit arc.
 
-**2. Absence.** There is no application designed around the actual frameworks and principles of intentional living — the GYR Spiral, the four life domains, phase-based accountability, the Container Model, spaced learning, the day-mode model, Brynn's Table Talk ritual, the Vivid Vision, the Misogi, the Quarterly Habit arc. These frameworks exist in Clint's operating system. They do not exist as a coherent, daily-use product.
+**3. The activation gap.** Without a daily machine, knowledge fades, rituals drift, the Vivid Vision is written once and forgotten.
 
-**3. The activation gap.** Even with the knowledge and the frameworks, sustained installation requires a daily machine. Without it, great insights fade. Goals go untracked. Rituals drift. The GYR Spiral runs once, then gets forgotten. The Vivid Vision is written in January and not looked at until December. The knowledge is there — but there is no system that installs it into the body, the habits, and the daily rhythm, one concept at a time, until it becomes identity.
-
-**4. No project-level tool layer.** Life is not just habits and domains — it contains bounded projects with specific, temporary needs. A trip to Europe needs a budget. A child's ear infection needs a medication schedule. A test needs a study app. Today, these tools are either cobbled together manually, outsourced to generic apps, or not built at all.
+**4. No project-level tool layer.** Bounded projects (trips, medical protocols, study prep) have no purpose-built tool system.
 
 ### The solution in one sentence
 
@@ -55,22 +48,11 @@ For Clint, this produces four compounding problems:
 
 ### What a good solution looks like
 
-A single application that integrates the entire practice of intentional living — principles, tools, rituals, tracking, coaching, family coordination, health data, and project-level tool-building — into one coherent daily experience. One that:
-
-- Surfaces the right information at the right time based on day type, domain status, and what's alive
-- Installs frameworks and knowledge through staged, spaced learning — not information dumps
-- Connects every domain of life (Body, Being, Balance, Business) to goals, phases, habits, and progress in one place
-- Integrates Claude natively as the coaching, processing, suggestion, and tool-building layer
-- Allows Claude to build custom tools for bounded projects — scoped to the project pillar, archived on completion
-- Serves Clint first, and by extension his family
+A single application integrating the entire practice of intentional living — principles, rituals, tracking, coaching, health data, and project tools — into one coherent daily experience that serves Clint first and his family next.
 
 ### What this is NOT
 
-- Not a task manager — tasks are one input among many
-- Not a journal app — journaling is one output among many
-- Not a replacement for S-BOS — that is the business operating system; this is the personal one
-- Not a collection of tools glued together — it is a machine with a single coherent logic
-- Not finished when the data is entered — it is always working, always suggesting, always tending
+Not a task manager. Not a journal app. Not S-BOS. Not tools glued together. Not finished when data is entered.
 
 ---
 
@@ -84,24 +66,15 @@ A single application that integrates the entire practice of intentional living �
 
 ## §2 — Target Users
 
-### Phase 1 user: Clint Stitser (only)
+**Phase 1:** Clint Stitser only. Interest-based nervous system, object permanence challenges, consecutive appetite, Channel of Inspiration (1-8).
 
-- Personal operating system, daily driver. Four domains: Body, Being, Balance, Business.
-- Operating manual profile: interest-based nervous system, object permanence challenges, consecutive appetite, Channel of Inspiration (1-8), non-linear thinking is a structural advantage.
-
-### Phase 2 users: Family members
-
-> ⏳ Entirely Phase 2. Architecture supports expansion.
-
-Christie (Partner), Avery, Brynn, Max (Children). Kids enter their own data. Customized to each person's wiring.
-
-### Phase 1 user needs by domain
+**Phase 2:** Christie, Avery, Brynn, Max. Kids enter their own data. Customized to each person's wiring.
 
 | Domain | Phase 1 need |
 |---|---|
-| Body | Weight, body fat, meals, alcohol, sleep, readiness, training (Strava), health records. Phase-based protocol. Staged learning. |
+| Body | Weight, body fat, meals, alcohol, sleep, readiness, training, health records. Phase-based protocol. |
 | Being | Rituals, stacks, decisions, mindset, Spiral processing. |
-| Balance | Table Talk (Clint records). Family profiles as read-only context. Relationship measurables tracked via Stat + Goal engine with Claude inference. |
+| Balance | Table Talk (Clint records). Family profiles as read-only context. Relationship measurables via inference. |
 | Business | Personal goals. Phase anchor for allocator seat. GYR per product line. |
 
 ---
@@ -116,140 +89,558 @@ Christie (Partner), Avery, Brynn, Max (Children). Kids enter their own data. Cus
 
 ## §3 — Core Entities
 
-> **Scope:** Phase 1 only. All SmartSuite app IDs confirmed by live schema pull 2026-06-25.
+> 44 entities. Full definitions, app IDs, and clarifications in the previous version of this document. Summarized here for reference.
 
-### Entity Map
-
-| # | Entity | Phase | Source | App ID / Location |
-|---|---|---|---|---|
-| 1 | Goal | 1 | Game App | `6824d4d1885a8769bd2dfc0d` |
-| 2 | Priority | 1 | Game App | `68216f48f98789b5bb095a4b` |
-| 3 | Milestone | 1 | Game App | `68216f48f98789b5bb095a37` |
-| 4 | Stat | 1 | Game App | `6840927ebcfa2d2bfef039e2` |
-| 5 | Stat Menu Item | 1 | Game App | `68409420391d32d925740e28` |
-| 6 | GYR Status Report | 1 | Game App | `68216f48f98789b5bb095a51` |
-| 7 | Task | 1 | Three sources | multiple — see definition |
-| 8 | Journal Entry | 1 | Stitser Way | `68f8f8fe3757414d70d94ae0` |
-| 9 | Day Mode Log | 1 | Stitser Way (automation) | `68f8f8fe3757414d70d94ae0` |
-| 10 | Decision | 1 | Stitser Way | `68feda0035fd19c93de8d757` |
-| 11 | Principle / Realization | 1 | Stitser Way | `6913f7e0e36376fca2b14b0e` |
-| 12 | BAC Day Type | 1 | Stitser Way | `69458768a624db0406935efc` |
-| 13 | BAC Calendar Event | 1 | Stitser Way | `6945877b88051cf9ac527e8a` |
-| 14 | BAC Goal | 1 | Stitser Way | `69458793cc79c051739c047b` |
-| 15 | Quarterly Habit | 1 | Game App Goals (tagged) | `6824d4d1885a8769bd2dfc0d` |
-| 16 | Misogi | 1 | Game App Goals (tagged) | `6824d4d1885a8769bd2dfc0d` |
-| 17 | Kevin's Rule Event | 1 | Game App Goals (tagged) | `6824d4d1885a8769bd2dfc0d` |
-| 18 | Project | 1 | SB Biz Dev | `68216a706900e8eaf75a05a7` |
-| 19 | Check List | 1 | SB Project MGT | `6a060dadc513b3329b7d4485` |
-| 20 | Check List Task | 1 | SB Project MGT | `68a8e17251dc814e8c529f3f` |
-| 21 | Project Budget — G702 | 1 | SB Project MGT | `68a8c3d2bba73ca6e62d00f0` |
-| 22 | Project Budget Line Items — G703 | 1 | SB Project MGT | `68db71a363e88ace0bd45439` |
-| 23 | Baseline Budget Items | 1 | SB Project MGT | `69bb89ebf6a195c2c73a3b3e` |
-| 24 | Bills & Invoices | 1 | SB Project MGT | `68a8c3d2bba73ca6e62d1297` |
-| 25 | Project Schedule | 1 | SB Project MGT | `68a8d2153c056ca71c9928fd` |
-| 26 | Project Dates | 1 | SB Project MGT | `69bb7d64740e0e696d88c47f` |
-| 27 | Notes & Comments | 1 | SB Biz Dev | `6894e64f621641b3ef90fa99` |
-| 28 | Project Tool | 1 | Claude artifact + SmartSuite link | n/a |
-| 29 | Strava Activity | 1 | Strava MCP | external — read-only |
-| 30 | Oura Sleep Record | 1 | Oura API | external — read-only |
-| 31 | Oura Readiness Record | 1 | Oura API | external — read-only |
-| 32 | Apple Health Weight Record | 1 | Apple Health API | external — read-only |
-| 33 | Body Scan Record | 1 | Google Drive link | DXA/DEXA — Drive link + date |
-| 34 | Bloodwork Record | 1 | Google Drive link | Lab report — Drive link + date |
-| 35 | Eye Prescription Record | 1 | Google Drive link | Prescription — Drive link + date |
-| 36 | Vivid Vision | 1 | GitHub (source of truth) | `01-user-profile/vivid-vision-2036.md` |
-| 37 | Annual Commitments | 1 | GitHub (source of truth) | `01-user-profile/2026-commitments.md` |
-| 38 | Clint's Profile | 1 | GitHub | `01-user-profile/` |
-| 39 | Family Profile | 1 (read-only) / 2 | GitHub | `07-family/` |
-| 40 | Key Doc | 1 | JSON config → Supabase | n/a |
-| 41 | Lesson | 1 | SB Training & Certifications | `68d480e2727607560a7f0d26` |
-| 42 | Course | 1 | SB Training & Certifications | `68d480e2727607560a7f0d2c` |
-| 43 | Learning Track | 1 | SB Training & Certifications | `68d480e2727607560a7f0d23` |
-| 44 | Progress Record | 1 | SB Training & Certifications | `6a18ad82e630be8e82a202ea` |
+**Game App:** Goals (#1), Priorities (#2), Milestones (#3), Stats (#4), Stat Menu Items (#5), GYR Status Reports (#6)
+**Stitser Way solution:** Journal Entries (#8), Day Mode Log (#9), Decisions (#10), Principles/Realizations (#11), BAC Day Types (#12), BAC Calendar Events (#13), BAC Goals (#14)
+**Game App Goals (tagged):** Quarterly Habit (#15), Misogi (#16), Kevin's Rule Event (#17)
+**Tasks (composite — 3 sources):** Check List Tasks + Notes & Comments + GYR follow-ups (#7)
+**SB Project MGT:** Projects (#18), Check Lists (#19), Check List Tasks (#20), Budget G702 (#21), Budget Line Items G703 (#22), Baseline Budget Items (#23), Bills & Invoices (#24), Project Schedule (#25), Project Dates (#26)
+**SB Biz Dev:** Notes & Comments (#27)
+**Claude artifact:** Project Tool (#28)
+**External APIs:** Strava (#29), Oura Sleep (#30), Oura Readiness (#31), Apple Health Weight (#32)
+**Drive links:** Body Scan (#33), Bloodwork (#34), Eye Prescription (#35)
+**GitHub:** Vivid Vision (#36), Annual Commitments (#37), Clint's Profile (#38), Family Profiles (#39)
+**App config:** Key Doc (#40)
+**SB Training & Certifications:** Lesson (#41), Course (#42), Learning Track (#43), Progress Record (#44)
 
 ---
 
-### Key Clarifications
-
-**Goals — universal tag-based entity:** Quarterly Habit, Misogi, Kevin's Rule are Goal records with a `type` tag. Values: Standard Goal / Quarterly Habit / Misogi / Kevin's Rule.
-
-**Tasks — three source tables:** Check List Tasks + Notes & Comments + GYR Status Reports (follow-up owner = Clint, Red/Yellow, not completed).
-
-**Day Mode → Journal automation:** "Day Mode Log" entry auto-created after confirmation. Enables pattern tracking over time.
-
-**Daily Reminder Engine:** "A Thought For You" on Today tab. Draws from Vivid Vision lines + Annual Commitment lines + Principles & Realizations records. One per day, never repeats two days running.
-
-**Bills & Invoices — Phase 1 confirmed:** Actively used for Europe trip budget tracking.
-
-**Health data — two integration patterns:**
-- *Live API reads (no SmartSuite storage):* Oura (sleep + readiness — primary), Apple Health (weight — primary), Strava (training).
-- *Historical Drive links (date + notes + URL):* Body Scan / DXA, Bloodwork, Eye Prescription — stored in Body domain Health Vault.
-
-**Source of truth rule (confirmed 2026-06-25):** Oura primary for sleep + readiness. Apple Health primary for weight.
-
-**Health Vault:** Body domain section surfacing all Drive-linked health records chronologically. One-tap Drive access. Add via simple form: type → date → Drive URL → notes.
-
-**Relationship measurables — no new entities needed:**
-Balance domain Goals like "Rides with Max," "Dates with Christie" use the existing Stat + Goal engine. Logged via the Stat Inference Engine (Discovery Input O) — no forms.
-
-**Skill/Habit Installation Arc — SB Training & Certifications `68d480e2727607560a7f0d22`:**
-The data store for tracking progression from conscious incompetence to subconscious competence. Four tables, all confirmed live:
-
-| Entity | Table | Role in the arc |
-|---|---|---|
-| **Lesson** (#41) | Lesson Catalog `68d480e2727607560a7f0d26` | Atomic learning unit — one concept, one card. Two types: In-App (delivered as a Calmio-style card, 6-hour safety rail) and External Practice (a daily checkbox prompt). |
-| **Course** (#42) | Courses `68d480e2727607560a7f0d2c` | A structured sequence of Lessons for one phase of the arc. |
-| **Learning Track** (#43) | Learning Tracks/Certifications `68d480e2727607560a7f0d23` | The full installation arc from Install through Subconscious Competence. Contains multiple Courses. |
-| **Progress Record** (#44) | Progress Table `6a18ad82e630be8e82a202ea` | Clint's live position — which lesson, which phase, completion %, date started, streak for external practice. |
-
-**Lesson types — two kinds (confirmed 2026-06-25):**
-
-| Type | How it's delivered | How progress is logged | Safety rail |
-|---|---|---|---|
-| **In-App Lesson** | Calmio-style card in the app — text, one concept, Next button | Automatically on completion | 6-hour rail — next lesson held until next day's slot |
-| **External Practice** | Daily checkbox prompt — *"Did you do your Calmio session today?"* | One-tap Yes / Skip. No content in the app — just the boolean. | No safety rail — it's a daily check-in, not a lesson delivery |
-
-**What External Practice tracking does NOT capture:** what happened in the external app, any content, duration, or quality. Only *that* it happened. The external app (Calmio, Duolingo, a coaching platform) owns the content and experience. Stitser Way owns the arc-level accountability — did the practice happen today, what's the streak, is the Learning Track on pace.
-
-**How the arc maps to Phases of Proficiency:**
-
-```
-Learning Track = "Body Protocol: Fat Loss & MTB Performance"
-  Course 1 = Foundation Phase    (Install → Beginner)
-    Lesson 1 = In-App: Why sleep outperforms exercise for fat loss
-    Lesson 2 = In-App: The cortisol/testosterone triangle
-    Lesson 3 = In-App: Why alcohol is the primary visceral fat driver
-    Lesson 4 = External: Daily Calmio session (checkbox)
-    ...
-  Course 2 = Engine Phase        (Intermediate → Expert)
-  Course 3 = Race Block Phase    (Expert → Subconscious Competence)
-```
-
-**Cross-product note:** SB Training & Certifications serves both Stitser Way (personal domain skills and habits) and S-BOS (business operational skills — Pay App, Compliance Audit, etc.). Same four tables, two audiences.
-
-**Vivid Vision + Annual Commitments:** GitHub source of truth. App reads via GitHub API. Also feed Daily Reminder Engine.
-
-**BAC infrastructure already live:** BAC-Day Types `69458768a624db0406935efc`, BAC-Calendar Events `6945877b88051cf9ac527e8a`, BAC-Goals `69458793cc79c051739c047b`.
-
-### §3 Gate 2 Checklist
+## §3 Gate 2 Checklist
 
 - [x] All Phase 1 entities named — ✅ Approved by Clint 2026-06-25
 - [x] No orphan entities — ✅ Approved by Clint 2026-06-25
 - [x] Phase 1 / Phase 2 boundary clear — ✅ Approved by Clint 2026-06-25
 
-> **Note:** Entities 41–44 and External Practice lesson type added post-approval. Clarifications, not scope changes.
-
 ---
 
 ## §4 — Core Features
 
-> ⏳ Not started. Gate 2 complete — ready to begin.
+> **15 features.** Each spec contains: what it does, entities read/write, UX behavior, success criteria. Phase 1 only.
+
+---
+
+### F01 — Day Mode Engine
+
+**What it does:** Determines the operating posture for the day — Focus, Buffer, or Free — and changes the app's behavior accordingly. Claude suggests the mode based on three signals; Clint confirms with a gut check.
+
+**Entities read:** BAC Calendar Events (#13) — today's schedule. Task (#7) — count of Overdue + This Week items. Day Mode Log (#9) — days since last Buffer and Free Day.
+
+**Entities written:** Day Mode Log (#9) — one Journal Entry created per confirmed day, type = "Day Mode Log," fields: mode, date, confirmed-at timestamp.
+
+**UX behavior:**
+- On app open, Kompass surfaces one suggestion with a one-sentence reason: *"Today looks like a Buffer Day — 4 overdue, last buffer was Tuesday."*
+- Clint responds: uh-huh (confirms) or uh-uh (opens three-option picker: Focus / Buffer / Free)
+- Max two questions. Never open-ended.
+- Mode badge visible in nav. Tap to switch at any time.
+- **Focus Day:** Tab bar hides. Only anchor item + Pomodoro timer. Break-glass button (low-visibility) reveals task/capture/email access. Grounding affirmation from Clint's operating manual shown.
+- **Buffer Day:** Full app. Horizon Rings is the command center. Three sub-tabs: Horizon / Email / Big 3. Two guardrail questions fire on any commitment decision.
+- **Free Day:** Calendar + wins panel + Table Talk prompt only. Mandate: *"Your job today is to wander."* Kompass off.
+
+**Success criteria:**
+- Mode suggested within 3 seconds of app open
+- Day Mode Log entry created automatically on confirmation
+- Tab bar hides/shows correctly on mode change
+- Free Day shows no tasks, no inbox, no Horizon Rings
+
+---
+
+### F02 — Horizon Rings
+
+**What it does:** Surfaces the most important and urgent items from across Clint's active projects, goals, and follow-ups in a single, filtered, actionable view. The daily planning screen. Max 7–10 items at any time.
+
+**Entities read:** Check List Tasks (#20) — assigned to Clint, not complete/cancelled. Notes & Comments (#27) — assigned to Clint, follow-up date ≤ today + 7 days. GYR Status Reports (#6) — Clint is follow-up owner, Red/Yellow, not completed. Goals (#1) — for Phase Context Strip.
+
+**Entities written:** Check List Tasks (#20) — status updates (Done, Parked, Killed, Snoozed). Stats (#4) — when Sacral Anchor is confirmed as logged.
+
+**UX behavior — five rings:**
+
+| Ring | Signal |
+|---|---|
+| 🔴 Overdue | Past due date |
+| 🟡 This Week | Due within 7 days OR aging 48hr+ untouched |
+| 🔵 Active | No due date, currently in motion |
+| 🟢 Coming Soon | Due 8–21 days out |
+| ⚪ Parked | Due 22+ days or explicitly snoozed |
+
+- Priority stack order: Overdue → GYR Red → Notes past due → Active Big 3 → Aging This Week
+- Coming Soon and Parked collapsed by default — tap to expand
+- Phase Context Strip above rings: one chip per active product line, current phase, tappable
+
+**Dual-mode toggle (top-right icon):**
+- **Stacked list (default):** Full triage. Done / Park / Kill / Snooze inline on each card.
+- **Circles overview:** Concentric rings. Items as dots. Tap ring to filter. Tap dot → detail card below with actions. Tap "→ Focus" → returns to stacked with item highlighted in gold.
+
+**Sacral Anchor:**
+- Prompt: *"What has the most pull for you today?"*
+- Surfaces top 3 actionable items. Clint selects one. Becomes the day's anchor, pinned at top.
+- No algorithm — gut only.
+
+**Quick Clear mode:** Triggered by button. Surfaces items with no due date AND no activity in 7+ days. Batches of 3–5. Commands: Done / Park / Kill / Keep.
+
+**Success criteria:**
+- Never more than 10 items in the active view
+- Dual-mode toggle works without page reload
+- Sacral Anchor persists as pinned item for the full day
+- Quick Clear correctly surfaces stale items only
+
+---
+
+### F03 — Stat Inference Engine
+
+**What it does:** Claude scans Strava, journal entries, and calendar events after they occur and surfaces one-tap prompts to log stats against active Goals — eliminating manual form entry for relationship and activity measurables.
+
+**Entities read:** Strava Activity (#29), Journal Entry (#8), BAC Calendar Events (#13), Goal (#1) — active Balance Goals with linked Stat Menu Items, Stat Menu Item (#5).
+
+**Entities written:** Stat (#4) — one new record per confirmed log.
+
+**UX behavior:**
+- Claude scans for signal after each event (Strava sync, new journal entry, completed calendar event)
+- Matches event to active Goal by person name + activity type
+- Surfaces one prompt per match: *"You just logged a ride — was Max with you? Count it toward 'Rides with Max Q3' (3 of 10)?"*
+- Response options: Yes / No / Not quite (one clarifying question, never a form)
+- Prompts queue — if multiple matches, presented one at a time
+- Dismissed prompts do not re-surface for that event
+
+**Success criteria:**
+- Correct match rate > 85% on obvious signals (person name + activity in journal)
+- Prompt surfaces within 5 minutes of triggering event
+- No prompt ever opens a multi-field form
+- Confirmed logs correctly increment the linked Goal's % metric complete
+
+---
+
+### F04 — Universal Goal Engine
+
+**What it does:** Provides a consistent five-step framework for every initiative across every domain. All Goal types (Standard, Quarterly Habit, Misogi, Kevin's Rule) use this same engine. Domain-specific fields layer on top.
+
+**Entities read/written:** Goal (#1), Priority (#2), Milestone (#3), Stat (#4), Stat Menu Item (#5), GYR Status Report (#6).
+
+**The five steps:**
+
+| Step | What happens | Entity |
+|---|---|---|
+| 1. Current Score | Where you are now vs. target — pulls from linked Stats | Goal + Stat |
+| 2. Goal + Deadline | What you're aiming for and by when | Goal (target, due date) |
+| 3. Rhythm & Reminders | Reporting frequency, chunked execution, staged learning | Goal (reporting cadence) + Learning Track |
+| 4. Progress Tracking | Visual + numerical. % Metric Complete, % Time Complete, Balance to Finish, Reporting Grade | Goal (formula fields) |
+| 5. Celebrate Wins | GYR grade update, scoreboard, phase advancement, identity statement | GYR Status Report + Journal Entry |
+
+**UX behavior:**
+- New Goal is created by tapping "Add" inside a domain → Claude opens a guided conversation (not a form)
+- Claude asks one question at a time, never a multi-field page
+- Once all five steps are populated, the Goal card renders with progress ring and current score
+- Existing Goal tap → initiative screen showing all five steps, current values, and quick-log for Stats
+- GYR grade shown as a colored indicator (Green/Yellow/Red) on the Goal card in the domain view
+
+**Success criteria:**
+- New Goal fully set up in < 5 Claude exchanges
+- Goal card shows current score vs. target and % metric complete at all times
+- GYR grade correctly reflects the most recent GYR Status Report
+
+---
+
+### F05 — GYR Spiral
+
+**What it does:** Guides Clint through the six-step transformation processing session (Facts → Feelings → Root Cause → Focus → Massive/Relevant Actions → Fruit) for any Goal or Priority in any domain. Claude facilitates each step. Output is filed to the GYR Status Reports table.
+
+**Entities read:** Goal (#1), Priority (#2), GYR Status Report (#6) — prior reports for context.
+
+**Entities written:** GYR Status Report (#6) — one new record per completed Spiral. Journal Entry (#8) — filed simultaneously as a Journal record.
+
+**UX behavior:**
+- Entry points: (a) top-right Spiral icon from any screen, (b) "Run Spiral" button on any Goal/Priority card, (c) Kompass proactively suggests when a domain is Yellow or Red
+- Step 1: Domain selector → Goal selector (or free-form if not linked to a Goal)
+- Steps 2–7: Claude presents one step at a time. Prior answers visible as Clint progresses — the full picture builds.
+- Claude provides contextual coaching at each step — not generic prompts
+- On completion: summary shown, GYR grade selected, filed to SmartSuite, Journal Entry created
+- Prior Spirals for the same Goal surfaced as context ("Last time you ran this, your root cause was…")
+
+**Success criteria:**
+- Spiral can be completed start to finish in < 15 minutes
+- Prior Spiral context loaded correctly for returning Goals
+- GYR grade on the linked Goal card updates immediately on completion
+- Journal Entry filed correctly with type = "Spiral" and domain tag
+
+---
+
+### F06 — Learning Engine
+
+**What it does:** Delivers staged, spaced learning for skills and habits being installed — one concept per day, sleep between sessions, 6-hour safety rail for in-app lessons. Tracks external practice (Calmio, other apps) via a daily checkbox. Progress tracked against a Learning Track in SB Training & Certifications.
+
+**Entities read:** Learning Track (#43), Course (#42), Lesson (#41), Progress Record (#44).
+
+**Entities written:** Progress Record (#44) — completion entry per lesson or external practice confirmation.
+
+**Two lesson types:**
+
+| Type | Delivery | Logged by | Safety rail |
+|---|---|---|---|
+| In-App | Calmio-style card: title, one concept, Next button. Progress indicator (17/20). Time estimate shown. | Auto on tap of Next | 6-hour hold after completion |
+| External Practice | Daily prompt: *"Did you do your Calmio session today?"* One-tap Yes / Skip | Manual confirmation | None |
+
+**UX behavior:**
+- Learning Track activates when a new Quarterly Habit or Body protocol phase starts — automatic, not manual
+- Today's lesson surfaces as a card on the Today tab (below Big 3, above Table Talk)
+- "Next" tap logs completion, shows brief celebration, queues next lesson for next day's slot
+- If 6-hour rail is active, Next is replaced by: *"Come back tomorrow — sleep is doing the work."*
+- External Practice prompt surfaces each morning for active external-practice lessons
+- Progress ring on the Learning Track card shows % of current Course complete
+- Phase advancement (Course completion) triggers celebration and unlocks the next Course
+
+**Success criteria:**
+- 6-hour safety rail correctly prevents next lesson delivery within same day
+- External Practice checkbox works independently of the safety rail
+- Progress ring updates immediately on completion
+- Learning Track completion triggers Quarterly Habit celebration sequence (F10)
+
+---
+
+### F07 — Daily Reminder Engine
+
+**What it does:** Surfaces one rotating thought per day on the Today tab — drawn from Vivid Vision lines, Annual Commitment lines, and Principles & Realizations records. Designed to keep the north star visible without overwhelming. Modeled on Calmio's "A Thought For You."
+
+**Entities read:** Vivid Vision (#36), Annual Commitments (#37), Principles & Realizations (#11).
+
+**Entities written:** None. Display only.
+
+**UX behavior:**
+- Appears on Today tab as a dedicated card: "A Thought For You" label, one sentence or short paragraph
+- Content pools: (a) parsed lines from `vivid-vision-2036.md`, (b) parsed lines from `2026-commitments.md`, (c) records from Principles & Realizations table
+- Rotates daily — never the same content two days in a row
+- Clint can tap to save (adds to Principles & Realizations if not already there) or dismiss
+- If dismissed, a new one is drawn from the pool
+- Tied to morning ritual — shown as part of the ritual open sequence
+
+**Success criteria:**
+- No repeat within a 7-day window
+- Content renders correctly from all three pools
+- Save action correctly creates/links a Principles & Realizations record
+- Displays within 1 second of Today tab load
+
+---
+
+### F08 — Body Domain — Health Tracking & Vault
+
+**What it does:** Surfaces all Body domain data in one place — live metrics from Oura, Apple Health, and Strava alongside historical health records from Google Drive. Phase-based protocol with staged learning. Three sub-sections: Metrics Dashboard, Training Log, Health Vault.
+
+**Entities read:** Oura Sleep (#30), Oura Readiness (#31), Apple Health Weight (#32), Strava Activity (#29), Body Scan (#33), Bloodwork (#34), Eye Prescription (#35), Goal (#1) — Body domain goals, Learning Track (#43) — Body protocol track.
+
+**Entities written:** Stat (#4) — when Clint logs a manual stat (meals, alcohol). Body Scan / Bloodwork / Eye Prescription records — when new Drive links are added.
+
+**Three sub-sections:**
+
+**Metrics Dashboard:**
+- Weight: daily log from Apple Health → 7-day rolling average + trend indicator (↑↓→)
+- Sleep: Oura sleep score, total sleep, HRV, RHR — last 7 nights shown as a sparkline
+- Readiness: Oura readiness score + top 2 contributors surfaced
+- Waist circumference: manually logged Stat, shown as latest value + trend
+- Training: this week's rides/runs from Strava (TSS, elevation, ride count)
+- Alcohol: current streak (days without) + this week's count
+- Meals: current protocol adherence (manually logged or inferred from journal captures)
+
+**Training Log:**
+- Strava activities feed — last 10 activities with date, type, distance, elevation, TSS
+- Race countdown: Downieville (Jul 23), Grizzly 100 (Sep 5)
+- Phase indicator: Foundation / Engine / Race Block — current phase shown, gate criteria visible
+
+**Health Vault:**
+- Chronological list of Drive-linked health records
+- Types: Body Scan / DXA, Bloodwork, Eye Prescription (extensible)
+- Each record: type, date, notes field, one-tap Drive link
+- Add record: type → date → Drive URL → notes (simple form — only place in the app where a mini-form is acceptable because this is record creation, not stat logging)
+- Cross-reference with Key Docs Health category — a DXA report can be flagged to appear in both
+
+**Success criteria:**
+- Weight trend shows correct 7-day rolling average
+- Oura data refreshes on each app open (or background sync)
+- Health Vault Drive links open natively without Drive API auth
+- Race countdown shows correct days remaining
+- Phase gate criteria visible and checkable
+
+---
+
+### F09 — Big Ass Calendar
+
+**What it does:** Provides a year-at-a-glance visual that makes the entire designed year visible simultaneously — solving object permanence for time-bound intentions. Two layers: backward (look how far we've come) and forward (what's coming). Surfaces as the primary view on Free Days.
+
+**Entities read:** BAC Calendar Events (#13), BAC Goals (#14), Goal (#1) — Misogi and Kevin's Rule tagged goals.
+
+**Entities written:** BAC Calendar Events (#13) — when Clint adds a new intentional event.
+
+**UX behavior:**
+
+**Year view (default):**
+- All 12 months on one screen — tiny but scannable
+- Color-coded by category: Misogi (red), Kevin's Rule adventures (orange), races (purple), family milestones (green), phase completions (blue), quarterly habit milestones (gold)
+- Backward layer: completed events shown in muted/desaturated color with a checkmark — the "look how far" visual
+- Forward layer: upcoming events in full color — the anticipation layer
+- Tap any month → expands to month view
+
+**Month view:**
+- Standard month calendar grid
+- Events shown as colored dots/chips
+- Tap any event → detail card with name, date, category, notes
+- "Add event" → category picker → date → title → notes → saves to BAC Calendar Events
+
+**Free Day behavior:**
+- Today tab shows Big Ass Calendar (year view) instead of the standard Today layout
+- Forward layer emphasized — what are you looking forward to?
+- Wins panel below: completed events from the last 90 days
+- No tasks, no inbox, no Horizon Rings
+
+**Success criteria:**
+- Year view renders all 12 months on one screen without scrolling
+- Completed events render in muted color
+- Add event flow completes in < 4 taps
+- Free Day correctly shows calendar instead of standard Today layout
+
+---
+
+### F10 — Quarterly Habit Arc
+
+**What it does:** Manages the full lifecycle of one quarterly habit — from selection through five stages of installation to completion and identity-level celebration. One habit at a time. Consecutive Appetite model.
+
+**Entities read:** Goal (#1) tagged `type = "Quarterly Habit"`, Stat (#4), Progress Record (#44), Learning Track (#43).
+
+**Entities written:** Goal (#1) — stage field updated, Journal Entry (#8) — celebration record at milestones, BAC Calendar Event (#13) — quarter completion milestone.
+
+**Five stages:**
+
+| Stage | What it means | App behavior |
+|---|---|---|
+| Install | Habit chosen, first week | Daily prompt + Learning Track begins |
+| Beginner | Weeks 2–4, streaks building | Streak counter, encouragement messages |
+| Intermediate | Month 2, consistency forming | Weekly reflection prompt, domain Goal connection shown |
+| Expert | Month 3, feels automatic | Reduced prompting, identity language surfaced |
+| Complete | End of quarter | Full celebration ritual (see below) |
+
+**Selection flow (quarter start):**
+- Kompass surfaces prompt: *"New quarter — what habit would make the biggest difference?"*
+- One suggestion based on current domain GYR + Goal progress
+- Clint gut-checks: uh-huh to adopt, uh-uh to see two alternatives
+- Previous habit optionally promoted to "installed identity" and removed from active tracking
+
+**Streak mechanics:**
+- Daily streak counter on the habit card
+- Milestone acknowledgments at: Day 7 ("hardest week is behind you"), 14, 21, 30, 60, 90
+- Each milestone generates a brief celebration message — not gamified, just acknowledged
+
+**Quarter-end celebration:**
+- Journal prompt: "You did it — what does it mean that you're now someone who [habit]?"
+- Identity statement generated: *"You're now someone who rides 4x a week."*
+- BAC Calendar Event created marking the quarter completion
+- Optional Table Talk entry: share the win at dinner
+
+**Success criteria:**
+- Only one active Quarterly Habit at any time
+- Stage advances automatically based on streak and time elapsed
+- Quarter-end celebration fires on the correct date
+- Identity statement generated and stored in Journal Entry
+
+---
+
+### F11 — Container Model — Empty State & Build Flow
+
+**What it does:** Every section of the app exists from day one as an invitation. Empty containers have three visual layers (glow, invitation, progress ring) and a Claude-guided build flow that fills the container conversationally — no forms.
+
+**Entities read:** All entities relevant to the container being built.
+
+**Entities written:** Whatever the container requires — Goal record, GitHub markdown file, Key Doc JSON entry, etc.
+
+**Three visual layers (always present on empty container):**
+1. **Soft glow / shimmer** — animated gold border on the empty card — present but not urgent
+2. **Invitation copy** — a short "why this matters" statement, not a feature description
+3. **Progress ring** — around the section icon in the Me menu, fills as containers are completed
+
+**Empty state copy examples:**
+
+| Container | Invitation copy |
+|---|---|
+| Vivid Vision | *"You can't move toward something you haven't named. Ten minutes here shapes the next ten years."* |
+| Quarterly Habit | *"One habit, fully installed, changes more than ten habits half-started. What's the one?"* |
+| Misogi | *"What would you do this year if you knew you'd look back and say — I can't believe I did that?"* |
+| Body Goals | *"Your body is the hardware that runs everything else. Where does it stand right now?"* |
+| Key Docs | *"The documents that matter most are the hardest to find in a crisis. Ten minutes now saves hours later."* |
+
+**Build flow:**
+1. Clint taps empty container
+2. "Why this matters" card appears
+3. Uh-huh → Claude opens guided build conversation
+4. One question at a time — never a form
+5. Output filed to correct destination
+6. Container resolves from empty to active — glow disappears, content appears, progress ring updates
+7. Celebration: *"First one built — the machine is starting."*
+
+**Refresh cycles (containers aren't built once):**
+
+| Container | Refresh trigger |
+|---|---|
+| Vivid Vision | Annual — New Year prompt |
+| Annual Commitments | Annual + quarterly check-in |
+| Quarterly Habit | Quarter end |
+| Misogi | Annual — start of year |
+| Key Docs | User-triggered |
+| Body Goals | Phase advancement |
+
+**Success criteria:**
+- Every section shows correct empty state on first use
+- Build flow completes without any multi-field form
+- Progress ring updates immediately on container completion
+- Refresh triggers fire at correct cadences
+
+---
+
+### F12 — About Me + Vivid Vision
+
+**What it does:** Surfaces Clint's full personal profile and the Vivid Vision / Annual Commitments documents in one section of the Me menu. Clint's operating manual, quick reference, 10-year vision, and 1-year commitments — all readable and searchable. Family profiles readable as reference context.
+
+**Entities read:** Clint's Profile (#38) — 4 GitHub files. Family Profiles (#39) — 5 GitHub files (read-only). Vivid Vision (#36), Annual Commitments (#37).
+
+**Entities written:** None in Phase 1. Phase 2: edits saved to Supabase.
+
+**UX behavior:**
+- Me menu → "About Me" → Clint's profile shown first
+- Four tabs: Operating Manual / Quick Reference / Vivid Vision / 2026 Commitments
+- Full markdown rendered — scrollable, not truncated
+- Search bar — searches across all profile content simultaneously
+- "Open in Google Doc" button on Vivid Vision tab — opens Drive link natively
+- Last-updated date pulled from GitHub file metadata
+- Family profiles: person selector (Christie / Avery / Brynn / Max / Gwen) — tap to read, read-only
+
+**Vivid Vision sub-section:**
+- 10-year vision organized by section: Health / Environment / Family / Business / Wealth & Legacy
+- 2026 Commitments organized by domain: Rituals / Body / Being / Balance / Business
+- Measurable commitments tap-through to their linked Goal card
+
+**Daily Reminder Engine connection:** The Vivid Vision and Annual Commitments files are parsed into lines that feed the Daily Reminder Engine pool. One line per day, rotating.
+
+**Success criteria:**
+- All 4 Clint profile files render correctly from GitHub
+- Google Doc link opens Drive natively without API auth
+- Measurable commitment tap-through correctly navigates to linked Goal
+- Family profile selector correctly loads each person's file
+
+---
+
+### F13 — Project + Tool Layer
+
+**What it does:** Surfaces personal/family projects using the existing S-BOS project infrastructure, organized by the four universal pillars (Budget, Alignment, Schedule, Checklists). Claude builds custom tools scoped to specific project stages, which are used through their lifecycle and archived on completion.
+
+**Entities read/written:** Project (#18), Check List (#19), Check List Task (#20), Project Budget G702 (#21), Budget Line Items G703 (#22), Baseline Budget Items (#23), Bills & Invoices (#24), Project Schedule (#25), Project Dates (#26), Project Tool (#28).
+
+**UX behavior:**
+
+**Project list view:**
+- Me menu → "Tools" → Projects tab
+- Active projects listed with domain tag, current pillar status, and tool count
+- Tap project → four-pillar view: Budget / Alignment / Schedule / Checklists
+- Each pillar shows its current status and any attached tools
+
+**Tool creation:**
+- Entry point A: inside a pillar → "Build a tool for this stage" → Claude conversation → tool attaches to that pillar
+- Entry point B: Shortcuts tab → Claude skill trigger → "Build me a [tool type] for [project]" → Kompass identifies the right project and pillar → attaches
+- Claude generates the tool as an HTML artifact
+- Tool rendered inside the app as an embedded view
+
+**Tool lifecycle:**
+- Create → Active (used daily/weekly during stage) → Complete (stage ends) → Archived (stored with project)
+- Archive prompt fires when a project stage closes
+- Archived tools browsable from the project record
+
+**Archive as library:**
+- Completed tools searchable by type, domain, project name
+- A study app built for one exam can be surfaced when a similar exam starts
+- A medication schedule can be found when a new protocol is needed
+
+**Success criteria:**
+- Project hierarchy (Master/Child/Grandchild) renders correctly from SmartSuite
+- Four pillars surface correct data from SB Project MGT tables
+- Tool creation completes in < 5 Claude exchanges
+- Archived tools are findable by type and domain
+
+---
+
+### F14 — Kompass Operating Platform
+
+**What it does:** Three-layer system that externalizes everything requiring sustained attention, sequential processing, or remembering — removing cognitive load from Clint and routing it to the correct destination automatically. Second Brain (capture), Buffer Anchor (clear), Genius Schedule (protect).
+
+**Entities read:** All entities — Kompass reads the full state of the system.
+
+**Entities written:** Task (#7) — new tasks from email triage. Journal Entry (#8) — from capture. Decision (#10) — from capture. Principles & Realizations (#11) — from capture. BAC Calendar Events (#13) — from capture. Notes & Comments (#27) — email thread records.
+
+**Layer 1 — Second Brain (Capture):**
+- `/capture` activated from anywhere: typed text, voice, photo
+- Nine-type classification routing:
+
+| Input signals | Destination |
+|---|---|
+| Action verb + person + deadline | Check List Task |
+| Emotional content, first-person processing | Journal Entry |
+| Speculative, "what if" | Principles & Realizations |
+| Named person + message intent | Held for Buffer session |
+| Competing options, open question | Decision |
+| Frustration, anger, friction language | Flagged for next Morning Ritual |
+| Factual update about people/business | GitHub Clint-s-Kompass |
+| Date + time + meeting reference | BAC Calendar Event |
+| Someone needs something from Clint | Check List Task + Notes thread |
+
+- Ambiguous: Claude offers two options with a gut check — never open-ended
+
+**Layer 2 — Buffer Anchor (Clear):**
+- Email triage: Gmail → Kompass reviews → creates Task + Notes thread → surfaces in Buffer session with draft reply attached → Clint approves → Kompass sends
+- `Who` field privacy rule: task only gets a person tag when the task genuinely involves them
+- Buffer session runs Tuesday (team meeting) and Wednesday (development meeting)
+- Two guardrail questions on any commitment decision: *"What do you actually want here?"* and *"Is this a people-pleasing tendency or a hell yes?"*
+
+**Layer 3 — Genius Schedule (Protect):**
+- Morning: reviews day against day type, flags violations, confirms Big 3 are protected
+- Weekly Monday audit: Focus Day violations, Buffer Days without clearing sessions, Free Days with business creep
+
+**Success criteria:**
+- Capture correctly classifies > 90% of inputs without clarification needed
+- `Who` field is never populated without explicit Clint intent
+- Buffer session surfaces items with draft replies attached, not just raw email content
+- Monday audit correctly identifies week-type violations
+
+---
+
+### F15 — Shortcuts Tab
+
+**What it does:** Provides single-tap access to every Claude skill and external tool Clint uses regularly — organized by Personal and Business categories. Tap a skill → prompt copied, Claude project opens. Tap an external tool → deep link opens the app directly.
+
+**Entities read:** None — pure navigation/launch feature.
+
+**Entities written:** None.
+
+**UX behavior:**
+- Four sections: Personal Skills / Business Skills / External Tools / Recent
+- Personal Skills (19): Morning Ritual, Evening Ritual, Weekly Review, WAR/Cash/Irritation/Anger/Guilt/Gratitude/Excitement/Discovery Stacks, Free Write, Strategic Vision, Project Debrief, Horizon Scan, Quick Capture, Relationship Coach, Buffer Session, Email Triage
+- Business Skills (17): Baseline a Project, Pay App, Pay App Audit, Underwrite a Deal, Strategic Review, GP Cash Flow, Entity Budget, Refresh Actuals, Year-End Audit, Interco Review, Platform Performance, Compliance Audit, Schema Registry, Data Dictionary, Training Docs, Skill Management, Duplicate Contact Merge
+- External Tools (8): Google Calendar, Gmail, Google Drive, Strava, S-BOS (SmartSuite), Phase Anchor, Sage Intacct, GP Cash Flow (Railway)
+- Recent section: last 5 used skills, surfaced at top
+- Search bar: filter by name
+
+**Success criteria:**
+- All 36 skills launch correctly
+- All 8 external tools deep-link correctly (no generic app open — specific app section where possible)
+- Recent section updates after each use
+- Search filters correctly within < 200ms
+
+---
+
+## §4 Gate 3 Checklist
+
+- [ ] All features named and described ✳️ *Pending sign-off*
+- [ ] All features have entities read/write ✳️ *Pending sign-off*
+- [ ] All features have success criteria ✳️ *Pending sign-off*
+- [ ] No feature references an entity not in §3 ✳️ *Pending sign-off*
 
 ---
 
 ## §5 — User Workflows
 
-> ⏳ Not started. Begins after §4.
+> ⏳ Not started. Writing after §4 sign-off.
 
 ---
 
@@ -279,75 +670,8 @@ Learning Track = "Body Protocol: Fat Loss & MTB Performance"
 
 ## Discovery Inputs (from session 2026-06-24 / 2026-06-25)
 
-### A — Navigation & Shell *(Phase 1)*
-Four tabs: Today / Horizon / Me / Shortcuts. Me menu Phase 1: four domains + About Me + Key Docs + Big Ass Calendar + Quarterly Habit + Journal + Tools + Spec Sheet.
+*Sections A–O captured in full in previous commits. Summarized here.*
 
-### B — Day Mode *(Phase 1)*
-Focus / Buffer / Free. Kompass suggests. Uh-huh / uh-uh. Day Mode Log auto-created via automation.
+**A** Navigation & Shell. **B** Day Mode. **C** Horizon Rings. **D** Kompass Operating Platform. **E** Universal Goal Engine. **F** Shortcuts Tab. **G** In-App Spec Sheet. **H** About Me. **H1** Vivid Vision & Annual Commitments. **I** Big Ass Calendar. **J** Quarterly Habit. **K** Key Docs. **L** Container Model & Learning Engine. **M** Brand Identity. **N** Project-Based Tool Layer. **O** Stat Inference Engine.
 
-### C — Horizon Rings *(Phase 1)*
-Five rings. Three SmartSuite sources. Max 7–10 items. Stacked + Circles. Sacral Anchor. Quick Clear. Phase Context Strip.
-
-### D — Kompass Operating Platform *(Phase 1)*
-Three layers: Second Brain / Buffer Anchor / Genius Schedule. Nine-type capture routing (→ Decisions, → Principles & Realizations). `Who` privacy field.
-
-### E — Universal Goal Engine *(Phase 1)*
-Five steps. `type` tag differentiates all Goal sub-types.
-
-### F — Shortcuts Tab *(Phase 1)*
-19 personal + 17 business Claude skills + 8 external tools.
-
-### G — In-App Spec Sheet *(Phase 1)*
-10 sections, 60+ rows. Tap-to-advance. Tap-to-edit.
-
-### H — About Me *(Phase 1: Clint only)*
-4 GitHub files. Daily Reminder Engine. Phase 2: family profiles interactive.
-
-### H1 — Vivid Vision & Annual Commitments *(Phase 1)*
-GitHub source of truth. Annual update prompt. Feed Daily Reminder Engine.
-
-### I — Big Ass Calendar *(Phase 1)*
-BAC tables in Stitser Way solution. Misogi + Kevin's Rule + Quarterly Habit. Backward + forward layers. Surfaces on Free Day.
-
-### J — Quarterly Habit *(Phase 1)*
-Goal tagged `type = "Quarterly Habit"`. Five-stage arc. Staged learning via Learning Track in SB Training & Certifications.
-
-### K — Key Docs *(Phase 1: Clint only)*
-JSON config → Supabase. Drive links open natively. Nine categories. Emergency flag.
-
-### L — Container Model & Learning Engine *(Phase 1)*
-Three-layer empty state. Claude-guided build. Ebbinghaus / Calmio model. 6-hour safety rail for In-App Lessons. No safety rail for External Practice checkboxes. Data store: SB Training & Certifications — Lesson / Course / Learning Track / Progress Record (entities 41–44).
-
-### M — Brand Identity & Positioning
-Stitser Way (working name). Sage-Architect-Builder. Austrian fire / Kronerer developing. Full detail in `03-stitser-way/messaging.md`.
-
-### N — Project-Based Tool Layer *(Phase 1)*
-Four pillars — SB Project MGT tables confirmed including Bills & Invoices. Master → Child → Grandchild. Claude-built tools. Archive reusable.
-
-### O — Stat Inference Engine *(Phase 1)*
-
-**What it is:** Claude reads existing data sources (Strava, journal captures, calendar entries) after events occur and surfaces smart, one-tap confirmation prompts to log stats against active Goals — without requiring Clint to fill out forms.
-
-**The core principle:** The app is a second brain. It notices what happened and asks one question. Clint confirms or dismisses. No forms. No manual entry. No friction.
-
-**How it works — three signal sources:**
-
-1. **Strava** — new activity detected → checks for matching active Balance Goal → surfaces prompt
-2. **Journal / Capture** — person name + activity keyword found → matches to Goal → surfaces prompt
-3. **Calendar** — completed event with named person + activity type → matches to Goal → surfaces prompt
-
-**The prompt format (one-tap, never a form):**
-
-> *"Hey — you just logged a 12-mile ride. Was Max with you? Tap yes to count it toward 'Rides with Max Q3' (3 of 10)."*
-
-> *"I saw a note about driving with Avery to her game. Want me to log that against 'Drives with Avery' (7 of 20)?"*
-
-> *"Looks like you had a date night with Christie. Log it against 'Monthly Dates with Christie' (2 of 3 this month)?"*
-
-**Response options:** Yes — log it / No — skip / Not quite (one clarifying question max, never a form)
-
-**Entities touched:**
-- Reads: Strava Activity (#29), Journal Entry (#8), BAC Calendar Event (#13), Goal (#1), Stat Menu Item (#5)
-- Writes: Stat (#4) — one new record per confirmed log
-
-**Not automatic** — Claude always asks, Clint always confirms. Full feature spec in §4.
+*Full Discovery Input detail preserved in TSW_memory.md and prior commit history.*
