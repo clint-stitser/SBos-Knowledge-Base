@@ -1,6 +1,6 @@
 # Product Design Doc: Stitser Way
 
-> **Status:** 🔄 In Progress — Gate 1 §1 ✅ approved. §2 pending sign-off.
+> **Status:** 🔄 In Progress — Gate 1 ✅ COMPLETE. Gate 2 (§3 Core Entities) next.
 > **Methodology:** Ryan Falke's Design Templates, adapted for Stitser Way
 > **Decision-maker:** Clint Stitser
 > **Last updated:** 2026-06-25
@@ -9,12 +9,12 @@
 
 ## Gate System
 
-| Gate | Sections | Condition to advance |
+| Gate | Sections | Status |
 |---|---|---|
-| Gate 1 | §1 Problem + §2 Users | Clint approves both |
-| Gate 2 | §3 Core Entities | All entities named, no orphans |
-| Gate 3 | §4 Features + §5 Workflows | All features have success criteria; all workflows are walkable |
-| Gate 4 | §6 Scope + §7 Metrics + §8 Timeline + §9 Open Questions | All open questions resolved or deferred with owner |
+| Gate 1 | §1 Problem + §2 Users | ✅ Complete — approved by Clint 2026-06-25 |
+| Gate 2 | §3 Core Entities | ⏳ Next |
+| Gate 3 | §4 Features + §5 Workflows | ⏳ Not started |
+| Gate 4 | §6 Scope + §7 Metrics + §8 Timeline + §9 Open Questions | ⏳ Not started |
 | ✅ PDD Done | All gates passed | Data Integration Doc + Tech Spec + UI/UX Doc can begin |
 
 ---
@@ -102,17 +102,17 @@ A single application that integrates the entire practice of intentional living �
 
 ---
 
-## §2 Gate 1 Checklist (continued)
+## §2 Gate 1 Checklist
 
-- [ ] All user types identified ✳️ *Pending sign-off*
-- [ ] Primary user needs per domain stated ✳️ *Pending sign-off*
-- [ ] Family profile model confirmed ✳️ *Pending sign-off*
+- [x] All user types identified — ✅ Approved by Clint 2026-06-25
+- [x] Primary user needs per domain stated — ✅ Approved by Clint 2026-06-25
+- [x] Family profile model confirmed — ✅ Approved by Clint 2026-06-25
 
 ---
 
 ## §3 — Core Entities
 
-> ⏳ Not started. Begins after Gate 1 sign-off.
+> ⏳ Not started. Gate 1 complete — ready to begin.
 
 ---
 
@@ -154,7 +154,7 @@ A single application that integrates the entire practice of intentional living �
 
 ## Discovery Inputs (from session 2026-06-24 / 2026-06-25)
 
-> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 once Gate 1 is signed off. Organized into fourteen areas.
+> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 as the gates progress. Organized into fourteen areas.
 
 ---
 
