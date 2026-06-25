@@ -1,6 +1,6 @@
 # Product Design Doc: Stitser Way
 
-> **Status:** 🔄 In Progress — Gate 1 ✅ COMPLETE. Gate 2 (§3 Core Entities) next.
+> **Status:** 🔄 In Progress — Gate 1 ✅ COMPLETE. §3 Core Entities in progress.
 > **Methodology:** Ryan Falke's Design Templates, adapted for Stitser Way
 > **Decision-maker:** Clint Stitser
 > **Last updated:** 2026-06-25
@@ -12,10 +12,25 @@
 | Gate | Sections | Status |
 |---|---|---|
 | Gate 1 | §1 Problem + §2 Users | ✅ Complete — approved by Clint 2026-06-25 |
-| Gate 2 | §3 Core Entities | ⏳ Next |
+| Gate 2 | §3 Core Entities | 🔄 In progress |
 | Gate 3 | §4 Features + §5 Workflows | ⏳ Not started |
 | Gate 4 | §6 Scope + §7 Metrics + §8 Timeline + §9 Open Questions | ⏳ Not started |
 | ✅ PDD Done | All gates passed | Data Integration Doc + Tech Spec + UI/UX Doc can begin |
+
+---
+
+## Phase Model
+
+> **Confirmed 2026-06-25.** Phase 1 is for Clint only. Family is entirely Phase 2. The architecture accounts for family expansion but Phase 1 does not build it. Clint validates the machine first.
+
+| Phase | Users | What gets built |
+|---|---|---|
+| **Phase 1** | Clint only | The full personal OS for one person — all four domains, all rituals, Goal engine, Horizon Rings, Day Mode, Spiral, Big Ass Calendar, Quarterly Habit, Key Docs, Projects, Tools |
+| **Phase 2** | Family members | Each family member gets their own profile, their own data, their own experience — age-appropriate, customized to their wiring. Built on the validated Phase 1 machine. |
+
+**Table Talk nuance:** The Table Talk ritual itself is Phase 1 — Clint records the dinner conversation. The per-member experience (each person entering their own Hi/Lo/Buffalo from their own profile) is Phase 2.
+
+**About Me nuance:** Clint's profile (4 GitHub files) is Phase 1. Family profiles are read-only reference data in Phase 1 (Clint can read them to inform his coaching and relationship approach) — they are not interactive or writeable by family members until Phase 2.
 
 ---
 
@@ -71,7 +86,7 @@ A single application that integrates the entire practice of intentional living �
 
 ## §2 — Target Users
 
-### Primary user: Clint Stitser
+### Phase 1 user: Clint Stitser (only)
 
 - Personal operating system, daily driver
 - Uses the app across all four life domains: Body, Being, Balance, Business (personal)
@@ -80,24 +95,26 @@ A single application that integrates the entire practice of intentional living �
 - Runs morning ritual, evening ritual, weekly review, and stacks (WAR, Cash, Irritation, etc.) through the app
 - Operating manual profile: interest-based nervous system, object permanence challenges, consecutive appetite (one thing at a time), Channel of Inspiration (1-8), non-linear thinking is a structural advantage
 
-### Secondary users: Family members
+### Phase 2 users: Family members
 
-| Member | Role | Notes |
+> ⏳ Family is entirely Phase 2. Designed for, not built in Phase 1. Architecture supports expansion.
+
+| Member | Role | Phase 2 experience |
 |---|---|---|
-| Christie | Partner | Full profile, own data |
-| Avery | Child | Own profile, age-appropriate autonomy, owns their data |
-| Brynn | Child | Initiated the Table Talk ritual. Own profile, owns their data |
+| Christie | Partner | Full profile, own data, own experience |
+| Avery | Child | Own profile, age-appropriate, owns their data |
+| Brynn | Child | Initiated Table Talk. Own profile, owns their data |
 | Max | Child | Own profile, owns their data |
 
-**Design principle:** Kids enter their own data. The app is intrinsically motivating — not parent-assigned homework. Customized to each family member's wiring and learning style.
+**Design principle (Phase 2):** Kids enter their own data. The app is intrinsically motivating — not parent-assigned homework. Customized to each family member's wiring and learning style.
 
-### User needs by domain
+### Phase 1 user needs by domain
 
-| Domain | What Clint needs the app to do |
+| Domain | What Clint needs the app to do in Phase 1 |
 |---|---|
-| Body | Track weight, body fat, meals, alcohol, training rides (Strava), health records. Phase-based protocol (Foundation → Engine → Race Block). Reminders and staged learning connected to the why. |
+| Body | Track weight, body fat, meals, alcohol, training rides (Strava), health records. Phase-based protocol (Foundation → Engine → Race Block). Staged learning connected to the why. |
 | Being | Morning/evening rituals, stacks, affirmations, decisions, mindset tracking. Spiral processing. Phase gate for being/mindset development. |
-| Balance | Family coordination, Table Talk (Hi/Lo/Buffalo), relationship tracking, gratitude, celebrations. Christie + kids profiles. |
+| Balance | Table Talk (Clint records the dinner conversation). Family profiles readable by Clint as reference context. Relationship coaching via Claude. |
 | Business | Personal business goals — separate from S-BOS team goals. Phase anchor for Clint's role as allocator/CEO. GYR status per product line from his personal vantage point. |
 
 ---
@@ -112,7 +129,328 @@ A single application that integrates the entire practice of intentional living �
 
 ## §3 — Core Entities
 
-> ⏳ Not started. Gate 1 complete — ready to begin.
+> **Scope:** Phase 1 entities only — what the app needs to read, write, and reason about to serve Clint. Family entities are noted as Phase 2 where relevant but not defined here.
+
+---
+
+### Entity Map
+
+| # | Entity | Phase | Source | Description |
+|---|---|---|---|---|
+| 1 | Goal | 1 | SmartSuite | Top-level initiative within a life domain |
+| 2 | Priority | 1 | SmartSuite | Phase-level work chunk within a Goal |
+| 3 | Milestone | 1 | SmartSuite | Discrete sub-step within a Priority |
+| 4 | Stat | 1 | SmartSuite | A logged data point (weight, drinks, rides, etc.) |
+| 5 | Stat Menu Item | 1 | SmartSuite | The catalog of measurable types available for logging |
+| 6 | GYR Status Report | 1 | SmartSuite | A Spiral processing session for a Goal or Priority |
+| 7 | Task | 1 | SmartSuite | A discrete action item (Check List Tasks or Notes follow-ups) |
+| 8 | Journal Entry | 1 | SmartSuite | A completed ritual, stack, Table Talk, or Spiral record |
+| 9 | Quarterly Habit | 1 | SmartSuite | The one active habit being installed this quarter |
+| 10 | Misogi | 1 | SmartSuite + Calendar | The year-defining event |
+| 11 | Kevin's Rule Event | 1 | Google Calendar | A bimonthly adventure slot |
+| 12 | Key Doc | 1 | JSON config → Supabase | A named Google Drive link for a critical document |
+| 13 | Project | 1 | SmartSuite S-BOS | A bounded initiative (Master / Child / Grandchild) |
+| 14 | Project Tool | 1 | Claude artifact + SmartSuite | A Claude-built mini-app attached to a project pillar |
+| 15 | Clint's Profile | 1 | GitHub Clint-s-Kompass | Operating manual, quick reference, vivid vision, commitments |
+| 16 | Family Profile | 1 (read-only) / 2 (interactive) | GitHub Clint-s-Kompass | Christie, Avery, Brynn, Maxwell, Gwen — readable by Clint in Phase 1 |
+| 17 | Vivid Vision | 1 | Google Drive + GitHub | 10-year ideal circumstances document |
+| 18 | Annual Commitments | 1 | Google Drive + GitHub | 1-year measurable commitment document |
+| 19 | Day Mode | 1 | App state | Current day operating posture: Focus / Buffer / Free |
+
+---
+
+### Entity Definitions
+
+---
+
+#### 1. Goal
+The top-level initiative within a life domain. A Goal has a target, a deadline, and tracks progress over time through Stats and GYR Status Reports.
+
+| Field | Type | Notes |
+|---|---|---|
+| Title | Text | The goal name |
+| Domain | Select | Body / Being / Balance / Business |
+| GYR Status | Select | Green / Yellow / Red |
+| Target | Number | What success looks like numerically |
+| % Metric Complete | Formula | SmartSuite field `sc9f2f3411` |
+| % Time Complete | Formula | SmartSuite field `sbc4aa3064` |
+| Due Date | Date | SmartSuite field `s65ce469a2` |
+| Reporting Grade | Select | SmartSuite field `s9c754688f` |
+| Linked Priorities | Relation | Child Priority records |
+| Linked GYR Reports | Relation | GYR Status Report records |
+
+**Phase 2 addition:** `owner` field — which family member this Goal belongs to.
+
+---
+
+#### 2. Priority
+A phase-level work chunk within a Goal. The active initiative for a given time window.
+
+| Field | Type | Notes |
+|---|---|---|
+| Title | Text | |
+| GYR Status | Select | Green / Yellow / Red |
+| Target | Number | |
+| % Metric Complete | Formula | |
+| % Time Complete | Formula | |
+| Due Date | Date | |
+| Linked Goal | Relation | Parent Goal |
+| Linked Milestones | Relation | Child Milestone records |
+| Linked GYR Reports | Relation | |
+
+---
+
+#### 3. Milestone
+A discrete, completable sub-step within a Priority.
+
+| Field | Type | Notes |
+|---|---|---|
+| Title | Text | |
+| Due Date | Date | |
+| Complete | Checkbox | |
+| Linked Priority | Relation | Parent Priority |
+
+---
+
+#### 4. Stat
+A logged data point against a Goal or Priority. The raw data that feeds progress tracking.
+
+| Field | Type | Notes |
+|---|---|---|
+| Date | Date | When the stat was logged |
+| Amount | Number | SmartSuite field `s6471266f2` |
+| Stat Type | Relation | Links to Stat Menu Item |
+| Linked Goal | Relation | |
+| Linked Priority | Relation | |
+| Period | Select | Monthly / Weekly |
+
+---
+
+#### 5. Stat Menu Item
+The catalog of measurable types available for logging. Defines what can be tracked.
+
+| Field | Type | Notes |
+|---|---|---|
+| Name | Text | e.g., Weight, Alcohol, TSS, Waist Circumference |
+| Summary Type | Select | Sum / Average / Latest |
+| Linked Goals | Relation | |
+| Linked Priorities | Relation | |
+
+---
+
+#### 6. GYR Status Report
+A Spiral processing session for a Goal or Priority. The transformation engine record — facts through fruit.
+
+| Field | Type | Notes |
+|---|---|---|
+| Title | Text | |
+| Domain | Select | Body / Being / Balance / Business |
+| GYR Grade | Select | Green / Yellow / Red |
+| Facts | Long text | What is actually true |
+| Feelings | Long text | Emotional response to the facts |
+| Root Cause | Long text | What's actually driving the situation |
+| Focus | Long text | The one thing to change |
+| Actions | Long text | Massive, relevant actions |
+| Fruit | Long text | Expected outcome |
+| Follow-Up Owner | Person | Assigned to Clint (Phase 1) |
+| Follow-Up Date | Date | When to review |
+| Linked Goal | Relation | |
+| Linked Priority | Relation | |
+
+---
+
+#### 7. Task
+A discrete action item. Sourced from SmartSuite Check List Tasks or Notes & Comments follow-ups. Surfaces in Horizon Rings.
+
+| Field | Type | Notes |
+|---|---|---|
+| Title | Text | Clear action statement |
+| Due Date | Date | |
+| Assigned To | Person | Clint (Phase 1) |
+| Status | Select | Open / In Progress / Complete / Cancelled |
+| Who | Person | Privacy field — only populated when task genuinely involves another person |
+| Linked Project / Goal / Priority | Relation | Context anchor |
+| Source | Select | Task / Notes & Comments follow-up / GYR follow-up |
+
+---
+
+#### 8. Journal Entry
+A completed ritual, stack, Table Talk, or Spiral session — the permanent record of processing.
+
+| Field | Type | Notes |
+|---|---|---|
+| Title | Text | Auto-generated from type + date |
+| Type | Select | Morning Ritual / Evening Ritual / WAR Stack / Cash Stack / Irritation Stack / Anger Stack / Guilt Stack / Gratitude Stack / Excitement Stack / Discovery Stack / Spiral / Table Talk / Free Write / Project Debrief / Strategic Vision / Weekly Review |
+| Date | Date | |
+| Domain | Select | Body / Being / Balance / Business / All |
+| Content | Long text | Full session content |
+| SmartSuite App | Fixed | `68f8f8fe3757414d70d94ae0` |
+
+**Phase 2 addition:** `family_member` field — who recorded this entry.
+
+---
+
+#### 9. Quarterly Habit
+The one active habit being installed this quarter. Consecutive Appetite model — one at a time.
+
+| Field | Type | Notes |
+|---|---|---|
+| Title | Text | The habit name and identity statement |
+| Domain | Select | Body / Being / Balance / Business |
+| Stage | Select | Install / Beginner / Intermediate / Expert / Complete |
+| Start Date | Date | Quarter start |
+| End Date | Date | Quarter end |
+| Streak | Number | Current consecutive days |
+| Target Frequency | Select | Daily / 3x week / Weekly |
+| Linked Goal | Relation | The Goal this habit serves |
+
+*Stored as a Goal record with type = "Quarterly Habit" in SmartSuite.*
+
+---
+
+#### 10. Misogi
+The year-defining event — slightly terrifying, deeply personal. One per year.
+
+| Field | Type | Notes |
+|---|---|---|
+| Title | Text | |
+| Date | Date | The event date |
+| Domain | Select | Body / Being / Balance / Business |
+| Description | Long text | What it is, why it matters, what it requires |
+| Status | Select | Planned / In Preparation / Complete |
+| Google Calendar Link | URL | Event link |
+
+*Stored as a Goal record with type = "Misogi" in SmartSuite + Google Calendar event.*
+
+---
+
+#### 11. Kevin's Rule Event
+A bimonthly adventure — one new experience every other month. Six slots per year.
+
+| Field | Type | Notes |
+|---|---|---|
+| Title | Text | |
+| Date | Date | |
+| Month Slot | Number | 1–6 (which bimonthly slot this fills) |
+| Description | Long text | What it is, why it was new |
+| Status | Select | Planned / Complete |
+| Google Calendar Link | URL | |
+
+*Stored as Google Calendar events with a "Kevin's Rule" tag. Phase 1: manual entry. Phase 2: structured SmartSuite record.*
+
+---
+
+#### 12. Key Doc
+A named Google Drive link for a critical personal document. Not file storage — a link registry.
+
+| Field | Type | Notes |
+|---|---|---|
+| Name | Text | Human-readable document name |
+| Category | Select | Identity / Health / Legal / Financial / Property / Education / Vehicle / Travel / Other |
+| Drive URL | URL | Opens Drive natively — no API auth |
+| Emergency Flag | Boolean | Surfaces first in a crisis |
+| Owner | Select | Clint (Phase 1) / family member (Phase 2) |
+
+*Phase 1: stored as structured JSON config. Phase 2: Supabase.*
+
+---
+
+#### 13. Project
+A bounded initiative with a defined scope and lifecycle. Uses the existing S-BOS SmartSuite project infrastructure.
+
+| Field | Type | Notes |
+|---|---|---|
+| Title | Text | |
+| Level | Select | Master / Child / Grandchild |
+| Domain | Select | Body / Being / Balance / Business |
+| Status | Select | Active / Complete / Archived |
+| Active Pillar | Select | Budget / Alignment / Schedule / Checklists |
+| Linked Parent | Relation | Parent Project (null for Master) |
+| Linked Tools | Relation | Claude-built Project Tools |
+
+---
+
+#### 14. Project Tool
+A Claude-built custom mini-app, tracker, or checklist attached to a project pillar.
+
+| Field | Type | Notes |
+|---|---|---|
+| Title | Text | |
+| Type | Select | Budget tracker / Study app / Scheduler / Checklist / Team planner / Calculator / Reference |
+| Pillar | Select | Budget / Alignment / Schedule / Checklists |
+| Lifecycle Stage | Select | Create / Active / Complete / Archived |
+| Linked Project | Relation | Parent Project |
+| Artifact URL | URL | Link to Claude-built HTML artifact |
+| Created Date | Date | |
+| Archived Date | Date | |
+
+---
+
+#### 15. Clint's Profile
+Clint's personal operating manual and context files — the document set that defines how he works, what he's building, and who he is.
+
+| File | Contents | Source |
+|---|---|---|
+| `operating-manual.md` | Human Design, ADHD profile, cognitive mechanics, decision-making protocol | GitHub Clint-s-Kompass |
+| `quick-reference.md` | Condensed key reminders | GitHub Clint-s-Kompass |
+| `vivid-vision-2036.md` | 10-year ideal circumstances | GitHub Clint-s-Kompass |
+| `2026-commitments.md` | Current year measurable commitments | GitHub Clint-s-Kompass |
+
+*Read-only by the app via GitHub API. Not a SmartSuite entity.*
+
+---
+
+#### 16. Family Profile (Phase 1: read-only reference)
+Profile files for Christie, Avery, Brynn, Maxwell, and Gwen. In Phase 1, these are readable by Clint as context for coaching and relationship navigation — not interactive, not writeable by family members.
+
+*Phase 2: each family member gets their own auth and can read/write their own profile.*
+
+---
+
+#### 17. Vivid Vision
+The 10-year ideal circumstances document. Surfaces inside Clint's profile section. Opens natively via Google Drive link.
+
+| Field | Notes |
+|---|---|
+| Google Doc ID | `1KpYWZdRgeM93V79mp0sSStE57y-f9iWKwRu5pyYcIsI` |
+| GitHub backup | `01-user-profile/vivid-vision-2036.md` |
+| Sections | Health / Environment / Family / Business / Wealth & Legacy |
+| Review cadence | Annual — New Year prompt |
+
+---
+
+#### 18. Annual Commitments
+The 1-year measurable commitment document. Surfaces inside Clint's profile. Opens natively via Google Drive link.
+
+| Field | Notes |
+|---|---|
+| Google Doc ID | Same doc as Vivid Vision — `1KpYWZdRgeM93V79mp0sSStE57y-f9iWKwRu5pyYcIsI` |
+| GitHub backup | `01-user-profile/2026-commitments.md` |
+| Sections | Rituals / Body / Being / Balance / Business |
+| Review cadence | Annual renewal + quarterly check-in |
+| Connection | Measurable commitments link to SmartSuite Goals in the corresponding domain |
+
+---
+
+#### 19. Day Mode
+The current day's operating posture. App state — not a persisted SmartSuite record in Phase 1.
+
+| Field | Notes |
+|---|---|
+| Mode | Focus / Buffer / Free |
+| Date | Today |
+| Set by | Kompass suggestion (confirmed) or manual override |
+| Confirmed at | Timestamp |
+
+**Open question (flag for §9):** Should Day Mode be logged to Journals so Clint can see his day-type patterns over time (e.g., how many Focus Days last month)? Low-cost addition with potential scoreboard value. Decide before Technical Spec.
+
+---
+
+## §3 Gate 2 Checklist
+
+- [ ] All Phase 1 entities named ✳️ *Pending sign-off*
+- [ ] No orphan entities — every entity referenced in Discovery Inputs is defined here ✳️ *Pending sign-off*
+- [ ] Phase 1 / Phase 2 boundary clear for every entity ✳️ *Pending sign-off*
 
 ---
 
@@ -154,182 +492,102 @@ A single application that integrates the entire practice of intentional living �
 
 ## Discovery Inputs (from session 2026-06-24 / 2026-06-25)
 
-> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 as the gates progress. Organized into fourteen areas.
+> Organized into fourteen areas. Phase flags added 2026-06-25.
 
 ---
 
-### A — Navigation & Shell
+### A — Navigation & Shell *(Phase 1)*
 
 - Four persistent bottom tabs: **Today / Horizon / Me / Shortcuts**
 - Me tab is a domain menu — four domain cards (Body/Being/Balance/Business), tap domain → Goals list, tap Goal → universal initiative screen
-- **Me menu sections (full list):** Body / Being / Balance / Business domains + About Me & People Around Me + Key Docs + Big Ass Calendar + Quarterly Habit + Journal + Tools + Spec Sheet
-- Spiral and Spec Sheet accessible from top-right nav icons on any screen (not main tabs)
-- Tab bar hides entirely in Focus Day mode — the app changes posture, not just content
+- **Me menu sections (Phase 1):** Body / Being / Balance / Business + About Me (Clint) + Key Docs + Big Ass Calendar + Quarterly Habit + Journal + Tools + Spec Sheet
+- **Me menu sections (Phase 2 additions):** People Around Me (family profiles, interactive) + Family Key Docs + family Table Talk
+- Spiral and Spec Sheet accessible from top-right nav icons on any screen
+- Tab bar hides entirely in Focus Day mode
 
 ---
 
-### B — Day Mode
-*Source: `06-platform-design/kompass-operating-platform.md` in Clint-s-Kompass repo*
+### B — Day Mode *(Phase 1)*
 
-Three modes: **Focus Day / Buffer Day / Free Day**
-
-**Suggestion logic — Kompass reads three signals:**
-1. Calendar — meetings, blocks, commitments today
-2. Horizon Rings — count of Overdue + This Week items
-3. Recent energy — days since last Buffer Day, last Free Day
-
-**Confirmation flow:**
-- Kompass makes one suggestion with reasoning
-- Clint responds: **uh-huh** (confirms) or **uh-uh** (triggers three-option picker: Focus / Buffer / Free)
-- Max two questions, never open-ended
-- Mode badge displayed in nav — tap to switch
-
-**Focus Day:** Tab bar hides. Only anchor item + Pomodoro timer visible. Kompass runs silently. Grounding affirmation shown. Break-glass available.
-
-**Buffer Day:** Full app visible. Horizon Rings is the command center. Three sub-tabs: Horizon / Email / Big 3. Two guardrail questions on any commitment decision.
-
-**Free Day:** Calendar + wins + Table Talk prompt only. No tasks, no inbox. Mandate: "Your job today is to wander." Kompass off.
-
-**Week architecture:** Focus Day (meetings only if serving named initiative) / Buffer Day Tue (team meeting anchor) / Buffer Day Wed (dev meeting anchor) / Free Day (zero business)
+Three modes: Focus Day / Buffer Day / Free Day. Kompass suggests from three signals (calendar, Horizon Rings, recent energy). Clint confirms with uh-huh / uh-uh. Full spec in Discovery Input B above.
 
 ---
 
-### C — Horizon Rings
-*Sources: `06-platform-design/horizon-rings-design-spec.md` + `skills/daily-horizon-scan/SKILL.md`*
+### C — Horizon Rings *(Phase 1)*
 
-Five rings: 🔴 Overdue / 🟡 This Week / 🔵 Active / 🟢 Coming Soon / ⚪ Parked. Three data sources: SmartSuite Tasks, Notes & Comments, GYR Status Reports. Max 7–10 items. Dual-mode toggle: Stacked list (default triage) + Circles overview (spatial orientation, tap → Focus bridge). Sacral Anchor prompt. Quick Clear mode. Phase Context Strip.
-
----
-
-### D — Kompass Operating Platform
-*Source: `06-platform-design/kompass-operating-platform.md`*
-
-Three layers: Second Brain (capture & externalize) / Buffer Anchor (email triage, body-doubling) / Genius Schedule (daily calendar design and review). Nine-type capture routing table. `Who` field privacy rule. Weekly Monday audit.
+Five rings. Three SmartSuite data sources. Max 7–10 items. Dual-mode: Stacked list + Circles overview. Sacral Anchor. Quick Clear. Phase Context Strip. Full spec in Discovery Input C above.
 
 ---
 
-### E — Universal Goal Engine
+### D — Kompass Operating Platform *(Phase 1)*
 
-Five steps: Current Score → Goal + Deadline → Rhythm & Reminders → Progress Tracking → Celebrate Wins. Same template for every initiative across every domain. Domain-specific fields layer on top.
-
----
-
-### F — Shortcuts Tab
-
-19 personal Claude skills + 17 business Claude skills + 8-item external tools grid. Full inventory in `TSW_Design_Context.md` and `TSW_memory.md`.
+Three-layer architecture: Second Brain / Buffer Anchor / Genius Schedule. Full spec in Discovery Input D above.
 
 ---
 
-### G — In-App Spec Sheet
+### E — Universal Goal Engine *(Phase 1)*
 
-Living design doc built into the app. 10 sections, 60+ feature rows. Feature / Principle / Tool / Status columns. Status cycles tap-to-advance. Cells tap-to-edit. Add row per section. Summary pill strip at top.
-
----
-
-### H — About Me & People Around Me
-
-Full profiles for Clint (4 files) + Christie, Avery, Brynn, Maxwell, Gwen. Data source: GitHub `Clint-s-Kompass` repo via GitHub API — the only section not reading from SmartSuite. Person selector, full markdown render, search across all profiles, last-updated date, edit opens GitHub natively.
-
-**H1 — Vivid Vision & Annual Commitments:** 10-year vision + 1-year commitments surfaced inside Clint's profile. Google Doc opens natively (Drive link, no API auth). Daily rotating reminder tied to morning ritual. Annual update prompt each New Year.
+Five steps: Current Score → Goal + Deadline → Rhythm & Reminders → Progress Tracking → Celebrate Wins. Full spec in Discovery Input E above.
 
 ---
 
-### I — Big Ass Calendar
-*Source: thebigasscalendar.com*
+### F — Shortcuts Tab *(Phase 1)*
 
-Year-at-a-glance visual. Three elements: Misogi (year-defining event) + Kevin's Rule (bimonthly adventures) + Quarterly Habit. Two views: full-year color-coded (backward "look how far" layer + forward "what's coming" layer) + month/week drill-in. Surfaces on Free Day Today tab.
-
----
-
-### J — Quarterly Habit
-
-One habit at a time — Consecutive Appetite model. Five-stage arc: Install → Beginner → Intermediate → Expert → Complete. Freud's sense of achievement at completion. Staged learning (3–5 lessons, one per day, first 2 weeks). Celebration at 7/14/21/30/60/90 days + quarter end. Identity statement generated at completion.
+19 personal Claude skills + 17 business Claude skills + 8 external tools. Full inventory in `TSW_Design_Context.md`.
 
 ---
 
-### K — Key Docs
+### G — In-App Spec Sheet *(Phase 1)*
 
-Google Drive link registry for critical personal and family documents. Links open Drive natively — no API auth. Nine categories. Person selector + Family tab. Emergency-access flag. Cross-references Body health vault.
+Living design doc inside the app. 10 sections, 60+ rows. Tap-to-advance status. Tap-to-edit cells.
 
 ---
 
-### L — Container Model & Learning Engine
+### H — About Me *(Phase 1: Clint only)*
 
-**L1 — Container Model:** Three-layer empty state (soft glow + clear invitation + progress ring). Every container has a "why this matters" message before the build prompt. Build flow: Claude-guided conversation → filed to right destination → container fills → progress ring updates → celebration. Refresh cycles per container type.
+Clint's 4 GitHub profile files — full markdown render, scrollable. Daily rotating reminder from Vivid Vision / Annual Commitments tied to morning ritual.
 
-**L2 — Learning Engine:** Ebbinghaus forgetting curve + spaced repetition + sleep as the training session. One concept per card. Named bounded lessons with time estimates. Single Next button. 6-hour safety rail. Fires on: Quarterly Habit install, Body protocol, new container build, first Spiral, first family profile, S-BOS skill onboarding (cross-product).
+**H1 — Vivid Vision & Annual Commitments *(Phase 1)*:** Opens natively via Google Drive link. Annual update prompt each New Year.
+
+> **Phase 2:** Family profiles become interactive — each member reads and writes their own profile.
+
+---
+
+### I — Big Ass Calendar *(Phase 1)*
+
+Year-at-a-glance. Misogi + Kevin's Rule + Quarterly Habit. Backward layer (look how far) + forward layer (what's coming). Surfaces on Free Day Today tab.
+
+---
+
+### J — Quarterly Habit *(Phase 1)*
+
+One habit at a time. Five-stage arc. Freud's sense of achievement. Staged learning. Celebration mechanics.
+
+---
+
+### K — Key Docs *(Phase 1: Clint's docs only)*
+
+Google Drive link registry. Links open natively. Nine categories. Emergency flag.
+
+> **Phase 2:** Family member docs added. Per-member selector becomes interactive.
+
+---
+
+### L — Container Model & Learning Engine *(Phase 1)*
+
+L1: Three-layer empty state (glow + invitation + progress ring). Claude-guided build flow.
+L2: Ebbinghaus / Calmio model. One concept per card. 6-hour safety rail.
 
 ---
 
 ### M — Brand Identity & Positioning
 
-**Working name:** Stitser Way — a good placeholder that may stand the test of time.
-
-**Identity archetype confirmed:** Sage-Architect-Builder. Starting posture is gratitude, not combat. Embodied through daily pursuit, never finished.
-
-**Closest identity noun:** The Steward. Steward synonyms explored: Keeper (top candidate), Cultivator, Tender. Sovereign/Craftsman/Author — over-claimed, avoid.
-
-**Austrian heritage thread (developing):** Herz-Jesu-Feuer / Bergfeuer / Sonnwendfeuer as brand story. Kronerer as most resonant identity archetype. Names explored: Bergfeuer, Kronerer, Krone Way, Feura, Luma Way — none landed. Running with Stitser Way as placeholder.
-
-**Confirmed positioning statements:**
-- *"The app is a machine that procedurally produces a better life. You don't need to arrive fully formed. The machine installs you into clarity over time."*
-- *"No need to be a warrior. You don't even need to explore. With the world's intelligence at your fingertips, you can be a sage builder of your life."*
-
-**Domain rename in development:** First instinct: *"Your money, your mind, your people, your Mecca."* Direction right — words not yet final.
-
-**Full detail:** `03-stitser-way/messaging.md` in Clint-s-Kompass repo.
+Working name: Stitser Way. Sage-Architect-Builder archetype. Austrian fire tradition (Kronerer) as brand story developing. Full detail in `03-stitser-way/messaging.md`.
 
 ---
 
-### N — Project-Based Tool Layer (Claude-Built Tools)
+### N — Project-Based Tool Layer *(Phase 1)*
 
-**What it is:** A project-scoped tool-building system where Claude builds custom mini-apps, trackers, checklists, and schedulers for bounded life projects. Tools are created for a specific project stage, used through that stage's lifecycle, then archived for future reference or sharing with others. This is distinct from the recurring life domain framework (Body/Being/Balance/Business) — it handles the temporary, bounded, specific needs that arise throughout life.
+Four project pillars (Budget / Alignment / Schedule / Checklists). Universal across S-BOS and Stitser Way. Master → Child → Grandchild hierarchy. Claude-built tools attach to pillars. Create → Active → Complete → Archived lifecycle. Archive is searchable and reusable.
 
-**The core insight:** Not everything in life is a habit or a domain. Some things are projects — bounded in time, specific in need, complete when done. A trip to Europe isn't a Body goal. An ear infection isn't a Being ritual. An AP Chemistry test isn't a Business phase gate. These need their own tools, purpose-built for their stage, scoped to their project.
-
-#### The Four Project Pillars (universal — applies to every project in both S-BOS and Stitser Way)
-
-Every project — whether a construction development in S-BOS or a family trip in Stitser Way — is structured around the same four pillars. This is existing infrastructure in SmartSuite, developing in Supabase over time, and surfaced in both applications.
-
-| Pillar | What it contains |
-|---|---|
-| **Budget** | Financial plan, cost tracking, actuals vs. planned |
-| **Alignment** | Purpose + outcome + Team (who, what, when, why they do it, how much/when rewarded) |
-| **Schedule** | Timeline, milestones, phases, sequencing |
-| **Checklists** | QC / Safety / Decisions / Docs / Routines |
-
-**These pillars are universal.** A school year, a Europe trip, and a medical protocol all have Budget, Alignment, Schedule, and Checklists — just with different content in each pillar.
-
-#### Project Hierarchy
-
-Master Project → Child Project → Grandchild Project (existing S-BOS SmartSuite infrastructure). Claude-built tools attach to the specific pillar/stage they serve.
-
-```
-Master Project     → Europe Trip — Summer 2027
-  Child Project    → Budget pillar
-    Tool           → Claude-built: trip budget tracker
-  Child Project    → Schedule pillar
-    Tool           → Claude-built: day-by-day itinerary
-
-Master Project     → School Year 2026–27
-  Child Project    → AP Chemistry → Midterm Exam — Oct 15
-    Tool           → Claude-built: flashcard quiz + spaced review schedule
-
-Master Project     → Ear Infection — Max, Jun 2026
-  Child Project    → Checklists → Routines
-    Tool           → Claude-built: medication schedule with dosage + timing
-```
-
-#### Tool Lifecycle
-
-Create → Active → Complete → Archived. Archive is searchable, shareable across family members, and reusable as a template for future similar projects.
-
-#### Data Model
-
-- **Phase 1 (SmartSuite):** Existing S-BOS project infrastructure. Tools are Claude artifact HTML files linked to the project record.
-- **Phase 2 (Supabase):** Migrates with the rest of the data layer.
-- **Both S-BOS and Stitser Way read from the same infrastructure** — different audience and context, same four pillars.
-
-#### Open Question (flag for §9)
-
-UX entry point for tool creation: (a) from inside a project pillar, or (b) Claude skill trigger from anywhere → Kompass identifies the right project and pillar. Both may be valid. Decide before UI/UX doc.
+> **Phase 2:** Tool sharing across family members becomes interactive.
