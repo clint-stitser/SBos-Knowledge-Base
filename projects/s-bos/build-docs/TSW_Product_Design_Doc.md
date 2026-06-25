@@ -101,7 +101,7 @@ Christie (Partner), Avery, Brynn, Max (Children). Kids enter their own data. Cus
 |---|---|
 | Body | Weight, body fat, meals, alcohol, sleep, readiness, training (Strava), health records. Phase-based protocol. Staged learning. |
 | Being | Rituals, stacks, decisions, mindset, Spiral processing. |
-| Balance | Table Talk (Clint records). Family profiles as read-only context. Relationship coaching via Claude. |
+| Balance | Table Talk (Clint records). Family profiles as read-only context. Relationship measurables tracked via Stat + Goal engine with Claude inference. |
 | Business | Personal goals. Phase anchor for allocator seat. GYR per product line. |
 
 ---
@@ -182,6 +182,9 @@ Christie (Partner), Avery, Brynn, Max (Children). Kids enter their own data. Cus
 **Source of truth rule (confirmed 2026-06-25):** Oura primary for sleep + readiness. Apple Health primary for weight.
 
 **Health Vault:** Body domain section surfacing all Drive-linked health records chronologically. One-tap Drive access. Add via simple form: type → date → Drive URL → notes.
+
+**Relationship measurables — no new entities needed:**
+Balance domain Goals like "Rides with Max," "Dates with Christie," "Miles run with Brynn," "Drives with Avery" use the existing Stat + Goal engine. A relationship measurable is a Goal (domain = Balance, type = Standard) with a custom Stat Menu Item as the counter. No new tables required. The mechanism for logging these stats is the **Stat Inference Engine** — see Discovery Input O below.
 
 **Vivid Vision + Annual Commitments:** GitHub source of truth. App reads via GitHub API. Also feed Daily Reminder Engine.
 
@@ -277,3 +280,42 @@ Stitser Way (working name). Sage-Architect-Builder. Austrian fire / Kronerer dev
 
 ### N — Project-Based Tool Layer *(Phase 1)*
 Four pillars — SB Project MGT tables confirmed including Bills & Invoices. Master → Child → Grandchild. Claude-built tools. Archive reusable.
+
+### O — Stat Inference Engine *(Phase 1)*
+
+**What it is:** Claude reads existing data sources (Strava, journal captures, calendar entries) after events occur and surfaces smart, one-tap confirmation prompts to log stats against active Goals — without requiring Clint to fill out forms.
+
+**The core principle:** The app is a second brain. It notices what happened and asks one question. Clint confirms or dismisses. No forms. No manual entry. No friction.
+
+**How it works:**
+
+Claude periodically scans three signal sources:
+
+1. **Strava** — a new activity is detected (ride, run, hike). Claude checks: does Clint have any active Balance Goals whose Stat Menu Item matches this activity type (e.g., "Rides with Max," "Miles run with Brynn")? If yes, surfaces a prompt.
+
+2. **Journal / Capture** — a new journal entry or quick capture contains a person's name AND an activity keyword (e.g., "drove with Avery to practice," "ran 3 miles with Brynn"). Claude parses the entry, identifies the person + activity, checks for a matching active Balance Goal, and surfaces a prompt.
+
+3. **Calendar** — a calendar event is completed that involves a named person and an activity type (e.g., "Date Night with Christie"). Claude checks for a matching Goal and surfaces a prompt.
+
+**The prompt format (one-tap, never a form):**
+
+> *"Hey — you just logged a 12-mile ride. Was Max with you? Tap yes to count it toward 'Rides with Max Q3' (3 of 10)."*
+
+> *"I saw a note about driving with Avery to her game. Want me to log that against 'Drives with Avery' (7 of 20)?"*
+
+> *"Looks like you had a date night with Christie. Log it against 'Monthly Dates with Christie' (2 of 3 this month)?"*
+
+**Response options:** Yes — log it / No — skip / Not quite — let me adjust
+
+**When "Not quite" is tapped:** Claude asks one clarifying question maximum before logging or abandoning. Never opens a form.
+
+**What entities this touches:**
+- Reads: Strava Activity (#29), Journal Entry (#8), BAC Calendar Event (#13), active Goal records (#1), Stat Menu Items (#5)
+- Writes: Stat records (#4) — one new stat record created per confirmed log
+
+**What this is NOT:**
+- Not automatic logging — Claude always asks, Clint always confirms
+- Not a form — one prompt, one tap, done
+- Not a new data model — uses existing Stat + Goal + Stat Menu Item infrastructure entirely
+
+**Full feature spec to be written in §4.** This clarification in §3 establishes the design intent so entity definitions remain accurate.
