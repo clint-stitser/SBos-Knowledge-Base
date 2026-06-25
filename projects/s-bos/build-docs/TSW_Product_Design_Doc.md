@@ -28,9 +28,9 @@
 | **Phase 1** | Clint only | The full personal OS for one person — all four domains, all rituals, Goal engine, Horizon Rings, Day Mode, Spiral, Big Ass Calendar, Quarterly Habit, Key Docs, Projects, Tools |
 | **Phase 2** | Family members | Each family member gets their own profile, their own data, their own experience — age-appropriate, customized to their wiring. Built on the validated Phase 1 machine. |
 
-**Table Talk nuance:** The Table Talk ritual itself is Phase 1 — Clint records the dinner conversation. The per-member experience (each person entering their own Hi/Lo/Buffalo from their own profile) is Phase 2.
+**Table Talk nuance:** The Table Talk ritual itself is Phase 1 — Clint records the dinner conversation. The per-member experience is Phase 2.
 
-**About Me nuance:** Clint's profile (4 GitHub files) is Phase 1. Family profiles are read-only reference data in Phase 1 (Clint can read them to inform his coaching and relationship approach) — they are not interactive or writeable by family members until Phase 2.
+**About Me nuance:** Clint's profile (4 GitHub files) is Phase 1. Family profiles are read-only reference in Phase 1 — not interactive or writeable by family members until Phase 2.
 
 ---
 
@@ -106,8 +106,6 @@ A single application that integrates the entire practice of intentional living �
 | Brynn | Child | Initiated Table Talk. Own profile, owns their data |
 | Max | Child | Own profile, owns their data |
 
-**Design principle (Phase 2):** Kids enter their own data. Intrinsically motivating — customized to each person's wiring.
-
 ### Phase 1 user needs by domain
 
 | Domain | What Clint needs the app to do in Phase 1 |
@@ -129,13 +127,13 @@ A single application that integrates the entire practice of intentional living �
 
 ## §3 — Core Entities
 
-> **Scope:** Phase 1 entities only. Family entities noted as Phase 2 where relevant but not defined here. All SmartSuite app IDs confirmed by live schema pull 2026-06-25.
+> **Scope:** Phase 1 entities only. All SmartSuite app IDs confirmed by live schema pull 2026-06-25.
 
 ---
 
 ### Entity Map
 
-| # | Entity | Phase | SmartSuite Source | App ID |
+| # | Entity | Phase | Source | App ID / Location |
 |---|---|---|---|---|
 | 1 | Goal | 1 | Game App | `6824d4d1885a8769bd2dfc0d` |
 | 2 | Priority | 1 | Game App | `68216f48f98789b5bb095a4b` |
@@ -143,99 +141,120 @@ A single application that integrates the entire practice of intentional living �
 | 4 | Stat | 1 | Game App | `6840927ebcfa2d2bfef039e2` |
 | 5 | Stat Menu Item | 1 | Game App | `68409420391d32d925740e28` |
 | 6 | GYR Status Report | 1 | Game App | `68216f48f98789b5bb095a51` |
-| 7 | Task | 1 | Three sources — see definition | multiple |
+| 7 | Task | 1 | Three sources | multiple — see definition |
 | 8 | Journal Entry | 1 | Stitser Way | `68f8f8fe3757414d70d94ae0` |
-| 9 | Day Mode Log | 1 | Stitser Way (via automation) | `68f8f8fe3757414d70d94ae0` |
-| 10 | BAC Day Type | 1 | Stitser Way | `69458768a624db0406935efc` |
-| 11 | BAC Calendar Event | 1 | Stitser Way | `6945877b88051cf9ac527e8a` |
-| 12 | BAC Goal | 1 | Stitser Way | `69458793cc79c051739c047b` |
-| 13 | Quarterly Habit | 1 | Game App Goals (tagged) | `6824d4d1885a8769bd2dfc0d` |
-| 14 | Misogi | 1 | Game App Goals (tagged) | `6824d4d1885a8769bd2dfc0d` |
-| 15 | Kevin's Rule Event | 1 | Game App Goals (tagged) | `6824d4d1885a8769bd2dfc0d` |
-| 16 | Project | 1 | SB Biz Dev | `68216a706900e8eaf75a05a7` |
-| 17 | Check List | 1 | SB Project MGT | `6a060dadc513b3329b7d4485` |
-| 18 | Check List Task | 1 | SB Project MGT | `68a8e17251dc814e8c529f3f` |
-| 19 | Project Budget (G702) | 1 | SB Project MGT | `68a8c3d2bba73ca6e62d00f0` |
-| 20 | Project Budget Line Items (G703) | 1 | SB Project MGT | `68db71a363e88ace0bd45439` |
-| 21 | Project Schedule | 1 | SB Project MGT | `68a8d2153c056ca71c9928fd` |
-| 22 | Project Dates | 1 | SB Project MGT | `69bb7d64740e0e696d88c47f` |
+| 9 | Day Mode Log | 1 | Stitser Way (automation) | `68f8f8fe3757414d70d94ae0` |
+| 10 | Decision | 1 | Stitser Way | `68feda0035fd19c93de8d757` |
+| 11 | Principle / Realization | 1 | Stitser Way | `6913f7e0e36376fca2b14b0e` |
+| 12 | BAC Day Type | 1 | Stitser Way | `69458768a624db0406935efc` |
+| 13 | BAC Calendar Event | 1 | Stitser Way | `6945877b88051cf9ac527e8a` |
+| 14 | BAC Goal | 1 | Stitser Way | `69458793cc79c051739c047b` |
+| 15 | Quarterly Habit | 1 | Game App Goals (tagged) | `6824d4d1885a8769bd2dfc0d` |
+| 16 | Misogi | 1 | Game App Goals (tagged) | `6824d4d1885a8769bd2dfc0d` |
+| 17 | Kevin's Rule Event | 1 | Game App Goals (tagged) | `6824d4d1885a8769bd2dfc0d` |
+| 18 | Project | 1 | SB Biz Dev | `68216a706900e8eaf75a05a7` |
+| 19 | Check List | 1 | SB Project MGT | `6a060dadc513b3329b7d4485` |
+| 20 | Check List Task | 1 | SB Project MGT | `68a8e17251dc814e8c529f3f` |
+| 21 | Project Budget — G702 | 1 | SB Project MGT | `68a8c3d2bba73ca6e62d00f0` |
+| 22 | Project Budget Line Items — G703 | 1 | SB Project MGT | `68db71a363e88ace0bd45439` |
 | 23 | Baseline Budget Items | 1 | SB Project MGT | `69bb89ebf6a195c2c73a3b3e` |
-| 24 | Notes & Comments | 1 | SB Biz Dev | `6894e64f621641b3ef90fa99` |
-| 25 | Project Tool | 1 | Claude artifact + SmartSuite link | n/a |
-| 26 | Vivid Vision | 1 | GitHub (source of truth) | `01-user-profile/vivid-vision-2036.md` |
-| 27 | Annual Commitments | 1 | GitHub (source of truth) | `01-user-profile/2026-commitments.md` |
-| 28 | Clint's Profile | 1 | GitHub | `01-user-profile/` |
-| 29 | Family Profile | 1 (read-only) / 2 | GitHub | `07-family/` |
-| 30 | Key Doc | 1 | JSON config → Supabase | n/a |
+| 24 | Bills & Invoices | 1 | SB Project MGT | `68a8c3d2bba73ca6e62d1297` |
+| 25 | Project Schedule | 1 | SB Project MGT | `68a8d2153c056ca71c9928fd` |
+| 26 | Project Dates | 1 | SB Project MGT | `69bb7d64740e0e696d88c47f` |
+| 27 | Notes & Comments | 1 | SB Biz Dev | `6894e64f621641b3ef90fa99` |
+| 28 | Project Tool | 1 | Claude artifact + SmartSuite link | n/a |
+| 29 | Strava Activity | 1 | Strava MCP | external — read-only |
+| 30 | Vivid Vision | 1 | GitHub (source of truth) | `01-user-profile/vivid-vision-2036.md` |
+| 31 | Annual Commitments | 1 | GitHub (source of truth) | `01-user-profile/2026-commitments.md` |
+| 32 | Clint's Profile | 1 | GitHub | `01-user-profile/` |
+| 33 | Family Profile | 1 (read-only) / 2 | GitHub | `07-family/` |
+| 34 | Key Doc | 1 | JSON config → Supabase | n/a |
 
 ---
 
-### Key Clarifications from 2026-06-25
+### Key Clarifications
 
 **Goals as the universal tag-based entity:**
-Quarterly Habit, Misogi, and Kevin's Rule Event are all stored as Goal records in the Game App Goals table — differentiated by a `type` tag field. Not separate entities. Same five-step engine, same SmartSuite table. Type values: Standard Goal / Quarterly Habit / Misogi / Kevin's Rule.
+Quarterly Habit, Misogi, and Kevin's Rule Event are Goal records differentiated by a `type` tag. Type values: Standard Goal / Quarterly Habit / Misogi / Kevin's Rule. Same five-step engine, same table.
 
 **Tasks pull from three source tables:**
-Horizon Rings and the Task entity surface items from:
-1. SB Project MGT — Check List Tasks `68a8e17251dc814e8c529f3f` — assigned to Clint, not complete/cancelled
-2. SB Biz Dev — Notes & Comments `6894e64f621641b3ef90fa99` — assigned to Clint, follow-up date ≤ today + 7 days
-3. Game App — GYR Status Reports `68216f48f98789b5bb095a51` — Clint is follow-up owner, follow-up not completed, Red or Yellow status
+1. Check List Tasks `68a8e17251dc814e8c529f3f` — assigned to Clint, not complete/cancelled
+2. Notes & Comments `6894e64f621641b3ef90fa99` — assigned to Clint, follow-up date ≤ today + 7 days
+3. GYR Status Reports `68216f48f98789b5bb095a51` — Clint is follow-up owner, Red or Yellow, not completed
 
-**Day Mode → Journal Entry via automation:**
-Day Mode is app state (not persisted). An automation fires at a set time after Clint confirms the mode — it creates a Journal Entry of type "Day Mode Log" in the Journals/Rituals table `68f8f8fe3757414d70d94ae0`. Same pattern as the existing dashboard print tag. Provides a permanent record enabling day-type pattern tracking over time (how many Focus Days last month, etc.).
+**Day Mode → Journal automation:**
+An automation fires after Clint confirms the day mode — creates a "Day Mode Log" Journal Entry. Same pattern as the existing dashboard print tag. Enables day-type pattern tracking (Focus Days per month, etc.).
 
-**Project infrastructure confirmed in SB Project MGT `68a8c3d1bba73ca6e62d00f0`:**
-The four pillars map to existing tables:
-- Budget pillar → Project Budget Management-G702 + Project Budget Line Items-G703 + Baseline Budget Items + Bills & Invoices
-- Alignment pillar → Project record itself (purpose, outcome, team) + Project Stakeholder Bridge
-- Schedule pillar → Project Schedule + Project Dates
-- Checklists pillar → Check Lists + Check List Tasks + Check List Templates
+**Decisions and Principles & Realizations — Daily Reminder Engine:**
+Both tables are capture destinations (routed from Kompass `/capture`) AND content sources for the app's daily rotating reminder. The "A Thought For You" widget on the Today tab draws from three pools — Vivid Vision lines, Annual Commitment lines, and Principles & Realizations records — rotating daily, never the same two days in a row. This is the Calmio / GrowthDay pattern: one insight surfaced at the top of the day, connected to who you're becoming. Decisions are a separate capture destination — decisions that need to be made — not part of the reminder pool.
+
+**Bills & Invoices confirmed as Phase 1:**
+Currently in active use for the Europe trip budget — tracking spend and identifying room left or overages. Critical for Budget pillar management on personal projects, not S-BOS-only. App ID: `68a8c3d2bba73ca6e62d1297`.
+
+**Project Budget pillar — full table set:**
+- Project Budget Management-G702 `68a8c3d2bba73ca6e62d00f0` — the budget header
+- Project Budget Line Items-G703 `68db71a363e88ace0bd45439` — the line items
+- Baseline Budget Items `69bb89ebf6a195c2c73a3b3e` — baseline tracking
+- Bills & Invoices `68a8c3d2bba73ca6e62d1297` — actual spend tracking
+
+**Strava Activity — external, read-only:**
+Not a SmartSuite entity. The app reads from Strava via MCP for training data (ride metrics, watts, TSS, elevation, dates). No write-back. Used in: Body domain training log, race countdown, progress tracking.
 
 **Vivid Vision and Annual Commitments → GitHub as source of truth:**
-Confirmed 2026-06-25. GitHub markdown files (`vivid-vision-2036.md` and `2026-commitments.md`) are the source of truth. The Google Doc becomes a view/reading copy. The app reads from GitHub, consistent with the rest of the profile. Removes the Google Drive integration dependency for these two entities.
+GitHub markdown files are the source of truth. Google Doc becomes a reading copy. App reads via GitHub API. Consistent with the rest of the profile layer.
 
-**The Stitser Way solution `68f8f8fd3757414d70d94ade` already has BAC infrastructure:**
-Three dedicated tables exist: BAC-Day Types, BAC-Calendar Events, BAC-Goals. These are the Phase 1 data source for the Big Ass Calendar feature — not raw Google Calendar data.
+**The Stitser Way solution already has BAC infrastructure:**
+BAC-Day Types `69458768a624db0406935efc`, BAC-Calendar Events `6945877b88051cf9ac527e8a`, BAC-Goals `69458793cc79c051739c047b` — all live and ready. Phase 1 data source for Big Ass Calendar.
 
 ---
 
 ### Entity Definitions (abbreviated — full field detail in Data Integration Doc)
 
 #### Goals (and tagged sub-types)
-Top-level initiative within a life domain. `type` tag differentiates Standard Goal / Quarterly Habit / Misogi / Kevin's Rule. All share the same five-step engine and SmartSuite table.
-
-**Quarterly Habit specific fields:** stage (Install/Beginner/Intermediate/Expert/Complete), streak, target frequency, quarter start/end.
-
-**Misogi specific fields:** event date, description, status (Planned/In Preparation/Complete).
-
-**Kevin's Rule specific fields:** month slot (1–6), description, status (Planned/Complete).
+Top-level initiative within a life domain. `type` tag differentiates Standard Goal / Quarterly Habit / Misogi / Kevin's Rule.
 
 #### Task (composite — three sources)
-A discrete action item surfaced in Horizon Rings. Pulled from Check List Tasks, Notes & Comments follow-ups, and GYR Status Report follow-ups. Common display fields: title, due date, source (Task/Note/GYR), linked context (project/goal/priority), status. `Who` privacy field — only populated when the task genuinely involves another person.
+Surfaced in Horizon Rings. Common display: title, due date, source icon, linked context, status. `Who` privacy field.
 
 #### Journal Entry + Day Mode Log
-All ritual completions, stack sessions, Table Talk records, Spirals, free writes, and Day Mode Logs live in the Journals/Rituals table `68f8f8fe3757414d70d94ae0`. Type field differentiates. Day Mode Log is created by automation after Clint confirms the day's mode — not manually entered.
+All in Journals/Rituals `68f8f8fe3757414d70d94ae0`. Type field differentiates. Day Mode Log created by automation.
+
+#### Decision
+A decision that needs to be made — routed from `/capture` when input signals competing options or open questions. Stored in Stitser Way Decisions table `68feda0035fd19c93de8d757`. Appears in Buffer session for resolution.
+
+#### Principle / Realization
+An insight, idea, or brainstorm — routed from `/capture`. Stored in Principles & Realizations `6913f7e0e36376fca2b14b0e`. **Also serves as a content source for the Daily Reminder Engine** — one principle surfaced per day on the Today tab, rotating through the pool alongside Vivid Vision and Annual Commitment lines.
+
+#### Daily Reminder Engine (feature note — not a table)
+The "A Thought For You" widget on the Today tab. Draws from three content pools:
+- Lines from Vivid Vision (`vivid-vision-2036.md`)
+- Lines from Annual Commitments (`2026-commitments.md`)
+- Records from Principles & Realizations `6913f7e0e36376fca2b14b0e`
+
+One item per day. Never repeats two days in a row. Tied to morning ritual launch. Clint can tap to save a reminder or dismiss. Modeled on Calmio's "A Thought For You" and GrowthDay's daily quote widget.
 
 #### BAC Entities
-Three dedicated tables in The Stitser Way solution:
-- **BAC-Day Types** `69458768a624db0406935efc` — Focus / Buffer / Free day type records
-- **BAC-Calendar Events** `6945877b88051cf9ac527e8a` — curated events on the year-at-a-glance (Misogi, Kevin's Rule adventures, races, milestones)
-- **BAC-Goals** `69458793cc79c051739c047b` — goals surfaced in the BAC context
+- BAC-Day Types `69458768a624db0406935efc`
+- BAC-Calendar Events `6945877b88051cf9ac527e8a`
+- BAC-Goals `69458793cc79c051739c047b`
 
 #### Project + Four Pillar Tables
-Project record lives in SB Biz Dev `68216a706900e8eaf75a05a7`. The four pillars are served by existing SB Project MGT tables — Budget (G702/G703/Baseline), Alignment (Project + Stakeholder Bridge), Schedule (Schedule + Dates), Checklists (Check Lists + Tasks + Templates). The Stitser Way app reads this same infrastructure for personal/family projects.
+Budget: G702 + G703 + Baseline + Bills & Invoices. Alignment: Project record + Stakeholder Bridge. Schedule: Schedule + Dates. Checklists: Check Lists + Tasks + Templates.
 
 #### Project Tool
-A Claude-built artifact (HTML file) linked to a project record. Stored as a URL + metadata in SmartSuite. Lifecycle stage tracked: Create → Active → Complete → Archived.
+Claude-built HTML artifact linked to a project record. Lifecycle: Create → Active → Complete → Archived.
+
+#### Strava Activity
+Read-only via Strava MCP. Training rides, watts, TSS, elevation. Used in Body domain training log, race countdown, metrics dashboard.
 
 #### Vivid Vision + Annual Commitments
-Markdown files in GitHub `Clint-s-Kompass` repo. App fetches via GitHub API and renders. Source of truth is GitHub. Annual update prompted by app each New Year.
+GitHub markdown files. Source of truth. App renders via GitHub API. Annual update prompted each New Year. Also feed the Daily Reminder Engine.
 
 #### Clint's Profile + Family Profiles
-Markdown files in GitHub `Clint-s-Kompass` repo. Clint's 4 files are Phase 1 interactive. Family profiles (Christie, Avery, Brynn, Maxwell, Gwen) are Phase 1 read-only reference — Phase 2 interactive.
+GitHub. Clint's 4 files — Phase 1 interactive. Family profiles — Phase 1 read-only, Phase 2 interactive.
 
 #### Key Doc
-Named Google Drive link registry. Phase 1: JSON config. Phase 2: Supabase. Links open Drive natively — no API auth.
+Drive link registry. Phase 1: JSON config. Phase 2: Supabase. Links open Drive natively.
 
 ---
 
@@ -285,49 +304,47 @@ Named Google Drive link registry. Phase 1: JSON config. Phase 2: Supabase. Links
 
 ## Discovery Inputs (from session 2026-06-24 / 2026-06-25)
 
-> Organized into fourteen areas. Phase flags added 2026-06-25.
-
 ### A — Navigation & Shell *(Phase 1)*
-Four tabs: Today / Horizon / Me / Shortcuts. Me menu Phase 1: four domains + About Me (Clint) + Key Docs + Big Ass Calendar + Quarterly Habit + Journal + Tools + Spec Sheet. Phase 2 additions: People Around Me (interactive family profiles) + Family Key Docs.
+Four tabs: Today / Horizon / Me / Shortcuts. Me menu Phase 1: four domains + About Me (Clint) + Key Docs + Big Ass Calendar + Quarterly Habit + Journal + Tools + Spec Sheet. Phase 2 additions: People Around Me (interactive) + Family Key Docs.
 
 ### B — Day Mode *(Phase 1)*
-Focus / Buffer / Free. Kompass suggests from three signals. Uh-huh / uh-uh confirmation. Day Mode Log auto-created in Journals table via automation on confirmation.
+Focus / Buffer / Free. Kompass suggests from three signals. Uh-huh / uh-uh. Day Mode Log auto-created in Journals via automation.
 
 ### C — Horizon Rings *(Phase 1)*
-Five rings. Three SmartSuite sources (Check List Tasks + Notes & Comments + GYR follow-ups). Max 7–10 items. Stacked + Circles dual-mode. Sacral Anchor. Quick Clear. Phase Context Strip.
+Five rings. Three SmartSuite sources. Max 7–10 items. Stacked + Circles. Sacral Anchor. Quick Clear. Phase Context Strip.
 
 ### D — Kompass Operating Platform *(Phase 1)*
-Three layers: Second Brain / Buffer Anchor / Genius Schedule. Nine-type capture routing. `Who` privacy field. Weekly Monday audit.
+Three layers: Second Brain / Buffer Anchor / Genius Schedule. Nine-type capture routing (including → Decisions and → Principles & Realizations). `Who` privacy field. Weekly Monday audit.
 
 ### E — Universal Goal Engine *(Phase 1)*
-Five steps. Same template for all Goal types (Standard / Quarterly Habit / Misogi / Kevin's Rule). Domain-specific fields via `type` tag.
+Five steps. Same template for all Goal types. `type` tag differentiates.
 
 ### F — Shortcuts Tab *(Phase 1)*
 19 personal + 17 business Claude skills + 8 external tools.
 
 ### G — In-App Spec Sheet *(Phase 1)*
-10 sections, 60+ rows. Tap-to-advance status. Tap-to-edit cells.
+10 sections, 60+ rows. Tap-to-advance. Tap-to-edit.
 
 ### H — About Me *(Phase 1: Clint only)*
-4 GitHub files. Daily rotating reminder from Vivid Vision / Annual Commitments. Phase 2: family profiles become interactive.
+4 GitHub files. Daily Reminder Engine surfaces one thought per day from Vivid Vision + Commitments + Principles & Realizations pool. Phase 2: family profiles interactive.
 
 ### H1 — Vivid Vision & Annual Commitments *(Phase 1)*
-GitHub as source of truth (confirmed 2026-06-25). App renders markdown via GitHub API. Annual update prompt each New Year.
+GitHub source of truth. Annual update prompt. Feed Daily Reminder Engine.
 
 ### I — Big Ass Calendar *(Phase 1)*
-Year-at-a-glance using BAC tables in The Stitser Way SmartSuite solution. Misogi + Kevin's Rule + Quarterly Habit milestones. Backward + forward layers. Surfaces on Free Day.
+BAC tables in Stitser Way SmartSuite solution. Misogi + Kevin's Rule + Quarterly Habit milestones. Backward + forward layers. Surfaces on Free Day.
 
 ### J — Quarterly Habit *(Phase 1)*
-Goal record with `type = "Quarterly Habit"`. One at a time. Five-stage arc. Staged learning. Celebration mechanics.
+Goal tagged `type = "Quarterly Habit"`. Five-stage arc. Staged learning. Celebration mechanics.
 
 ### K — Key Docs *(Phase 1: Clint only)*
-JSON config → Supabase Phase 2. Drive links open natively. Nine categories. Emergency flag.
+JSON config → Supabase. Drive links open natively. Nine categories. Emergency flag.
 
 ### L — Container Model & Learning Engine *(Phase 1)*
-Three-layer empty state. Claude-guided build. Ebbinghaus / Calmio model. 6-hour safety rail.
+Three-layer empty state. Claude-guided build. Ebbinghaus / Calmio. 6-hour safety rail.
 
 ### M — Brand Identity & Positioning
 Stitser Way (working name). Sage-Architect-Builder. Austrian fire tradition / Kronerer developing. Full detail in `03-stitser-way/messaging.md`.
 
 ### N — Project-Based Tool Layer *(Phase 1)*
-Four pillars (Budget / Alignment / Schedule / Checklists) — existing SB Project MGT tables confirmed. Master → Child → Grandchild hierarchy. Claude-built tools → Create → Active → Complete → Archived. Archive searchable and reusable.
+Four pillars — existing SB Project MGT tables confirmed including Bills & Invoices. Master → Child → Grandchild. Claude-built tools lifecycle. Archive reusable.
