@@ -142,7 +142,7 @@ Clint has a working personal goal-tracking infrastructure in SmartSuite (the Gam
 
 ## Discovery Inputs (from session 2026-06-24)
 
-> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 once Gate 1 is signed off. Organized into twelve areas. Source documents referenced where applicable.
+> These are confirmed design decisions from the discovery session. They will be formalized into §3–§5 once Gate 1 is signed off. Organized into thirteen areas.
 
 ---
 
@@ -167,731 +167,123 @@ Three modes: **Focus Day / Buffer Day / Free Day**
 3. Recent energy — days since last Buffer Day, last Free Day
 
 **Confirmation flow:**
-- Kompass makes one suggestion with reasoning (e.g. "Today looks like a Buffer Day — 3 overdue, 2 replies ready, last buffer was Tuesday")
+- Kompass makes one suggestion with reasoning
 - Clint responds: **uh-huh** (confirms) or **uh-uh** (triggers three-option picker: Focus / Buffer / Free)
 - Max two questions, never open-ended
 - Mode badge displayed in nav — tap to switch
 
-**Focus Day behavior:**
-- Tab bar hides. Only anchor item + Pomodoro timer visible
-- Kompass runs silently in background (email sweep continues, no digest surfaced)
-- Grounding affirmation shown — sourced from operating manual
-- Break-glass button: low-visibility, requires intentional tap, reveals task/email/stack/capture options
-- Meeting filter: only meetings serving a named active Focus initiative are permitted
+**Focus Day:** Tab bar hides. Only anchor item + Pomodoro timer visible. Kompass runs silently. Grounding affirmation shown. Break-glass available.
 
-**Buffer Day behavior:**
-- Full app visible. Horizon Rings is the command center
-- Three sub-tabs: Horizon (rings + dual-mode toggle) / Email (reply queue with drafts ready) / Big 3 (set today's dominos)
-- Buffer session runs Tuesday (team meeting anchor) and Wednesday (development meeting anchor)
-- Kompass presents one item at a time with full context and a draft or recommendation attached
-- Two guardrail questions fire on any commitment decision involving another person's agenda:
-  - Q1: *"Staying focused on your ideal circumstances — what do you actually want here?"*
-  - Q2: *"Is assuming this situation a people-pleasing tendency, or a hell yes from your gut?"*
+**Buffer Day:** Full app visible. Horizon Rings is the command center. Three sub-tabs: Horizon / Email / Big 3. Two guardrail questions on any commitment decision.
 
-**Free Day behavior:**
-- Calendar + wins ("Look how far we've come") + Table Talk prompt only
-- No tasks, no inbox, no agenda
-- Mandate displayed: "Your job today is to wander"
-- Kompass off — app gets out of the way
-- Protects the Channel of Inspiration (1-8) — aimless time is where best ideas surface
+**Free Day:** Calendar + wins + Table Talk prompt only. No tasks, no inbox. Mandate: “Your job today is to wander.” Kompass off.
 
-**Week architecture:**
-
-| Day type | Protection rule |
-|---|---|
-| Focus Day | Full day — no reactive admin, meetings only if serving a named active initiative |
-| Buffer Day (Tue) | Team meeting anchor + clearing session |
-| Buffer Day (Wed) | Development meeting anchor + clearing session |
-| Free Day | Full off — zero business |
+**Week architecture:** Focus Day (meetings only if serving named initiative) / Buffer Day Tue (team meeting anchor) / Buffer Day Wed (dev meeting anchor) / Free Day (zero business)
 
 ---
 
-### C — Horizon Rings (daily planning screen)
-*Sources: `06-platform-design/horizon-rings-design-spec.md` + `skills/daily-horizon-scan/SKILL.md` in Clint-s-Kompass repo*
+### C — Horizon Rings
+*Sources: `06-platform-design/horizon-rings-design-spec.md` + `skills/daily-horizon-scan/SKILL.md`*
 
-**Core principle:** Items earn their way into view through signal, not assignment.
-
-**Five rings:**
-
-| Ring | Label | Signal |
-|---|---|---|
-| 🔴 | Overdue | Past due date |
-| 🟡 | This Week | Due within 7 days, OR aging 48hr+ untouched |
-| 🔵 | Active | No due date, currently in motion |
-| 🟢 | Coming Soon | Due 8–21 days out |
-| ⚪ | Parked | Due 22+ days, or explicitly snoozed |
-
-**Three data sources (all pull into the same ring logic):**
-1. SmartSuite Check List Tasks — assigned to Clint, not complete/cancelled (App ID: `68a8e17251dc814e8c529f3f`)
-2. Notes & Comments follow-ups — assigned to Clint, follow-up date ≤ today + 7 days (App ID: `6894e64f621641b3ef90fa99`)
-3. GYR Status Reports — Clint is follow-up owner, follow-up not completed, Red or Yellow status
-
-**Display rules:**
-- Maximum 7–10 items in the active scan view at any time
-- Priority stack order: Overdue → GYR Red → Notes past due → Active Big 3 → Aging This Week
-- Coming Soon and Parked collapsed by default — expandable on tap
-- Each item shows: title, source icon (Task ✅ / GYR 📊 / Note 📝), linked project, due date or "no date"
-- Phase Context Strip above rings: one chip per active product line showing current phase (tappable → expands to full phase checklist)
-
-**Dual-mode toggle (top-right icon, not a tab):**
-- **Stacked list (default):** Full triage functionality. Every item readable and actionable. Done/Park/Kill/Snooze inline on each card.
-- **Circles overview:** Concentric rings, spatial layout. Items as dots on their ring. Tap ring to filter. Tap dot to inspect — detail card appears below with actions. Tap "→ Focus" to return to stacked with that item highlighted in gold.
-- The bridge: orient in circles → identify what has pull → tap Focus → land on item in list → act.
-
-**Actions per item:** Done / Park (pushes due date 14 days) / Kill / Snooze (N days) / Pin as Anchor
-
-**Sacral Anchor:**
-- Prompt: *"What has the most pull for you today?"*
-- Surfaces top 3 actionable items as options
-- User selects one — becomes the day's anchor, pinned at top for the rest of the day
-- No algorithmic prioritization — gut only
-- The Sacral Anchor answer informs Domino #1 of the Big 3 (the bridge between Horizon and Today tab)
-
-**Quick Clear mode (bulk triage):**
-- Triggered by button — not the default view
-- Surfaces items with no due date AND no activity in 7+ days
-- Presents in batches of 3–5
-- Commands: Done / Park / Kill / Keep — parsed and batch-filed at end of session
-
-**What Horizon Rings is NOT:**
-- Not a full task manager — items are managed in SmartSuite, not here
-- Not a calendar — no time blocks, no scheduling
-- Not pressure-generating — no countdown timers, no urgency language
-
-**Relationship to Claude:** When Claude runs a Horizon Scan conversationally (via the `daily-horizon-scan` skill), it reads the same data and applies the same ring logic. The app screen and Claude are two surfaces of the same model. Claude can update item status from conversation; the app reflects the change.
+Five rings: 🔴 Overdue / 🟡 This Week / 🔵 Active / 🟢 Coming Soon / ⚪ Parked. Three data sources: SmartSuite Tasks, Notes & Comments, GYR Status Reports. Max 7–10 items. Dual-mode toggle: Stacked list (default triage) + Circles overview (spatial orientation, tap → Focus bridge). Sacral Anchor prompt. Quick Clear mode. Phase Context Strip.
 
 ---
 
-### D — Kompass Operating Platform (three-layer architecture)
-*Source: `06-platform-design/kompass-operating-platform.md` in Clint-s-Kompass repo*
+### D — Kompass Operating Platform
+*Source: `06-platform-design/kompass-operating-platform.md`*
 
-The platform exists to match Clint's burst-and-drift wiring. Everything requiring sustained attention, sequential processing, or remembering to do something is removed from Clint and handled by the system.
-
-**Three layers:**
-
-| Layer | Guardrail | What it solves |
-|---|---|---|
-| 1 | Second Brain | Working memory is a sieve — externalize everything automatically |
-| 2 | Buffer Anchor | Executive Function Gap + unfinished pile pressure — clear with body doubling |
-| 3 | Genius Schedule | Genius gets colonized by others' urgency — protect, design, and review daily |
-
-**Layer 1 — Second Brain (Capture & Externalize):**
-`/capture` activates intake from any input: typed text, voice memo, Remarkable photo, dictation.
-
-Classification routing table:
-
-| Type | Signals | Destination |
-|---|---|---|
-| Task / commitment | Action verb, person, deadline implied | Check List Tasks |
-| Journal / reflection | Emotional content, first-person processing | Journals/Rituals |
-| Idea / brainstorm | Speculative, "what if" | Principles & Realizations |
-| Communication draft | Named person + message intent | Held for Buffer session |
-| Decision needed | Open question, competing options | Decisions app |
-| Stack trigger | Frustration, anger, friction language | Flagged for next Morning Ritual |
-| Knowledge update | Factual update about business/people | GitHub — Clint-s-Kompass |
-| Calendar / meeting note | Date, time, meeting reference | BAC-Calendar Events |
-| Email request / inbound ask | Someone needs something from Clint | Check List Task + Notes & Comments thread |
-
-Ambiguous submissions get two options and a gut check — never an open-ended question.
-
-**Layer 2 — Buffer Anchor:**
-- Email triage model: Gmail → Kompass reviews → Creates Check List Task (title = clear action, `Who` field = requestor) + Notes & Comments thread (type = "Email Request") → Surfaces in Buffer session with draft reply attached → Clint approves → Kompass sends → status updated
-- **`Who` field privacy rule:** Tasks with no `Who` tag (or Clint-only) are invisible to anyone else. Kompass only adds a person to `Who` when the task genuinely involves them.
-- Meeting minutes intake: Kompass reviews Google Calendar event details + uploaded Plaud transcripts → extracts commitments, decisions, follow-ups → routes to Check List Tasks or next Buffer session
-
-**Layer 3 — Genius Schedule:**
-- Daily (not weekly) calendar design and review
-- Morning: review day against day type, flag violations, confirm Big 3 protected
-- Midday (if needed): re-plan afternoon
-- Evening: review actual vs. planned, surface commitments and follow-ups
-- Weekly Monday audit: Focus Day violations, Buffer Days without clearing sessions, Free Days with business creep, weeks with no Free Day
+Three layers: Second Brain (capture & externalize) / Buffer Anchor (email triage, body-doubling) / Genius Schedule (daily calendar design and review). Nine-type capture routing table. `Who` field privacy rule. Weekly Monday audit.
 
 ---
 
-### E — Universal Goal Engine (five steps)
+### E — Universal Goal Engine
 
-One template powers every initiative across every domain. Domain-specific fields layer on top.
-
-1. **Current Score** — where you are now vs target (pulled from SmartSuite Stats + Goal formulas)
-2. **New Goal + Deadline** — what you're aiming for, by when (SmartSuite Goal record: target amount + due date)
-3. **Rhythm & Reminders** — reporting frequency (weekly/monthly), chunked execution, staged learning connected to the why
-4. **Progress Tracking** — visual + numerical. SmartSuite Stats as the data source. Fields: % Metric Complete, % Time Complete, Balance to Finish, Reporting Grade
-5. **Celebrate Wins** — ritual of confirmation, GYR grade update, scoreboard, phase advancement
-
-**Applies to everything:** Body weight loss, alcohol reduction, training, business phase gates, relationship habits, reading goals. Same five steps, different stat types on top.
+Five steps: Current Score → Goal + Deadline → Rhythm & Reminders → Progress Tracking → Celebrate Wins. Same template for every initiative across every domain. Domain-specific fields layer on top.
 
 ---
 
-### F — Shortcuts Tab (full inventory)
-*Sources: plugin layer (`/mnt/skills/plugins/`), user layer (`/mnt/skills/user/`), Clint-s-Kompass skills*
+### F — Shortcuts Tab
 
-**Claude Skills — Personal:**
-
-| Skill | Trigger | Plugin |
-|---|---|---|
-| Morning Ritual | "morning ritual", "start my ritual" | stitser-way |
-| Evening Ritual | "evening ritual", "let's do the evening ritual" | stitser-way |
-| Weekly Review | "weekly review" | stitser-way |
-| WAR Stack | "WAR stack", "let's do a WAR stack" | stitser-way |
-| Cash Stack | "cash stack" | stitser-way |
-| Irritation Stack | "irritation stack" | stitser-way |
-| Anger / Rage Stack | "anger stack", "rage stack" | stitser-way |
-| Guilt Stack | "guilt stack" | stitser-way |
-| Gratitude Stack | "gratitude stack" | stitser-way |
-| Excitement Stack | "excitement stack" | stitser-way |
-| Discovery Stack | "discovery stack" | stitser-way |
-| Free Write / Journal | "free write", "I want to journal" | stitser-way |
-| Strategic Vision | "strategic vision" | stitser-way |
-| Project Debrief | "project debrief" | stitser-way |
-| Daily Horizon Scan | "horizon scan", "what's alive", "scan my tasks" | kompass-ea / user |
-| Quick Capture | "capture this", "file this" | user |
-| Relationship Coach | "[family member name] + relational context" | user / Clint-s-Kompass |
-| Buffer Session | "let's do the buffer session", "clear the queue" | kompass-ea / user |
-| Email Triage | "sweep my email", "what's in my inbox" | kompass-ea / user |
-
-**Claude Skills — Business:**
-
-| Skill | Trigger | Plugin |
-|---|---|---|
-| Baseline a Project | "baseline this project" | user |
-| Pay App | "kick off pay app" | user |
-| Pay App Audit Checklist | per-invoice PM audit | user |
-| Underwrite a Deal | "let's underwrite a deal" | arbitrage-cfo / user |
-| Strategic Review | "run Strategic Review for [entity]" | arbitrage-cfo |
-| GP Cash Flow Schedule | "GP cash flow schedule", "forward GP" | arbitrage-cfo |
-| Entity Budget | "finalize the [entity] budget" | arbitrage-cfo |
-| Refresh Actuals | "refresh actuals for [entity]" | arbitrage-cfo |
-| Year-End Audit | "run year-end audit for [entity]" | arbitrage-cfo |
-| Interco Allocation Review | "review the interco file" | arbitrage-cfo |
-| Platform Performance | "open the platform dashboard" | arbitrage-cfo |
-| Brokerage Compliance Audit | "audit [property/contract]" | user |
-| S-BOS Schema Registry | "refresh the schema" | sbos-system-admin |
-| S-BOS Data Dictionary | "rebuild the data dictionary" | sbos-system-admin |
-| S-BOS Training Docs | "write training docs for [feature]" | sbos-system-admin |
-| Skill Management | "I want to create a skill" | user |
-| Duplicate Contact Merge | "merge these two records" | user / organization |
-
-**External Tools Grid:**
-
-| Tool | Category | Deep link |
-|---|---|---|
-| Google Calendar | Personal | calendar.google.com |
-| Gmail | Personal | mail.google.com |
-| Google Drive | Personal | drive.google.com |
-| Strava | Personal / Body | strava.com |
-| S-BOS / SmartSuite | Business | app.smartsuite.com |
-| Phase Anchor | Business | sb-planning-tools-production.up.railway.app |
-| Sage Intacct | Business | intacct.com |
-| GP Cash Flow | Business | (Railway app) |
+19 personal Claude skills + 17 business Claude skills + 8-item external tools grid. Full inventory in `TSW_Design_Context.md` and `TSW_memory.md`.
 
 ---
 
-### G — In-App Spec Sheet (living design doc)
-*Source: v2 prototype (`kompass-os-v2.html`) — built during discovery session*
+### G — In-App Spec Sheet
 
-The spec sheet is built into the app as its own screen. It is the checklist of principles, tools, and features Clint references during build and testing. Not a separate document — lives inside the product it describes.
-
-**Structure:**
-- Grouped by section with collapsible headers
-- Each row: Feature / Principle & Framework / Tool / Status
-- Status cycles (tap to advance): Designed → In Build → Live → Parked
-- Cells are tap-to-edit inline
-- Add row button per section
-- Summary pill strip at top: count per status across all sections
-
-**Ten sections with seed content:**
-
-**Section 1 — Today**
-
-| Feature | Principle / Framework | Tool |
-|---|---|---|
-| Daily greeting + sub-status | Live with intention — morning anchor sets direction | SmartSuite Journals |
-| GYR domain strip (4 tiles) | GYR Audit — Claude surfaces current status per domain | SmartSuite + Claude |
-| Spiral nudge (context-aware) | GYR Spiral — surfaces Yellow/Red domains for processing | Claude / Spiral engine |
-| Big 3 dominos | RPM / 80-20 — what 3 moves actually move the needle | SmartSuite Tasks |
-| Ritual habit strip | Habit Identity Loop — proof of showing up | SmartSuite Journals |
-| Table Talk (Hi/Lo/Buffalo) | Brynn's Ritual — family check-in, celebration, connection | SmartSuite (custom) |
-
-**Section 2 — Plan**
-
-| Feature | Principle / Framework | Tool |
-|---|---|---|
-| Big Ass Calendar (year view) | Intentional year design — offense not defense | Google Calendar API |
-| Week at a Glance | Guided chunking — focus in 7-day window | Google Calendar |
-| Quarterly Habit (one at a time) | Freud's sense of achievement + Consecutive Appetite | SmartSuite Goals |
-| Habit streak + dot tracking | Habit Identity Loop — streak = identity proof | SmartSuite Stats |
-| Misogi — year-defining event | One bold goal that defines the year — slightly terrifying | SmartSuite Goals |
-| Kevin's Rule — bimonthly adventure | Newness = alive — one thing you wouldn't normally do, every other month | SmartSuite / Calendar |
-
-**Section 3 — Tasks (Horizon Rings)**
-
-| Feature | Principle / Framework | Tool |
-|---|---|---|
-| All open tasks (filterable, max 7–10) | Items earn their way in through signal, not assignment | SmartSuite Tasks |
-| Notes & Comments surface | Capture → triage → file → act | SmartSuite Notes |
-| GYR Follow-Up tracker | GYR Audit output — Red/Yellow items need action | SmartSuite + Claude |
-| Domain tagging on every item | Body/Being/Balance/Business — everything has a home | SmartSuite |
-| Overdue flagging | Facts vs goals — can't hide from reality | SmartSuite |
-| Dual-mode toggle (stacked/circles) | Step back to orient, zoom in to act | Claude / UI |
-| Sacral Anchor prompt | Gut over algorithm — what has pull | UI |
-| Quick Clear bulk triage | Noise removal without pressure | SmartSuite |
-| Phase Context Strip | Bigger picture always visible | Phase Anchor |
-
-**Section 4 — Domains**
-
-| Feature | Principle / Framework | Tool |
-|---|---|---|
-| 4 life domain cards (B4) | Body / Being / Balance / Business — the four containers | SmartSuite + Phase Anchor |
-| Phase gate progress per domain | Phase-based accountability — define done, track it | Phase Anchor |
-| How We Know checklist (tap-to-check) | Team defines HOW, Clint defines WHAT done looks like | SmartSuite |
-| Product Line sub-cards with links | Allocator seat — context at a glance, drill on demand | Phase Anchor + Railway |
-| Spiral entry point per domain | GYR Spiral — transformation engine per life area | Claude |
-| Domain links (Strava, Drive, S-BOS) | Single system discipline — one tap to source of truth | Various |
-
-**Section 5 — Journal**
-
-| Feature | Principle / Framework | Tool |
-|---|---|---|
-| Filterable journal feed | Date and progress-based filing system | SmartSuite Journals |
-| New Journal / Stack launcher (FAB) | Capture immediately — voice or text | Claude Skills |
-| Table Talk history | Brynn's Ritual — permanent family record | SmartSuite |
-| All Stack types (WAR, Cash, Irritation…) | Stacks = structured emotional processing | Claude + SmartSuite |
-| Spiral Journals (full 7-step) | Facts → Feelings → Root → Focus → Actions → Fruit | Claude + SmartSuite |
-
-**Section 6 — Spiral**
-
-| Feature | Principle / Framework | Tool |
-|---|---|---|
-| 7-step guided Spiral flow | GYR Spiral — the transformation engine | Claude |
-| Domain selector at step 1 | Spiral in all areas — Body, Being, Balance, Business | Claude |
-| Prior answers visible as you progress | Facts-first — build the full picture before acting | Claude |
-| File to Journal on completion | Capture → file — no lost insight | SmartSuite Journals |
-| Claude contextual coaching per step | Kompass AI — context-aware guidance | Claude API |
-
-**Section 7 — More / Tools**
-
-| Feature | Principle / Framework | Tool |
-|---|---|---|
-| External tools grid | Single-system discipline — one place to reach everything | Various deep links |
-| Claude Skills launcher (28+ skills) | Kompass Launcher — prompt copied + project opens | Claude Projects |
-| Scoreboard (all domains + product lines) | Facts vs goals — always the North Star | Phase Anchor + SmartSuite |
-| Family profiles | Customized to each person's wiring — Human Design | GitHub + Claude |
-| Settings / preferences | Don't fight natural rhythm — app adapts to user | Local storage |
-
-**Section 8 — Principles & Frameworks**
-
-| Feature | Principle / Framework | Tool |
-|---|---|---|
-| GYR Spiral | Facts → Feelings → Root Cause → Focus → Massive/Relevant Actions → Fruit | Claude (guided) |
-| Body / Being / Balance / Business | Four containers — everything in life has a home | All screens |
-| Habit Identity Loop | I am the kind of person who… — identity before behavior | Plan tab / Habits |
-| Phase-Based Accountability | Phase gates replace willpower-based quarterly plans | Domains tab |
-| Human Needs (Tony Robbins) | Growth, Contribution, Stability, Variety — wired into all coaching | Claude context |
-| Phases of Proficiency | Install → Beginner → Intermediate → Expert → Teach → Sub-Conscious | Domains / Habits |
-| Brynn's Table Talk Ritual | Hi / Lo / Buffalo — dinner table IS the ritual | Today + Journal |
-| Machine Definition | A device that procedurally takes inputs and converts them to outputs | Entire app |
-| Kids Own Their Data | Age-appropriate autonomy — data entered by each person | Family profiles |
-| Never in 100% Balance | Balance is a myth — intentional imbalance with awareness | Today / GYR strip |
-| Spaced Repetition | Sleep locks in learning — reminders timed to protocol stages | Body section |
-| 80/20 + Chunking | Most results come from few actions — focus on the needle movers | Big 3 / Horizon |
-| Sacral Decision Model | Gut over algorithm — uh-huh / uh-uh, max two questions | Day Mode / Horizon |
-| Consecutive Appetite | One thing at a time, full completion before switching | Focus Day / Buffer |
-| Celebrate Progress (The Gap) | Acknowledge how far you've come, not just how far to go | Scoreboard / Wins |
-| Big Ass Calendar System | Designed year = remembered year — offense not defense | Plan tab |
-| Freud's Sense of Achievement | Completing a habit installs identity AND produces joy — not just behavior change | Quarterly Habit |
-| Misogi | One year-defining event — slightly terrifying, deeply personal | Big Ass Calendar |
-| Kevin's Rule | Newness is aliveness — one adventure every other month for 30 years = 180 life experiences | Big Ass Calendar |
-| Ebbinghaus Forgetting Curve | Spaced repetition + sleep = installation. Cramming = information, not skill. | Learning Engine |
-| Container Model | Every section exists as an invitation — empty containers have posture, not failure | Onboarding / All sections |
-
-**Section 9 — Body Domain**
-
-| Feature | Principle / Framework | Tool |
-|---|---|---|
-| Three-phase protocol | Foundation → Engine → Race Block (evidence-based fat loss + MTB training) | SmartSuite Goals |
-| Phase gate criteria (How We Know) | Sleep locked + alcohol cut / Strength added + riding polarized / Race-fueled | SmartSuite |
-| Weight tracker (daily log → weekly trend) | Waist-to-height ratio primary; weight trend secondary | SmartSuite Stats |
-| Body fat % history (DXA upload) | DXA gives true visceral fat baseline — better than BMI | File upload + Stats |
-| Meal tracker (Mediterranean green diet) | High polyphenols, high protein, no liquid sugar, walnuts + green tea | SmartSuite Stats |
-| Alcohol / drinking log (streak + daily count) | Dose-dependent visceral fat driver — reduction is highest-yield change | SmartSuite Stats |
-| Training log (Strava pull) | Polarized riding: 80% Zone 2, 20% hard intervals; not more volume | Strava MCP |
-| Staged learning reminders | Connected to the why — cortisol/testosterone triangle, sleep ROI, etc. | Claude / reminders |
-| Health vault (DXA, blood, eyes, skin) | Historical records — upload + date, searchable | File upload |
-| Strava race countdown | Downieville July 23, Grizzly 100 Sep 5 — shift to maintenance Jul 15 | Strava MCP |
-| Metrics dashboard | Waist circ, HRV/RHR, watts on Mt. Dyer, sleep consistency | Strava + SmartSuite |
-
-**Section 10 — Data & Infrastructure**
-
-| Feature | Principle / Framework | Tool |
-|---|---|---|
-| SmartSuite Game App (Phase 1) | Existing data model — no new schema to launch | Kompass MCP |
-| Supabase migration (Phase 2) | API limits + Claude-serviceability + no vendor lock-in | Supabase |
-| Strava MCP integration | Live training data, no manual entry | Strava MCP |
-| Google Calendar MCP | Day-mode suggestion engine + event display | Google Calendar MCP |
-| Gmail MCP | Email triage in Buffer Day | Gmail MCP |
-| Claude API (Anthropic) | Spiral, coaching, day-mode, capture classification | claude-sonnet-4-6 |
-| Railway hosting | Separate deployment from S-BOS | Railway |
-| SmartSuite Journals/Rituals | All rituals, stacks, table talk filed here | App ID: `68f8f8fe3757414d70d94ae0` |
-| GitHub (Clint-s-Kompass) | Profile files for About Me section — read via GitHub API | GitHub MCP |
+Living design doc built into the app. 10 sections, 60+ feature rows. Feature / Principle / Tool / Status columns. Status cycles tap-to-advance. Cells tap-to-edit. Add row per section. Summary pill strip at top.
 
 ---
 
 ### H — About Me & People Around Me
-*Sources: `01-user-profile/` + `07-family/` in Clint-s-Kompass repo*
 
-**What it is:** A dedicated section within the Me menu that surfaces full personal and family profiles — scrollable, searchable, and always available. The equivalent of a relationship and self-knowledge library living inside the app. Not a summary — the full profile for each person.
+Full profiles for Clint (4 files) + Christie, Avery, Brynn, Maxwell, Gwen. Data source: GitHub `Clint-s-Kompass` repo via GitHub API — the only section not reading from SmartSuite. Person selector, full markdown render, search across all profiles, last-updated date, edit opens GitHub natively.
 
-**Navigation location:** Me menu → "About Me & People Around Me" (own section alongside the four domain cards, Journal, Tools, and Spec Sheet)
-
-**Data source:** GitHub — `Clint-s-Kompass` repo, markdown files fetched via GitHub API at read time.
-
-> ⚠️ **Integration note:** This is the only section of the app that reads from GitHub rather than SmartSuite. The app fetches and renders markdown files directly. This is a different integration pattern from all other sections and must be called out explicitly in the Technical Spec and Data Integration Doc. Phase 2 consideration: migrate profile content to Supabase so it's editable in-app without a GitHub commit.
-
-**Profile files (Phase 1 sources):**
-
-| Person | File | Contents |
-|---|---|---|
-| Clint | `01-user-profile/operating-manual.md` | Human Design (Sacral MG, 5/2, Channel 1-8), ADHD assessment scores, cognitive mechanics, vulnerabilities/shadows, AI interaction principles, tactical guardrails, decision-making protocol |
-| Clint | `01-user-profile/quick-reference.md` | Condensed operating manual — key reminders at a glance |
-| Clint | `01-user-profile/vivid-vision-2036.md` | 10-year vivid vision (also linked as Google Doc — see Vivid Vision section below) |
-| Clint | `01-user-profile/2026-commitments.md` | 1-year commitments (also linked as Google Doc — see Vivid Vision section below) |
-| Christie | `07-family/christie-stitser.md` | Full profile |
-| Avery | `07-family/avery-stitser.md` | Full profile |
-| Brynn | `07-family/brynn-stitser.md` | Full profile |
-| Maxwell | `07-family/maxwell-stitser.md` | Full profile |
-| Gwen | `07-family/gwen-gifford.md` | Full profile |
-
-**UI structure:**
-
-```
-Me → About Me & People Around Me
-├── Clint (primary — shown first)
-│   ├── Operating Manual (full, scrollable)
-│   ├── Quick Reference (condensed)
-│   ├── Vivid Vision & Commitments (see dedicated sub-section below)
-│   └── [Other profile files]
-├── Christie
-├── Avery
-├── Brynn
-├── Maxwell
-└── Gwen
-```
-
-**Features:**
-- Person selector at top — tap avatar to switch profiles
-- Full markdown content rendered per person — scrollable, not truncated
-- Search bar — searches across all profiles simultaneously (name, keyword, concept)
-- Clint's profile shown first and by default
-- Each profile shows last-updated date (pulled from GitHub file metadata)
-- Edit button per profile → opens GitHub file in browser (Phase 1) or in-app editor (Phase 2)
-- Profile completeness indicator — surfaces which family members don't yet have a full profile
-
-**Relationship to Claude:** When Claude runs any coaching session, relationship session, or day-mode suggestion, it reads these same profile files from GitHub for context. The app surface and Claude are reading from the same source. Changes to a profile file update both Claude's context and the app simultaneously.
-
-**Phase 2 addition:** In-app profile editing — edits save directly to Supabase (no GitHub commit required). GitHub remains the backup/version history.
-
-**Open question (flag for §9):** Gwen Gifford — relationship to Clint not explicitly stated in current profile files. Confirm whether she belongs in this section or a separate "Extended Family / Key People" section before building.
-
----
-
-#### H1 — Vivid Vision & Annual Commitments (sub-section of About Me)
-*Source: Google Doc `1KpYWZdRgeM93V79mp0sSStE57y-f9iWKwRu5pyYcIsI` — "2026 Annual SB Plan"*
-
-**What it is:** A dedicated view inside Clint's profile that surfaces the 10-year Vivid Vision and 1-year commitments — the north star and the near-horizon in one place. Designed to be read regularly, not filed and forgotten. The document makes these intentions sticky by keeping them visible.
-
-**The document contains four layers — only two belong in the personal app:**
-
-| Layer | Belongs in Stitser Way? | Notes |
-|---|---|---|
-| Vivid Vision: January 2036 | ✅ Yes | 10-year ideal circumstances — Health, Environment, Family, Business, Wealth/Legacy |
-| 2026 Commitments | ✅ Yes | 1-year vision across Body, Being, Balance, Business with measurable targets |
-| The Manifesto + Daily Huddle | ❌ No — S-BOS | Company identity and code — business-facing |
-| Annual Initiatives & Q1 Plan | ❌ No — S-BOS | Stitser BUILT strategic plan — business-facing |
-
-**10-year Vivid Vision highlights (January 2036):**
-- Health: 50 years old, more alive and strong than a decade ago — still competing in biking, swimming, running; snowboarding, fishing, golf as rituals
-- Environment: Reno home as sanctuary + fluid movement between Reno, beach, mountains — lake house and beach house as refuges, private plane hours
-- Family: Christie and Clint in beautiful flow, "interdependence" mastered — kids successfully launched, deeply connected, stewards of the platform; grandkids welcome; deep holiday traditions
-- Business: Fully in the Allocator seat 4 days/week — no operations, no hiring, no daily "doing." Company is asset-based powerhouse, proprietary tools/tech, partners and customers see undeniable value
-- Wealth: $200K/month cash flow from assets — succession plan in place, multi-generational security + individual pursuit balanced
-- Legacy epitaph: *"Wise, Connected & Aligned, Shining Example of a Human Being"*
-
-**2026 Commitments highlights:**
-- **Morning & Evening Rituals:** Worthy of my own attention — day starts and ends with the Stitser Way ritual
-- **Body:** Cardio age 7+ years under actual (Oura), heart rate trend flat or declining, skin clear and moisturized, weight 198–203 lbs
-- **Being:** Choose to be a great man, not a nice man — connected to, worthy of, and capable of experiencing ideal circumstances — self-care as commitment, not luxury — present and connected
-- **Balance:** In flow with people I care about — embracing and celebrating the strengths of those closest to me
-- **Business:** Achieving at high level with efficient resources — all companies self-managing and self-funded — 6-month liquidity buffer — monthly strategy meetings at home — kids on salary + 401(k)
-
-**UI design for this sub-section:**
-
-```
-Clint → Vivid Vision & Commitments
-├── 🔭 10-Year Vision (January 2036)
-│   ├── Health & Vitality
-│   ├── Environment & Lifestyle
-│   ├── Family & Connection
-│   ├── Business & Career
-│   └── Wealth & Legacy
-├── 🎯 2026 Commitments
-│   ├── Rituals
-│   ├── Body
-│   ├── Being
-│   ├── Balance
-│   └── Business
-└── ✏️ Open in Google Doc → [Drive link opens natively]
-```
-
-**"Keep it alive" mechanics (from the document's own Next Steps):**
-The document itself identifies what would make these intentions stick. The app implements them:
-- **Daily Review:** A daily reminder surfaces one line from the Vivid Vision or 2026 Commitments — rotating, never the same two days in a row. Tied to the morning ritual.
-- **Annual Collage:** Flagged as a future feature — visual representation of the Vivid Vision as a mood board (Phase 2)
-- **Monthly with Christie:** A recurring calendar reminder — monthly long lunch with Christie to review and keep the vision alive (surfaced as a Kevin's Rule-style event in the BAC)
-- **Annual Update:** Each New Year, Kompass prompts a review of both the Vivid Vision and commitments — last year's vision reviewed, next year's written
-
-**Data source:** Google Doc opened natively via Drive link (no Drive API auth needed — sharing handled at Drive level per Clint's decision). GitHub repo also maintains markdown versions (`vivid-vision-2036.md` and `2026-commitments.md`) as Claude's reading copy.
-
-**Relationship to 2026 Commitment Targets:**
-The measurable 2026 commitments (198–203 lbs, cardio age 7+ years under actual, skin clear) map directly to SmartSuite Goals in the Body domain. The app connects the vision to the scoreboard — tap any commitment → see the corresponding Goal card with current progress.
+**H1 — Vivid Vision & Annual Commitments:** 10-year vision + 1-year commitments surfaced inside Clint’s profile. Google Doc opens natively (Drive link, no API auth). Daily rotating reminder tied to morning ritual. Annual update prompt each New Year.
 
 ---
 
 ### I — Big Ass Calendar
-*Source: thebigasscalendar.com/pages/our-system — Jesse Itzler / Taylor Prokes system*
+*Source: thebigasscalendar.com*
 
-**What it is:** A year-at-a-glance visual that turns time into a designed artifact. Not a scheduling tool — a meaning-making and anticipation tool. The goal is to live on offense: design the year intentionally, then follow the plan.
-
-**Core philosophy:** A great year doesn't happen by accident — it's designed. The Big Ass Calendar makes the entire year visible at once, solving Clint's object permanence challenge directly. When everything is visible, it becomes easier to say yes to what matters and no to what doesn't.
-
-**The three elements of the BAC system:**
-
-**1. The Misogi (year-defining event)**
-One bold event that will define the entire year. Slightly terrifying, deeply personal. When you look back, you'll remember the year as "the year I did that." Could be a physical challenge, a trip, a business milestone, a life bucket item. Must be within the realm of possibility but go BIG. For Clint: Downieville Downhill (Jul 23) and Grizzly 100 (Sep 5) are current candidates.
-
-**2. Kevin's Rule (bimonthly adventures)**
-Every other month, do one thing you wouldn't normally do. Not expensive — just new. A hike, a polar plunge, a cooking class, a museum. Six new experiences per year. Over 30 years = 180 life-enriching experiences that wouldn't have happened otherwise. Intentionally scheduled on the calendar — newness doesn't happen by accident.
-
-**3. Quarterly Habit** (see Section J — treated as its own feature, feeds back into the calendar visually)
-
-**Navigation location:** Me menu → "Big Ass Calendar" (own section) AND surfaces as the primary view on Free Days (Today tab shows the calendar in Free Day mode — what's coming + look how far we've come)
-
-**Two views:**
-
-**Year view (the "big ass" view):**
-- Full year on one screen — all 12 months visible simultaneously
-- Color-coded by category: Misogi events, Kevin's Rule adventures, family milestones, races, trips, phase completions, quarterly habit milestones
-- Backward layer (look how far we've come): completed events shown in a muted "achieved" color
-- Forward layer (what's coming): upcoming events shown in full color with anticipation
-- Object permanence solution: everything visible at once means nothing disappears from awareness
-
-**Month/week drill-in:**
-- Tap any month → expands to month view
-- Tap any day → surfaces event detail + Google Calendar sync
-- Add event button → tags by category (Misogi / Adventure / Family / Race / Milestone / Habit)
-
-**Data source:** Google Calendar MCP (reads scheduled events) + SmartSuite Goals (reads phase completion dates, race dates, habit milestones) + manual entries for Misogi and Kevin's Rule adventures
-
-**Relationship to Free Day:** On Free Day, the Today tab shows only the Big Ass Calendar year view (forward-looking) + the wins panel (backward-looking). No tasks, no inbox — just the designed year and how far you've come.
-
-**Spec Sheet rows added:** Misogi, Kevin's Rule, year-view calendar, backward/forward layers
+Year-at-a-glance visual. Three elements: Misogi (year-defining event) + Kevin’s Rule (bimonthly adventures) + Quarterly Habit. Two views: full-year color-coded (backward “look how far” layer + forward “what’s coming” layer) + month/week drill-in. Surfaces on Free Day Today tab.
 
 ---
 
-### J — Quarterly Habit (one at a time)
-*Source: Big Ass Calendar system + Freud's sense of achievement + Phases of Proficiency framework*
+### J — Quarterly Habit
 
-**What it is:** One new daily winning habit per quarter. One at a time — full focus, Consecutive Appetite model. Not a habit tracker in the traditional sense — a habit installation arc that ends in identity-level change and the felt sense of achievement Freud identified as a core human need.
-
-**The Freud connection:** Completing a habit arc isn't just behavioral — it produces genuine joy. The anticipation of mastery, the moment of competence, and the retrospective pride of "I did that" are what make habit-building feel meaningful rather than obligatory. The app's job is to make that arc visible and to celebrate each stage.
-
-**The five-stage habit arc (maps to Phases of Proficiency):**
-
-| Stage | Label | What it means | App behavior |
-|---|---|---|---|
-| 1 | Install | Habit chosen, first week | Daily prompt, staged learning about why this habit |
-| 2 | Beginner | Weeks 2–4, streaks building | Streak tracking, encouragement, "you're doing it" |
-| 3 | Intermediate | Month 2, consistency forming | Weekly reflection prompt, connection to domain goal |
-| 4 | Expert | Month 3, feels automatic | Reduced prompting, identity language ("you're someone who…") |
-| 5 | Complete | End of quarter | Celebration ritual, Freudian achievement moment, BAC milestone marked |
-
-**One habit at a time — why:**
-- Consecutive Appetite: Clint's digestion type is one thing at a time, full completion before switching
-- Attention dilution: multiple habits compete for the same ignition energy
-- Identity installation: one habit done fully becomes "who I am" — three habits done partially become "things I'm trying to do"
-
-**What triggers a new habit each quarter:**
-- Quarter ends (Jan 1, Apr 1, Jul 1, Oct 1)
-- Kompass surfaces a Sacral question: *"What habit would make the biggest difference this quarter?"*
-- One option suggested based on current domain GYR and Goal progress — Clint gut-checks yes/no
-- Previous habit optionally continued or promoted to "installed identity" and removed from active tracking
-
-**Staged learning (the why layer):**
-Each habit comes with a short learning sequence — 3–5 bite-sized lessons delivered over the first 2 weeks via daily reminder. For Body habits: the science behind why (e.g. why morning rides improve cortisol/testosterone ratio). For Being habits: the framework behind why (e.g. why evening journaling improves morning clarity). Learning is connected to the habit — never disconnected motivation content.
-
-**Celebration mechanics:**
-- Week 1 completion: "Day 7 — the hardest week is behind you"
-- Streak milestones: 14, 21, 30, 60, 90 days — each acknowledged with a specific message
-- Quarter completion: full celebration ritual — journal prompt, BAC milestone marked, identity statement generated ("You're now someone who [habit]"), optional Table Talk entry
-- The celebration IS the Freudian achievement moment — it has to feel real, not gamified
-
-**Data source:** SmartSuite Goals (habit as a Goal record with daily Stats) + SmartSuite Journals (celebration entries)
-
-**Current Q3 2026 habit candidate (from Body protocol):** Morning ride consistency — 3x per week minimum, targeting 5x by Race Block
-
-**Spec Sheet rows:** Quarterly Habit arc, staged learning, celebration ritual, Misogi connection, Freud's sense of achievement
+One habit at a time — Consecutive Appetite model. Five-stage arc: Install → Beginner → Intermediate → Expert → Complete. Freud’s sense of achievement at completion. Staged learning (3–5 lessons, one per day, first 2 weeks). Celebration at 7/14/21/30/60/90 days + quarter end. Identity statement generated at completion.
 
 ---
 
 ### K — Key Docs
-*Navigation: Me menu → "Key Docs" (sibling section alongside About Me & People Around Me)*
 
-**What it is:** A curated library of important personal and family documents — surfaced as named links directly into Google Drive. Not a document storage system — a one-tap reference panel that solves the "where did I save that?" problem for life's most important files.
-
-**Auth model (confirmed):** Links open Google Drive natively in the browser — no Drive API auth required. Sharing and access permissions are managed by Clint at the Drive level. The app is a link registry only.
-
-**Navigation location:** Me menu → "Key Docs" — own section, listed directly below "About Me & People Around Me"
-
-**Data source:** Google Drive deep links. Phase 1: simple structured JSON config. Phase 2: links stored in Supabase per-user record.
-
-**Category taxonomy:**
-
-| Category | Icon | Examples |
-|---|---|---|
-| Identity | 🪪 | Birth certificate, passport, Social Security card |
-| Health | 🏥 | Immunization records, insurance cards, medical history |
-| Legal | ⚖️ | Trust documents, will, POA |
-| Financial | 💰 | Tax returns, account statements |
-| Property | 🏠 | Deeds, titles, HOA docs |
-| Education | 🎓 | Diplomas, transcripts |
-| Vehicle | 🚗 | Titles, registrations, insurance |
-| Travel | ✈️ | Passports, visas, travel insurance |
-| Other | 📄 | Anything that doesn't fit above |
-
-**Features:** Person selector (same pattern as About Me), Family tab for shared docs, last-accessed indicator, copy-link option, emergency-access flag (surfaces these first under pressure).
-
-**Relationship to Body section:** Health vault DXA/blood/eye records cross-reference here — single source of truth, surfaced in two relevant places.
+Google Drive link registry for critical personal and family documents. Links open Drive natively — no API auth. Nine categories. Person selector + Family tab. Emergency-access flag. Cross-references Body health vault.
 
 ---
 
 ### L — Container Model & Learning Engine
 
-> ⚠️ **Cross-product note:** This section applies to both **Stitser Way** (personal app) and **S-BOS** (business app). The Learning Engine and Container Model are a shared design principle. When S-BOS builds its onboarding and skill installation layer, it follows the same spec. Reference this section in the S-BOS PDD when that feature is scoped.
+**L1 — Container Model:** Three-layer empty state (soft glow + clear invitation + progress ring). Every container has a “why this matters” message before the build prompt. Build flow: Claude-guided conversation → filed to right destination → container fills → progress ring updates → celebration. Refresh cycles per container type.
+
+**L2 — Learning Engine:** Ebbinghaus forgetting curve + spaced repetition + sleep as the training session. One concept per card. Named bounded lessons with time estimates. Single Next button. 6-hour safety rail. Fires on: Quarterly Habit install, Body protocol, new container build, first Spiral, first family profile, S-BOS skill onboarding (cross-product).
 
 ---
 
-#### L1 — The Container Model (empty state design)
+### M — Brand Identity & Positioning
+*Source: Identity research session 2026-06-24. Full research reports in `TSW_messaging.md` (Clint-s-Kompass) and artifact docs.*
 
-**The core principle:** The app does not require the user to arrive fully formed. Every section exists from day one — visible, real, and present. Empty containers are not broken features or missing data. They are invitations. The machine installs you into clarity over time.
+**Working name:** Stitser Way — a good placeholder that may stand the test of time.
 
-**Visual design — three layers, all present simultaneously:**
+**Identity archetype confirmed:** Sage-Architect-Builder — someone who sees clearly, designs intentionally, builds and tends daily. Embodied through pursuit, never finished. Starting posture is gratitude, not combat.
 
-| Layer | What it does | Visual treatment |
-|---|---|---|
-| 1. Soft glow / shimmer | Present but not urgent — the container exists and is waiting | Subtle animated shimmer on the card border, gold-tinted background |
-| 2. Clear empty state + single invitation tap | One clear call to action — no confusion about what to do | Large, friendly prompt text. One button: "Build this →" |
-| 3. Progress ring / completion indicator | Shows % of profile built across all containers — visible at the Me menu level | Ring around each section icon in the Me menu. Fills as containers are completed. |
+**Closest identity noun:** The Steward — one who tends what’s been entrusted from a place of gratitude. First instinct after research (Clint): *“The Steward’s Way.”* Steward synonyms explored: Keeper (top candidate), Cultivator, Tender. Sovereign/Craftsman/Author — all over-claimed, avoid.
 
-**The three layers work together:** The glow says "this exists." The empty state says "here's how to fill it." The progress ring says "look how far you've come." None of these create pressure — they create orientation.
+**Austrian heritage thread (developing — not yet named):**
+Clint’s Austrian heritage is the authentic source of the brand identity — the same instinct that produced “Kompass” as a product name. The Austrian Sacred Heart Fire tradition (Herz-Jesu-Feuer / Bergfeuer / Sonnwendfeuer), witnessed firsthand at the 2026 summer solstice in Tyrol, is the most resonant brand story found:
 
-**Empty state posture — what it says, not what's missing:**
+- **Tradition origin:** 1796, Tyrolean communities vow to tend their land and renew the vow annually by lighting fires on every peak simultaneously
+- **The Kronerer:** In Oberammergau, 15 elite men hold the ancient right to light the crown fire on the summit — a title earned through generational training, selection, and grit. This is the most resonant identity archetype found.
+- **The analogies (full detail in messaging doc):**
+  - The climb = daily practice and habit installation
+  - Generational knowledge = the Learning Engine
+  - Every peak lit simultaneously = all four life domains tended at once
+  - The fire as beacon = leadership and legacy
+  - The vow renewed = annual ritual and recommitment
+  - There is always another peak = pursuit, not destination
+  - The Kronerer = the earned identity
+- **Names explored:** Bergfeuer, Bergfeurer, Kronerer, Krone, Krone Way, Feura, Luma Way, Feuerhüter, Lichtweg. None landed as *the one* in this session.
+- **Session conclusion (Clint):** “I like the identity of Bergfeurer but not the abrasive names. German can be a tough and abrupt language.” Played with Kronerer phonetic variants. Running with Stitser Way as placeholder while the fire identity develops organically.
 
-Every empty container opens with a short "why this matters" statement before the build prompt. Not a feature description — a human reason.
+**Confirmed positioning statements:**
+- *“The app is a machine that procedurally produces a better life. You don’t need to arrive fully formed. The machine installs you into clarity over time.”*
+- *“No need to be a warrior. You don’t even need to explore. With the world’s intelligence at your fingertips, you can be a sage builder of your life.”*
 
-Examples:
+**Domain rename in development (differentiating from Warriors Way CORE 4):**
+First instinct: *“Your money, your mind, your people, your Mecca.”* Direction is right — personal, possessive, aspirational. Words not yet final.
 
-| Container | Empty state message |
-|---|---|
-| Vivid Vision | *"You can't move toward something you haven't named. Ten minutes here shapes the next ten years."* |
-| Annual Commitments | *"What does this year look like at its best? Not a to-do list — a felt sense of who you're becoming."* |
-| Quarterly Habit | *"One habit, fully installed, changes more than ten habits half-started. What's the one?"* |
-| Misogi | *"What would you do this year if you knew you'd look back and say — I can't believe I did that?"* |
-| Family Profile (Brynn) | *"Brynn is in your life every day. The more you understand her wiring, the better you can show up for her."* |
-| Body Goals | *"Your body is the machine that runs everything else. Where does it stand right now?"* |
-| Key Docs | *"The documents that matter most are the hardest to find in a crisis. Ten minutes now saves hours later."* |
-
-**Build flow (same pattern for every container):**
-1. User taps empty container
-2. "Why this matters" card appears (brief, human, connected to principles)
-3. Uh-huh → Claude launches guided build session for that container
-4. Claude asks questions conversationally, one at a time (never a form)
-5. Output is filed to the right destination (GitHub, SmartSuite, Drive link registry)
-6. Container fills in — placeholder resolves to real content
-7. Progress ring on the Me menu updates
-8. Celebration moment: "First one built — the machine is starting."
-
-**Refresh cycles (containers aren't built once):**
-
-| Container | Refresh trigger |
-|---|---|
-| Vivid Vision | Annual — New Year prompt |
-| Annual Commitments | Annual — January; quarterly check-in |
-| Family Profiles | Event-driven — Relationship Coach session produces update suggestion |
-| Quarterly Habit | Quarter end (Jan 1, Apr 1, Jul 1, Oct 1) |
-| Misogi | Annual — set at start of year, reviewed at midpoint |
-| Key Docs | User-triggered — add/update as docs change |
-| Body Goals | Phase advancement — each new phase prompts goal review |
-
----
-
-#### L2 — The Learning Engine (staged installation, spaced repetition)
-
-*Source: Calmio app onboarding — "Entering the Journey" lesson sequence (19-slide format). Screenshots provided 2026-06-24. The Ebbinghaus forgetting curve and spaced repetition science underpin this entire layer.*
-
-**The core principle:** Information given once is not a skill. Skills are installed through spaced repetition + sleep. One concept per day, a sleep between each, and the gap between sessions is not empty time — it's the part doing the work.
-
-**The neuroscience (from Calmio's onboarding — adopted as design canon):**
-
-- **The forgetting curve (Ebbinghaus, 1885):** Memory decays steeply after learning, then levels off. Spaced repetition — a little practice, a sleep, a little more — flattens the curve permanently. Each revisit rebuilds the curve from a higher baseline.
-- **Sleep as the training session:** Overnight, the brain replays the day at high speed, strengthening connections it flagged as worth keeping. A skill learned yesterday feels more yours today — without extra practice. A night of poor sleep is a missed training session.
-- **Prefrontal cortex → basal ganglia migration:** New skills live in the prefrontal cortex (effortful, costs focus). With repetition + sleep, they migrate to the basal ganglia (automatic, fires without asking). That's what "it got easier" actually is.
-- **Cramming backfires:** Overloads the prefrontal cortex (stops encoding halfway). Skips the sleep gap (weak wiring). Exhausts tomorrow-you (avoidance sets in). The feeling of "I'm getting somewhere" after a long session is often the last real learning in that session.
-
-**Application to Stitser Way — what this means in practice:**
-
-Every habit, framework, and skill in the app is introduced through a staged learning sequence. Not a wall of text. Not a video. A sequence of single-concept cards delivered one per day, with sleep between each, connected directly to the goal or habit being installed.
-
-**The lesson format (modeled on Calmio's UI):**
-
-| Element | Design spec |
-|---|---|
-| One concept per card | Single idea. Maximum 3–4 sentences. No scrolling required. |
-| Progress indicator | "17 / 20" at top — user knows exactly where they are |
-| Named, bounded lessons | Each lesson has a title that names the concept: "Why one-a-day changes your brain" — not "Chapter 3" |
-| Time estimate per lesson | "13 min" — sets expectation, reduces resistance |
-| Single "Next" button | No choices. No friction. One direction. |
-| Completion checkmark | Visual proof of showing up — the Habit Identity Loop in UI form |
-| Chapter overview with bullet previews | Shows what's coming and why it matters before the user commits |
-| Journey metaphor (not "course") | Language of becoming, not learning. Progress grows through small moments of showing up. |
-| Visual celebration artifact | Calmio uses a garden — each flower blooms for a lesson finished. Stitser Way equivalent: TBD (could be a mountain, a trail, a scoreboard with personal meaning) |
-
-**The 6-hour safety rail (Calmio's mechanic — adopt for Stitser Way):**
-
-After a lesson is completed, the next lesson is held for approximately 6 hours. Not to slow the user down — as a safety rail for real life. The brain works on days, not hours. Three lessons back-to-back in one evening wires almost nothing. The 6-hour wait is there for when life scrambles the schedule, not for finishing faster. One per day stays the goal.
-
-**Where the Learning Engine fires in Stitser Way:**
-
-| Context | What the engine teaches |
-|---|---|
-| Quarterly Habit (first 2 weeks) | The science behind why this specific habit matters — 3–5 lessons, one per day, delivered via daily reminder |
-| Body protocol (Foundation phase) | Why sleep > exercise for fat loss, why alcohol is the primary visceral fat driver, why protein timing matters, why waist-to-height beats BMI — one concept per day |
-| New container build (onboarding) | The framework behind what's being built — e.g., when building Vivid Vision, first lesson is "Why a written vision changes what you notice" |
-| Spiral (first use) | The Ebbinghaus + sleep science as context for why one Spiral per day is more powerful than three in a row |
-| Relationship Coach (first family profile) | What Human Design is, why wiring matters, why knowing someone's type changes how you show up |
-| S-BOS skill installation (see below) | Every new S-BOS skill introduced to a team member follows the same staged learning arc |
-
-**Cross-product application — S-BOS:**
-
-> ⚠️ **S-BOS PDD flag:** The Learning Engine is not unique to the personal app. Every S-BOS skill (Pay App, Baseline Capture, Compliance Audit, etc.) when introduced to a new team member (Christine, Andi, or future hires) should follow the staged installation model. Not a training document. Not a video walkthrough. A sequence of named, bounded lessons — one per day, 6-hour safety rail, completion indicator, visual celebration. The same neuroscience that installs a habit installs a workflow skill. When S-BOS onboarding is scoped in the S-BOS PDD, reference this section as the design standard.
-
-**What the Learning Engine is NOT:**
-- Not a content library to browse — it's a delivery sequence with pacing built in
-- Not optional — it fires automatically when a new container is built or a new habit is started
-- Not permanent — lessons graduate from "learning" to "installed." Once the skill is in the basal ganglia (automated, unconscious competence), the lesson sequence ends and the habit just runs
-
-**Progress visualization (the garden equivalent):**
-The visual celebration artifact for Stitser Way's learning engine is not yet decided. Candidates:
-- A mountain trail — each lesson adds a step; the summit is habit completion
-- A scoreboard with personal meaning (Body domain: a bike climb profile — each lesson brings you closer to the top)
-- A simple streak counter with milestone acknowledgments (less visual, more direct)
-
-> Open question for §9: What visual metaphor resonates most for the learning progress artifact? Decide before UI/UX doc is written.
+**Next steps for identity:**
+- Continue playing with Kronerer/Bergfeurer phonetic variants (2 syllables or less, warm not abrasive, smooth in English)
+- Test the fire-lit ridgeline as the visual progress metaphor in app prototype
+- Trademark/domain clearance when a name lands
+- Test “I am a ___” with Brynn, Christie, and 5 strangers who believe in intentional living
+- Explore multi-brand potential: Stitser Way as family platform, public brand using fire identity once it lands
