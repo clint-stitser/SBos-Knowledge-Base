@@ -1,6 +1,6 @@
 # Product Design Doc: Stitser Way
 
-> **Status:** 🔄 In Progress — Gate 2 ✅ COMPLETE. §4 ✅ COMPLETE (22 features). §5 User Workflows in progress.
+> **Status:** 🔄 In Progress — Gate 2 ✅ COMPLETE. §4 ✅ COMPLETE (23 features). §5 ✅ COMPLETE. Gate 3 pending sign-off.
 > **Methodology:** Ryan Falke's Design Templates, adapted for Stitser Way
 > **Decision-maker:** Clint Stitser
 > **Last updated:** 2026-06-25
@@ -13,7 +13,7 @@
 |---|---|---|
 | Gate 1 | §1 Problem + §2 Users | ✅ Complete — approved by Clint 2026-06-25 |
 | Gate 2 | §3 Core Entities | ✅ Complete — approved by Clint 2026-06-25 |
-| Gate 3 | §4 Features + §5 Workflows | 🔄 §4 ✅ approved (22 features). §5 in progress. |
+| Gate 3 | §4 Features + §5 Workflows | 🔄 §4 ✅ 23 features. §5 ✅ 7 workflows. Pending sign-off. |
 | Gate 4 | §6 Scope + §7 Metrics + §8 Timeline + §9 Open Questions | ⏳ Not started |
 | ✅ PDD Done | All gates passed | Data Integration Doc + Tech Spec + UI/UX Doc can begin |
 
@@ -105,7 +105,7 @@ Not a task manager. Not a journal app. Not S-BOS. Not tools glued together. Not 
 
 ## §4 — Core Features
 
-> **22 features — ✅ Approved by Clint 2026-06-25**
+> **23 features — ✅ Approved by Clint 2026-06-25**
 
 ---
 
@@ -242,80 +242,125 @@ Allocator/CEO view — not S-BOS operational, but personal strategic scoreboard.
 
 ### F20 — Week at a Glance
 **Entities read:** BAC Day Types (#12), BAC Calendar Events (#13), Task (#7), Day Mode Log (#9). **Written:** BAC Day Types (#12).
-7-day strip on Today tab. Each day: day type badge, up to 2 events, Big 3 anchor placeholder. Today highlighted. Past days muted. Tap future day → assign day type. Middle layer between BAC (year) and Horizon Rings (today). Buffer Day sub-tab shows strip as planning context.
-**Success:** Strip renders with today highlighted. Day type badges from SmartSuite. Assign in 2 taps. Big 3 renders. Buffer sub-tab shows strip.
+7-day strip on Today tab. Each day: day type badge, up to 2 events, Big 3 anchor placeholder. Today highlighted. Past days muted. Tap future day → assign day type.
+**Success:** Strip renders correctly. Day type badges from SmartSuite. Assign in 2 taps. Big 3 renders. Buffer sub-tab shows strip.
 
 ---
 
 ### F21 — Key Docs
-**Entities read/written:** Key Doc (#40). Cross-reference: Drive records (#33–35) Health category.
-Me menu → Key Docs. Nine categories with icons. Person selector. Drive links open natively (no API auth). Emergency flag surfaces critical docs first. Add: name → category → URL → notes → save. Health Vault cross-reference.
-**Success:** All links open natively. Emergency docs surface first. Add < 4 taps. Health Vault records appear in Health category.
+**Entities read/written:** Key Doc (#40). Cross-reference: Drive records (#33–35).
+Nine categories. Drive links open natively (no API auth). Emergency flag. Add < 4 taps. Health Vault cross-reference.
+**Success:** All links open natively. Emergency docs first. Add < 4 taps. Health Vault appears in Health category.
 
 ---
 
 ### F22 — In-App Spec Sheet
+**Entities read/written:** App config / local storage (Phase 1). Supabase (Phase 2).
+Always one tap from top-right nav icon. Ten seed sections. Each row: Feature / Framework / Status (cycles Designed→In Build→Live→Parked) / Notes / Screenshot. Inline edit. Add row + section. Summary strip counts by status.
+**Success:** Accessible from every screen. Status cycles correctly. Notes save. Screenshots attach. Summary strip updates immediately.
 
-**What it does:** A living checklist of the app's principles, frameworks, tools, and features — built directly into the app as its own screen. Everepresent during build and test. Clint can add notes, mark status, add screenshots, and edit rows at any time without leaving the app. The designer's reference and the builder's checklist in one place.
+---
 
-**Entities read/written:** App config / local storage (Phase 1). Supabase (Phase 2). No SmartSuite dependency — the Spec Sheet is internal to the app itself.
+### F23 — App Shell & Navigation
+
+**What it does:** Defines the structural container of the entire app — the four persistent bottom tabs, the Me menu architecture, the top-right nav icons, and the Today tab layout. Every other feature lives inside this shell. Without this spec, the build agent doesn't know how to construct the container that holds everything else.
+
+**Entities read:** Day Mode Log (#9) — to determine which tab bar state to render. BAC Day Types (#12) — to know if today is Free Day (changes Today tab layout).
+
+**Entities written:** None. Navigation is stateless presentation logic.
 
 **UX behavior:**
 
-**Structure:**
-- Accessible from the top-right nav icon (present on every screen) — always one tap away
-- Grouped by section with collapsible headers
-- Ten seed sections (extensible):
-  1. Today — daily launch features
-  2. Plan — BAC, Week at a Glance, Quarterly Habit, Misogi, Kevin's Rule
-  3. Tasks (Horizon Rings) — ring logic, sources, Sacral Anchor
-  4. Domains — all four domain cards
-  5. Journal — rituals, stacks, Spirals, Table Talk
-  6. Spiral — the six-step transformation engine
-  7. More / Tools — Shortcuts, project tools, scoreboard
-  8. Principles & Frameworks — every principle encoded in the app
-  9. Body Domain — protocol, metrics, health vault
-  10. Data & Infrastructure — all data sources and integrations
+**Four persistent bottom tabs:**
 
-**Each row contains:**
-- **Feature / Principle / Tool** — name of the item
-- **Framework** — the principle or framework it encodes (e.g., "Ebbinghaus spaced repetition," "Brynn's Table Talk Ritual," "Sacral Decision Model")
-- **Status** — cycles on tap: Designed → In Build → Live → Parked
-- **Notes field** — Clint adds build notes, observations, questions during testing
-- **Screenshot attachment** — tap paperclip icon to attach a screenshot from camera roll
+| Tab | Icon | What it shows |
+|---|---|---|
+| Today | 🏠 Home | Daily launch screen — changes by day mode |
+| Horizon | ⭕ Rings | Horizon Rings triage view (F02) |
+| Me | 👤 Person | Me menu — domains + sections |
+| Shortcuts | ⚡ Lightning | Claude skills + external tools (F15) |
 
-**Editing:**
-- Tap any cell to edit inline — no separate edit mode
-- Long-press a row to reorder
-- "Add row" button at the bottom of each section
-- "Add section" button at the bottom of the full sheet
-- Status pill tapped → cycles to next status. Color-coded: Designed (grey) → In Build (amber) → Live (green) → Parked (muted)
+- Tab bar visible on all screens except Focus Day (tab bar hides — F01)
+- Active tab highlighted. Tap to switch. No swipe navigation between tabs.
 
-**Summary strip at top:**
-- Four status count pills: Designed / In Build / Live / Parked
-- Shows overall build progress at a glance
+**Today tab layout (standard — Focus/Buffer day):**
 
-**What this is NOT:**
-- Not a project management tool — no assignees, no due dates, no dependencies
-- Not a public document — this is Clint's internal reference, not a shareable spec
-- Not a replacement for the PDD — the PDD is the source of truth for design decisions; the Spec Sheet is the builder's in-app mirror of it
+```
+─────────────────────────────────
+  Day Mode badge + mode label       ← F01
+  Daily Reminder ("A Thought")      ← F07
+  Lesson card (if active)           ← F06
+  Week at a Glance strip            ← F20
+  ─────────────────
+  Big 3 dominos (anchor + 2 more)
+  ─────────────────
+  Table Talk shortcut card          ← F18
+─────────────────────────────────
+```
 
-**Why it's everepresent:**
-The Spec Sheet is how Clint stays connected to what the app is supposed to be while he's using it. During build and testing, it's the answer to *"Does this feel right?"* — tap the icon, find the principle, check the framework, add a note if something feels off. The designer never has to leave the experience to reference the design.
+**Today tab layout (Free Day):**
+
+```
+─────────────────────────────────
+  "Your job today is to wander"     ← F01
+  Big Ass Calendar (year view)      ← F09
+  Wins panel (last 90 days)         ← F09
+  Table Talk shortcut card          ← F18
+─────────────────────────────────
+```
+
+**Today tab layout (Focus Day):**
+
+```
+─────────────────────────────────
+  Grounding affirmation             ← F01 (from operating manual)
+  Anchor item (Sacral Anchor)       ← F02
+  Pomodoro timer
+  ─────────────────
+  Break-glass button (low-vis)      ← F01
+─────────────────────────────────
+  [Tab bar hidden]
+─────────────────────────────────
+```
+
+**Me menu structure:**
+
+```
+Me tab
+├── Body                            ← F08
+├── Being                           ← F17
+├── Balance                         ← F18
+├── Business                        ← F19
+├── ─────────────
+├── About Me                        ← F12
+├── Key Docs                        ← F21
+├── Big Ass Calendar                ← F09
+├── Quarterly Habit                 ← F10
+├── Journal                         ← F16
+├── Tools (Projects)                ← F13
+└── Spec Sheet                      ← F22
+```
+
+**Top-right nav icons (visible on all screens):**
+- 🌀 Spiral icon → opens GYR Spiral (F05) — pre-loads current domain if inside a domain screen
+- 📋 Spec Sheet icon → opens In-App Spec Sheet (F22)
+
+**Container Model integration:**
+Each section in the Me menu shows a progress ring around its icon — filled as containers are built (F11). Empty sections glow softly. The Me menu is the master view of the app's container completion state.
 
 **Success criteria:**
-- Spec Sheet accessible from every screen via top-right icon in < 1 tap
-- All status transitions work correctly (Designed → In Build → Live → Parked)
-- Notes save correctly per row
-- Screenshot attachment works from camera roll
-- Add row and add section work without page reload
-- Summary strip counts update immediately on status change
+- Tab bar renders correctly on all screens except Focus Day
+- Today tab renders correct layout for each of the three day modes
+- Me menu shows all sections with correct progress rings
+- Top-right Spiral icon always navigates to GYR Spiral
+- Top-right Spec Sheet icon always navigates to Spec Sheet
+- No tab switch requires more than 1 tap from anywhere in the app
 
 ---
 
 ## §4 Gate 3 Checklist
 
-- [x] All 22 features named and described — ✅ Approved by Clint 2026-06-25
+- [x] All 23 features named and described — ✅ Approved by Clint 2026-06-25
 - [x] All features have entities read/write — ✅ Approved by Clint 2026-06-25
 - [x] All features have success criteria — ✅ Approved by Clint 2026-06-25
 - [x] No feature references an entity not in §3 — ✅ Approved by Clint 2026-06-25
@@ -328,7 +373,7 @@ The Spec Sheet is how Clint stays connected to what the app is supposed to be wh
 
 | # | Workflow | Features involved |
 |---|---|---|
-| W01 | Morning Launch | F01, F07, F06, F02, F20 |
+| W01 | Morning Launch | F23, F01, F07, F06, F20, F02 |
 | W02 | Buffer Day Sweep | F01, F02, F20, F14 |
 | W03 | Logging a Stat (inference path) | F03, F04 |
 | W04 | Running the GYR Spiral | F05, F04 |
