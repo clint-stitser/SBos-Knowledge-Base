@@ -1,6 +1,6 @@
 # Product Design Doc: Stitser Way
 
-> **Status:** 🔄 In Progress — Section 1 drafted, Gate 1 pending sign-off
+> **Status:** 🔄 In Progress — Gate 1 §1 ✅ approved. §2 pending sign-off.
 > **Methodology:** Ryan Falke's Design Templates, adapted for Stitser Way
 > **Decision-maker:** Clint Stitser
 > **Last updated:** 2026-06-25
@@ -63,9 +63,9 @@ A single application that integrates the entire practice of intentional living �
 
 ## §1 Gate 1 Checklist
 
-- [ ] Problem clearly stated — Clint confirms this is the real problem ✳️ *Pending sign-off*
-- [ ] Solution criteria stated — Clint confirms these are the right criteria ✳️ *Pending sign-off*
-- [ ] Scope boundaries stated — Clint confirms what this is NOT ✳️ *Pending sign-off*
+- [x] Problem clearly stated — ✅ Approved by Clint 2026-06-25
+- [x] Solution criteria stated — ✅ Approved by Clint 2026-06-25
+- [x] Scope boundaries stated — ✅ Approved by Clint 2026-06-25
 
 ---
 
@@ -287,117 +287,49 @@ Google Drive link registry for critical personal and family documents. Links ope
 
 **The core insight:** Not everything in life is a habit or a domain. Some things are projects — bounded in time, specific in need, complete when done. A trip to Europe isn't a Body goal. An ear infection isn't a Being ritual. An AP Chemistry test isn't a Business phase gate. These need their own tools, purpose-built for their stage, scoped to their project.
 
----
-
 #### The Four Project Pillars (universal — applies to every project in both S-BOS and Stitser Way)
 
 Every project — whether a construction development in S-BOS or a family trip in Stitser Way — is structured around the same four pillars. This is existing infrastructure in SmartSuite, developing in Supabase over time, and surfaced in both applications.
 
 | Pillar | What it contains |
 |---|---|
-| **Budget** | Financial plan, cost tracking, actuals vs. planned — for any project that involves money |
-| **Alignment** | Purpose + outcome (why this project exists and what success looks like) + Team (who is involved, what they do, when they do it, why they do it, how much/when they get rewarded) |
-| **Schedule** | Timeline, milestones, phases, sequencing — the when |
-| **Checklists** | QC / Safety / Decisions / Docs / Routines — structured verification and process within each stage |
+| **Budget** | Financial plan, cost tracking, actuals vs. planned |
+| **Alignment** | Purpose + outcome + Team (who, what, when, why they do it, how much/when rewarded) |
+| **Schedule** | Timeline, milestones, phases, sequencing |
+| **Checklists** | QC / Safety / Decisions / Docs / Routines |
 
-**These pillars are universal.** A school year has all four:
-- Budget → school fees, supplies, activity costs
-- Alignment → purpose of the year, subjects and their goals, family expectations, kids' roles and incentives
-- Schedule → semester dates, exam schedule, key milestones
-- Checklists → daily homework routine, weekly review, test prep checklist
-
-A family trip to Europe has all four:
-- Budget → flights, lodging, activities, food, contingency
-- Alignment → purpose of the trip, who's going, each person's role, what success looks like
-- Schedule → day-by-day itinerary, travel legs, activity booking windows
-- Checklists → packing list, document checklist, pre-departure routine
-
-A medical protocol (ear infection) has all four:
-- Budget → medication costs, copays, follow-up visits
-- Alignment → treatment goal, who is responsible for what, outcome criteria
-- Schedule → dosage timing, follow-up appointment dates
-- Checklists → medication schedule, symptom tracking, when to call the doctor
-
----
+**These pillars are universal.** A school year, a Europe trip, and a medical protocol all have Budget, Alignment, Schedule, and Checklists — just with different content in each pillar.
 
 #### Project Hierarchy
 
-Projects are structured in three levels using the existing S-BOS SmartSuite project infrastructure:
+Master Project → Child Project → Grandchild Project (existing S-BOS SmartSuite infrastructure). Claude-built tools attach to the specific pillar/stage they serve.
 
 ```
-Master Project     → School Year 2026–27
-  Child Project    → AP Chemistry
-    Grandchild     → Midterm Exam — Oct 15
-      Tool         → Claude-built: flashcard quiz + spaced review schedule
-
 Master Project     → Europe Trip — Summer 2027
   Child Project    → Budget pillar
-    Tool           → Claude-built: trip budget tracker with categories + running total
+    Tool           → Claude-built: trip budget tracker
   Child Project    → Schedule pillar
-    Tool           → Claude-built: day-by-day itinerary with logistics
+    Tool           → Claude-built: day-by-day itinerary
+
+Master Project     → School Year 2026–27
+  Child Project    → AP Chemistry → Midterm Exam — Oct 15
+    Tool           → Claude-built: flashcard quiz + spaced review schedule
 
 Master Project     → Ear Infection — Max, Jun 2026
-  Child Project    → Checklists pillar → Routines
-    Tool           → Claude-built: medication schedule with dosage + timing reminders
+  Child Project    → Checklists → Routines
+    Tool           → Claude-built: medication schedule with dosage + timing
 ```
 
-Claude-built tools attach to the specific pillar they serve — a budget tool lives inside the Budget pillar, a study app lives inside the relevant Checklist or Schedule stage.
+#### Tool Lifecycle
 
----
-
-#### Tool Lifecycle — Four Stages
-
-| Stage | What happens | App behavior |
-|---|---|---|
-| **Create** | Claude builds the tool scoped to the project pillar/stage | User describes need → Claude generates tool → tool attaches to project record |
-| **Active** | Tool in use for the duration of the stage | Accessible from project card, tasks surface in Horizon Rings |
-| **Complete** | Stage ends, tool has served its purpose | Marked complete, stage closes, archive prompt fires |
-| **Archived** | Stored for future reference or sharing | Accessible from archive, searchable, shareable with family or other users |
-
----
-
-#### Tool Types (Claude generates based on need — not a fixed menu)
-
-| Type | Pillar it typically serves | Example |
-|---|---|---|
-| Budget tracker | Budget | Trip budget, medical cost tracker, school activity fund |
-| Study app | Checklists / Schedule | Flashcard quiz, spaced review schedule, concept summary |
-| Scheduler / Itinerary | Schedule | Day-by-day trip plan, exam prep calendar, treatment timeline |
-| Checklist | Checklists | Packing list, pre-race checklist, medication schedule |
-| Team planner | Alignment | Who does what, when, and for what reward on a family project |
-| Calculator | Budget | Grade projector, dosage calculator, cost-per-day budget |
-| Reference doc | Alignment | Research summary, rules for a sport, protocol reference |
-
----
+Create → Active → Complete → Archived. Archive is searchable, shareable across family members, and reusable as a template for future similar projects.
 
 #### Data Model
 
-- **Phase 1 (SmartSuite):** Projects live in the existing S-BOS SmartSuite project infrastructure — Master → Child → Grandchild hierarchy. The four pillars exist as structured fields/sub-records within each project. Claude-built tools are artifact HTML files linked to the relevant project record.
-- **Phase 2 (Supabase):** Project infrastructure migrates to Supabase, developing the four-pillar model with full relational depth. Tool storage migrates with the rest of the data layer.
-- **Both S-BOS and Stitser Way read from the same project infrastructure** — S-BOS surfaces business projects (construction, development, brokerage), Stitser Way surfaces personal/family projects (school, travel, health, home). Same four pillars. Different audiences.
-
----
-
-#### Relationship to the Rest of the App
-
-- **Horizon Rings** — active project tasks surface in the rings by due date and urgency, alongside Goals and GYR follow-ups
-- **Life domains** — every project belongs to a domain: school → Balance, trip → Balance or Being, medical → Body, personal learning → Being
-- **Archive as library** — completed tools accumulate into a searchable personal library. A study app for AP Chemistry adapts to AP Biology. A medication schedule for one ear infection becomes the template for the next.
-- **Family Profiles** — tools shareable across family members. A packing checklist built for one trip becomes the starting point for the next. A study app Avery used can be shared with Brynn.
-
----
-
-#### What This Is NOT
-
-- Not S-BOS project management — S-BOS handles business projects. Stitser Way handles personal/family projects. Same infrastructure, different context.
-- Not a pre-built app library — Claude builds each tool fresh for the specific need. The archive stores outputs.
-- Not permanent infrastructure — tools have a lifecycle. Complete → archive. Not maintained indefinitely.
-
----
+- **Phase 1 (SmartSuite):** Existing S-BOS project infrastructure. Tools are Claude artifact HTML files linked to the project record.
+- **Phase 2 (Supabase):** Migrates with the rest of the data layer.
+- **Both S-BOS and Stitser Way read from the same infrastructure** — different audience and context, same four pillars.
 
 #### Open Question (flag for §9)
 
-What is the UX entry point for creating a new tool?
-- (a) Tap into a project pillar → "Build a tool for this stage" → Claude conversation → tool attaches to that pillar
-- (b) Claude skill trigger from anywhere ("build me a tool for...") → Kompass identifies the right project and pillar → attaches
-- Both may be valid and complementary. Decide before UI/UX doc is written.
+UX entry point for tool creation: (a) from inside a project pillar, or (b) Claude skill trigger from anywhere → Kompass identifies the right project and pillar. Both may be valid. Decide before UI/UX doc.
