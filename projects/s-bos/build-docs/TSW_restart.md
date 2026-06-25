@@ -15,19 +15,21 @@
 
 ## What We Did This Session
 
-1. **Reviewed and updated §1 Problem Statement** — rewrote as four compounding problems (Fragmentation, Absence, Activation Gap, No Project Tool Layer). Added Machine quote as solution anchor. Gate 1 signed off.
+1. **Reviewed and updated §1 Problem Statement** — rewrote as four compounding problems (Fragmentation, Absence, Activation Gap, No Project Tool Layer). Machine quote as solution anchor. Gate 1 signed off.
 
-2. **Completed §3 Core Entities** — 44 entities with real SmartSuite app IDs from live schema pull. Key decisions: Goals as universal tag-based entity, Tasks from three sources, Day Mode → Journal automation, Vivid Vision → GitHub source of truth, Bills & Invoices Phase 1, SB Training & Certifications as installation arc store, two lesson types, External Practice checkbox, Misogi + Kevin's Rule as project types. Gate 2 signed off.
+2. **Completed §3 Core Entities** — 44 entities with real SmartSuite app IDs. Key decisions: Goals as universal tag-based entity, Tasks from three sources, Day Mode → Journal automation, Vivid Vision → GitHub source of truth, Bills & Invoices Phase 1, SB Training & Certifications as installation arc store, two lesson types, External Practice checkbox, Misogi + Kevin's Rule as project types. Oura confirmed as single health aggregator (entity #32 updated from Apple Health Weight to Oura Weight). Gate 2 signed off.
 
-3. **Wrote §4 Core Features** — 23 features, each with entities read/write, UX behavior, and success criteria. Full systematic cross-check against all Discovery Inputs, entities, and decisions — no gaps found. Gate 3 §4 signed off.
+3. **Wrote §4 Core Features** — 23 features with entities read/write, UX behavior, success criteria. Full cross-check — no gaps. Gate 3 §4 signed off.
 
 4. **Wrote §5 User Workflows** — 7 workflows walkable end to end. Gate 3 §5 signed off.
 
-5. **Wrote Gate 4** — §6 Scope (Phase 1 in/out of scope, build sequence), §7 Success Metrics (daily/weekly/monthly/quarterly/annual + qualitative signal + anti-metrics), §8 Timeline (5 milestones + Phase 2 trigger), §9 Open Questions (14 questions with owners and blockers). Gate 4 signed off.
+5. **Wrote Gate 4** — §6 Scope + §7 Metrics + §8 Timeline + §9 Open Questions (14 questions, 2 resolved). Gate 4 signed off.
 
-6. **Brand identity work** — Austrian Sacred Heart Fire tradition (Herz-Jesu-Feuer / Bergfeuer) confirmed as brand story. Kronerer as most resonant identity archetype. Names explored: Bergfeuer, Kronerer, Krone, Feura, Luma Way — none landed. Running with Stitser Way. Sage Builder quote and Steward's Way direction captured in messaging doc.
+6. **Resolved OQ10 + OQ11** — Oura is the single health aggregator. Clint logs weight via Siri → Apple Health → Oura syncs automatically → Stitser Way pulls all health data (sleep, readiness, activity, weight) from a single Oura REST API integration. One PAT. No iOS companion. No HealthKit bridge.
 
-7. **Messaging docs updated** — `Clint-s-Kompass/03-stitser-way/messaging.md` — fire tradition analogies, brand story, Kronerer identity notes.
+7. **Brand identity work** — Austrian Sacred Heart Fire tradition as brand story. Kronerer as most resonant identity archetype. Running with Stitser Way as placeholder.
+
+8. **Messaging docs updated** — `Clint-s-Kompass/03-stitser-way/messaging.md`.
 
 ---
 
@@ -39,40 +41,49 @@
 
 ## Next Steps (in order)
 
-1. [ ] **Claude Code handoff** — provide the PDD as the source of truth. Claude Code builds the app starting with Sprint 1 (Shell + Today).
-2. [ ] **Data Integration Doc** — field-level mapping for all 44 entities. Resolves OQ01–OQ05 first.
-3. [ ] **Technical Spec** — architecture decisions, API patterns, auth model, deployment config.
-4. [ ] **UI/UX Doc** — screen-by-screen wireframes, component library, mobile-first layout spec.
-5. [ ] **Resolve OQ11 (Apple Health API)** — confirm whether accessible from mobile web app before Sprint 3.
-6. [ ] **Resolve OQ01 (Goal Type field values)** — pull SmartSuite schema before Sprint 2.
-7. [ ] **Brand identity** — continue Kronerer/fire identity development. Trademark + domain clearance when a name lands.
+1. [ ] **Claude Code handoff** — use briefing below. Claude Code reads the PDD and starts Sprint 1.
+2. [ ] **Resolve OQ01 (Goal Type field values)** — pull SmartSuite Goals schema to confirm how Body/Being/Balance/Business are tagged. Blocks Sprint 2 domain filtering.
+3. [ ] **Data Integration Doc** — field-level mapping for all 44 entities. Build alongside Sprint 1–2.
+4. [ ] **Technical Spec** — architecture decisions, API patterns, auth model, deployment config. Resolves OQ02–OQ09, OQ12–OQ14.
+5. [ ] **UI/UX Doc** — screen-by-screen wireframes, component library, mobile-first layout spec.
+6. [ ] **Brand identity** — continue Kronerer/fire identity development. Trademark + domain clearance when a name lands.
 
 ---
 
-## Open Questions (resolve before building)
+## Open Questions (12 remaining — resolve before or during Technical Spec)
 
-- **OQ01** Goal Type field values (blocks Sprint 2 domain filtering)
-- **OQ02** Family profile auth model
-- **OQ03** Strava sync frequency
-- **OQ04** Claude API integration pattern
-- **OQ05** Phase 1 write-back scope
-- **OQ06** Gwen Gifford section placement
-- **OQ07** Learning Engine visual metaphor
-- **OQ08** Domain rename
-- **OQ09** Day Mode Log automation timing
-- **OQ10** Oura API auth model
-- **OQ11** Apple Health API — mobile web accessible? (may force scope change)
-- **OQ12** Key Doc storage layer
-- **OQ13** Spec Sheet storage layer
-- **OQ14** Project Tool archive location
+- **OQ01** ⚠️ Goal Type field values — blocks Sprint 2 domain filtering. Pull before Sprint 2 starts.
+- **OQ02** Family profile auth model for Phase 1
+- **OQ03** Strava sync frequency — on-demand or background webhook?
+- **OQ04** Claude API integration — server action vs. edge function?
+- **OQ05** Phase 1 write-back scope — which SmartSuite tables?
+- **OQ06** Gwen Gifford — About Me or Extended Family section?
+- **OQ07** Learning Engine visual metaphor — mountain trail, ridgeline, or bike climb profile?
+- **OQ08** Domain rename for public brand
+- **OQ09** Day Mode Log automation timing — morning or end of day?
+- ~~**OQ10**~~ ✅ Resolved — Oura PAT confirmed. Single REST integration. See PDD §9.
+- ~~**OQ11**~~ ✅ Resolved — No iOS companion needed. Oura syncs weight from Apple Health automatically. See PDD §9.
+- **OQ12** Key Doc storage — JSON config vs. lightweight Supabase?
+- **OQ13** Spec Sheet storage — local, GitHub, or Supabase?
+- **OQ14** Project Tool archive — GitHub Gist, Supabase blob, or SmartSuite attachment?
 
 ---
 
 ## Claude Code Handoff Briefing
 
-When starting a Claude Code session, provide this context:
+Use this exact text when starting a Claude Code session:
 
-> "You are building Stitser Way — a personal operating system web app for Clint Stitser. The full Product Design Doc is at `SBos-Knowledge-Base/projects/s-bos/build-docs/TSW_Product_Design_Doc.md`. Read it before writing any code. The tech stack is Next.js / React / TypeScript / Tailwind v4, mobile-first, deployed on Railway. SmartSuite is the Phase 1 data layer via the Kompass MCP. Start with Sprint 1: F23 App Shell + F01 Day Mode Engine + F07 Daily Reminder Engine + F20 Week at a Glance + F11 Container Model. The app must feel like a machine, not a collection of tools. Every interaction is a conversation or a tap — never a form."
+> "You are building Stitser Way — a personal operating system web app for Clint Stitser. The full Product Design Doc is at `SBos-Knowledge-Base/projects/s-bos/build-docs/TSW_Product_Design_Doc.md`. Read it in full before writing any code.
+>
+> **Tech stack:** Next.js / React / TypeScript / Tailwind v4. Mobile-first. Deployed on Railway.
+>
+> **Data layer:** SmartSuite (Phase 1) via Kompass MCP. GitHub API for profile files (read-only). Oura REST API (personal access token, stored as Railway env var) for all health data — sleep, readiness, activity, and weight. Strava via MCP. Google Drive links open natively (no Drive API).
+>
+> **Health data flow:** Clint logs weight via Siri → Apple Health → Oura syncs automatically → Stitser Way pulls from Oura REST API. Single integration point. Weight stats are logged silently (trusted source — no inference prompt).
+>
+> **Start with Sprint 1:** F23 App Shell + F01 Day Mode Engine + F07 Daily Reminder Engine + F20 Week at a Glance + F11 Container Model.
+>
+> **The one rule:** The app must feel like a machine, not a collection of tools. Every interaction is a conversation or a tap — never a form."
 
 ---
 
