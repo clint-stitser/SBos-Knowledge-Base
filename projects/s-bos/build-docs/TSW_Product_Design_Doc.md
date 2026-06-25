@@ -162,6 +162,12 @@ Christie (Partner), Avery, Brynn, Max (Children). Kids enter their own data. Cus
 | 38 | Clint's Profile | 1 | GitHub | `01-user-profile/` |
 | 39 | Family Profile | 1 (read-only) / 2 | GitHub | `07-family/` |
 | 40 | Key Doc | 1 | JSON config → Supabase | n/a |
+| 41 | Lesson | 1 | SB Training & Certifications | `68d480e2727607560a7f0d26` |
+| 42 | Course | 1 | SB Training & Certifications | `68d480e2727607560a7f0d2c` |
+| 43 | Learning Track | 1 | SB Training & Certifications | `68d480e2727607560a7f0d23` |
+| 44 | Progress Record | 1 | SB Training & Certifications | `6a18ad82e630be8e82a202ea` |
+
+---
 
 ### Key Clarifications
 
@@ -184,7 +190,34 @@ Christie (Partner), Avery, Brynn, Max (Children). Kids enter their own data. Cus
 **Health Vault:** Body domain section surfacing all Drive-linked health records chronologically. One-tap Drive access. Add via simple form: type → date → Drive URL → notes.
 
 **Relationship measurables — no new entities needed:**
-Balance domain Goals like "Rides with Max," "Dates with Christie," "Miles run with Brynn," "Drives with Avery" use the existing Stat + Goal engine. A relationship measurable is a Goal (domain = Balance, type = Standard) with a custom Stat Menu Item as the counter. No new tables required. The mechanism for logging these stats is the **Stat Inference Engine** — see Discovery Input O below.
+Balance domain Goals like "Rides with Max," "Dates with Christie" use the existing Stat + Goal engine. Logged via the Stat Inference Engine (Discovery Input O) — no forms.
+
+**Skill/Habit Installation Arc — SB Training & Certifications `68d480e2727607560a7f0d22`:**
+The data store for tracking progression from conscious incompetence to subconscious competence. Four tables, all confirmed live:
+
+| Entity | Table | Role in the arc |
+|---|---|---|
+| **Lesson** (#41) | Lesson Catalog `68d480e2727607560a7f0d26` | Atomic learning unit — one concept, delivered as a Calmio-style card in the app. One per day, 6-hour safety rail. |
+| **Course** (#42) | Courses `68d480e2727607560a7f0d2c` | A structured sequence of Lessons for one phase of the arc (e.g., the "Foundation" phase of the Body protocol). |
+| **Learning Track** (#43) | Learning Tracks/Certifications `68d480e2727607560a7f0d23` | The full installation arc for a skill or habit — from Install through Subconscious Competence. A Learning Track contains multiple Courses. |
+| **Progress Record** (#44) | Progress Table `6a18ad82e630be8e82a202ea` | Clint's live position in any Learning Track — which lesson he's on, which phase, completion percentage, date started. |
+
+**How the arc maps to Phases of Proficiency:**
+
+```
+Learning Track = "Body Protocol: Fat Loss & MTB Performance"
+  Course 1 = Foundation Phase    (Install → Beginner)
+    Lesson 1 = Why sleep outperforms exercise for fat loss
+    Lesson 2 = The cortisol/testosterone triangle
+    Lesson 3 = Why alcohol is the primary visceral fat driver
+    ...
+  Course 2 = Engine Phase        (Intermediate → Expert)
+  Course 3 = Race Block Phase    (Expert → Subconscious Competence)
+```
+
+**External learning excluded (confirmed 2026-06-25):** Only in-app lesson completion is tracked in the Progress Record. Books, external apps, coaches, courses — not logged here. The Progress Record reflects what the machine delivered and Clint completed inside Stitser Way.
+
+**Cross-product note:** SB Training & Certifications is also the data store for S-BOS team member skill installation (Pay App, Compliance Audit, etc.). The same four tables serve both products. Stitser Way uses it for personal domain skills and habits; S-BOS uses it for business operational skills.
 
 **Vivid Vision + Annual Commitments:** GitHub source of truth. App reads via GitHub API. Also feed Daily Reminder Engine.
 
@@ -195,6 +228,8 @@ Balance domain Goals like "Rides with Max," "Dates with Christie," "Miles run wi
 - [x] All Phase 1 entities named — ✅ Approved by Clint 2026-06-25
 - [x] No orphan entities — ✅ Approved by Clint 2026-06-25
 - [x] Phase 1 / Phase 2 boundary clear — ✅ Approved by Clint 2026-06-25
+
+> **Note:** Four entities (41–44) added post-approval. These were missing from the original Gate 2 submission. Gate 2 remains closed — these additions are clarifications, not scope changes. Flag for review if Clint disagrees.
 
 ---
 
@@ -267,13 +302,13 @@ GitHub source of truth. Annual update prompt. Feed Daily Reminder Engine.
 BAC tables in Stitser Way solution. Misogi + Kevin's Rule + Quarterly Habit. Backward + forward layers. Surfaces on Free Day.
 
 ### J — Quarterly Habit *(Phase 1)*
-Goal tagged `type = "Quarterly Habit"`. Five-stage arc. Staged learning. Celebration.
+Goal tagged `type = "Quarterly Habit"`. Five-stage arc. Staged learning via Learning Track in SB Training & Certifications.
 
 ### K — Key Docs *(Phase 1: Clint only)*
 JSON config → Supabase. Drive links open natively. Nine categories. Emergency flag.
 
 ### L — Container Model & Learning Engine *(Phase 1)*
-Three-layer empty state. Claude-guided build. Ebbinghaus / Calmio. 6-hour safety rail.
+Three-layer empty state. Claude-guided build. Ebbinghaus / Calmio model. 6-hour safety rail. Data store: SB Training & Certifications — Lesson / Course / Learning Track / Progress Record (entities 41–44).
 
 ### M — Brand Identity & Positioning
 Stitser Way (working name). Sage-Architect-Builder. Austrian fire / Kronerer developing. Full detail in `03-stitser-way/messaging.md`.
@@ -287,15 +322,11 @@ Four pillars — SB Project MGT tables confirmed including Bills & Invoices. Mas
 
 **The core principle:** The app is a second brain. It notices what happened and asks one question. Clint confirms or dismisses. No forms. No manual entry. No friction.
 
-**How it works:**
+**How it works — three signal sources:**
 
-Claude periodically scans three signal sources:
-
-1. **Strava** — a new activity is detected (ride, run, hike). Claude checks: does Clint have any active Balance Goals whose Stat Menu Item matches this activity type (e.g., "Rides with Max," "Miles run with Brynn")? If yes, surfaces a prompt.
-
-2. **Journal / Capture** — a new journal entry or quick capture contains a person's name AND an activity keyword (e.g., "drove with Avery to practice," "ran 3 miles with Brynn"). Claude parses the entry, identifies the person + activity, checks for a matching active Balance Goal, and surfaces a prompt.
-
-3. **Calendar** — a calendar event is completed that involves a named person and an activity type (e.g., "Date Night with Christie"). Claude checks for a matching Goal and surfaces a prompt.
+1. **Strava** — new activity detected → checks for matching active Balance Goal → surfaces prompt
+2. **Journal / Capture** — person name + activity keyword found → matches to Goal → surfaces prompt
+3. **Calendar** — completed event with named person + activity type → matches to Goal → surfaces prompt
 
 **The prompt format (one-tap, never a form):**
 
@@ -305,17 +336,10 @@ Claude periodically scans three signal sources:
 
 > *"Looks like you had a date night with Christie. Log it against 'Monthly Dates with Christie' (2 of 3 this month)?"*
 
-**Response options:** Yes — log it / No — skip / Not quite — let me adjust
+**Response options:** Yes — log it / No — skip / Not quite (one clarifying question max, never a form)
 
-**When "Not quite" is tapped:** Claude asks one clarifying question maximum before logging or abandoning. Never opens a form.
+**Entities touched:**
+- Reads: Strava Activity (#29), Journal Entry (#8), BAC Calendar Event (#13), Goal (#1), Stat Menu Item (#5)
+- Writes: Stat (#4) — one new record per confirmed log
 
-**What entities this touches:**
-- Reads: Strava Activity (#29), Journal Entry (#8), BAC Calendar Event (#13), active Goal records (#1), Stat Menu Items (#5)
-- Writes: Stat records (#4) — one new stat record created per confirmed log
-
-**What this is NOT:**
-- Not automatic logging — Claude always asks, Clint always confirms
-- Not a form — one prompt, one tap, done
-- Not a new data model — uses existing Stat + Goal + Stat Menu Item infrastructure entirely
-
-**Full feature spec to be written in §4.** This clarification in §3 establishes the design intent so entity definitions remain accurate.
+**Not automatic** — Claude always asks, Clint always confirms. Full feature spec in §4.
