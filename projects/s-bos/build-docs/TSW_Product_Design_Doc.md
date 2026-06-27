@@ -17,7 +17,7 @@
 | Gate 4 | §6 Scope + §7 Metrics + §8 Timeline + §9 Open Questions | ✅ Complete — approved by Clint 2026-06-25 |
 | ✅ PDD Done | All gates passed | Data Integration Doc + Technical Spec + UI/UX Doc can begin |
 
-> **Post-approval additions:** Meetings capture (entity #45, feature F24) added 2026-06-26 during build — see the Addendum. Weight-capture workaround also added 2026-06-26 — see Addendum 2 + OQ16. Meeting enrichment spec added 2026-06-27 — see the Addendum + OQ17.
+> **Post-approval additions:** Meetings capture (entity #45, feature F24) added 2026-06-26 during build — see the Addendum. Weight-capture workaround also added 2026-06-26 — see Addendum 2 + OQ16. Meeting enrichment spec added 2026-06-27 — see the Addendum + OQ17. Project Tools — first tool (Food Logger) built 2026-06-27 — see Addendum 3.
 
 ---
 
@@ -119,7 +119,7 @@ Not a task manager. Not a journal app. Not S-BOS. Not tools glued together. Not 
 
 > **24 features — 23 approved by Clint 2026-06-25; F24 added 2026-06-26**
 
-F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 Universal Goal Engine — F05 GYR Spiral — F06 Learning Engine — F07 Daily Reminder Engine — F08 Body Domain Health Tracking & Vault — F09 Big Ass Calendar — F10 Quarterly Habit Arc — F11 Container Model — F12 About Me + Vivid Vision — F13 Project + Tool Layer — F14 Kompass Operating Platform — F15 Shortcuts Tab — F16 Journal & Decisions Library — F17 Being Domain — F18 Balance Domain — F19 Business Domain — F20 Week at a Glance — F21 Key Docs — F22 In-App Spec Sheet — F23 App Shell & Navigation — F24 Meetings Capture / Second Brain *(added 2026-06-26)*
+F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 Universal Goal Engine — F05 GYR Spiral — F06 Learning Engine — F07 Daily Reminder Engine — F08 Body Domain Health Tracking & Vault — F09 Big Ass Calendar — F10 Quarterly Habit Arc — F11 Container Model — F12 About Me + Vivid Vision — F13 Project + Tool Layer *(first tool — Food Logger — built 2026-06-27; see Addendum 3)* — F14 Kompass Operating Platform — F15 Shortcuts Tab — F16 Journal & Decisions Library — F17 Being Domain — F18 Balance Domain — F19 Business Domain — F20 Week at a Glance — F21 Key Docs — F22 In-App Spec Sheet — F23 App Shell & Navigation — F24 Meetings Capture / Second Brain *(added 2026-06-26)*
 
 ---
 
@@ -148,6 +148,7 @@ F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 
 | W07 | Quarter Start — New Habit | F10, F06, F04 | < 5 min setup |
 | W08 | Capturing a Meeting *(added 2026-06-26)* | F24 | passive — auto-ingested from Plaud / Google Meet, then LLM-enriched |
 | W09 | Logging Weight *(added 2026-06-26)* | F08 | passive — Siri Shortcut → Apple Health → Claude `log-weight` skill → Stats (Phase-1 workaround) |
+| W10 | Logging a Meal *(added 2026-06-27)* | F13 | < 15 sec — photo → green-Med compliant verdict → logged |
 
 ---
 
@@ -201,6 +202,7 @@ Weight (Phase-1 PERSONAL WORKAROUND — Oura API has no weight endpoint):
 **Quarterly:** One active Habit. Misogi as Project. Kevin's Rule in BAC.
 **Annually:** Vivid Vision reviewed. Identity statements for past Habits.
 **Meetings:** Every Plaud / Google Meet conversation lands in the Meetings table with no manual entry; attendees, projects, and follow-up tasks are auto-extracted; searchable in-app within minutes of the recording finishing.
+**Food:** Each meal logged in seconds with a green-Med compliant/not verdict; daily % compliant trends toward the 80% goal.
 **Qualitative:** App feels like a partner, not a tool.
 **Anti-metrics:** Forms > 2x/week. Rings > 10 items. No Spiral in 30+ days. Same thought twice in 7 days. Separate chat for rituals.
 
@@ -237,10 +239,11 @@ Phase 2 trigger: one full quarter as daily driver + qualitative signal passed.
 | OQ11 | ~~No iOS companion needed; Oura syncs weight from Apple Health automatically.~~ ⚠️ **Superseded by OQ16 (2026-06-26)** — Oura API has no weight endpoint, so this assumption was wrong. | F08 | ⚠️ Superseded by OQ16 |
 | OQ12 | Key Doc storage — JSON vs. Supabase? | F21 | ⏳ Tech Spec |
 | OQ13 | Spec Sheet storage — local, GitHub, or Supabase? | F22 | ⏳ Tech Spec |
-| OQ14 | Project Tool archive — Gist, Supabase blob, or SmartSuite attachment? | F13 | ⏳ Tech Spec |
+| OQ14 | **Project Tool archive (updated 2026-06-27).** Food Logger v1 logs **locally (localStorage)** — chosen over SmartSuite to avoid API rate limits; a Stats/Goal write-back (a "Green-Med Compliance" measurable + goal) is a later add. Durable archive for richer/shareable tools (Gist / Supabase / SmartSuite attachment) still open. | F13 | ✅ v1 local / ⏳ durable archive |
 | OQ15 | **Plaud ingestion auth (added 2026-06-26; live-verified 2026-06-27).** Plaud web API (`api.plaud.ai`): `GET /file/simple/web` (list) + `GET /file/detail/{id}` (transcript), `Authorization: Bearer <workspace token>`. Current web auth = a long-lived (~300d) USER access token (OTP login `/auth/otp-login`) that mints short (~24h) WORKSPACE tokens via `POST /user-app/auth/workspace/token/{wid}`; the bridge auto-mints + caches (`PLAUD_ACCESS_TOKEN`), with a pasted 24h token as fallback. Source single-select codes resolved (Plaud=`a9wZ9`, Google Calendar=`4yhuK`, Manual=`mTFZ5`). Official OAuth dev API applied for. ⚠️ Caveat: Clint's Plaud is Google SSO — email-OTP for the durable token needs testing. | F24 | ✅ Live on 24h token / ⏳ durable OTP access token |
 | OQ16 | **Oura weight source — workaround in place (added 2026-06-26).** Oura REST v2 has no weight endpoint. **Phase-1 resolution:** Siri Shortcut logs to Apple Health and sends the value to Claude; the `log-weight` skill writes it to Stats (against the "Weight & BMI" priority `68c893f4065d17a960dd8f6f`). ⚠️ **Workaround only — NOT productizable:** depends on Clint's personal Siri Shortcut + Apple Health + Claude. A licensed/multi-user release needs a per-user health source (HealthKit companion or per-user Oura/Health integration). | F08 | ✅ Phase-1 workaround live / ⏳ open for licensing + Phase 2 |
 | OQ17 | **Meeting enrichment + glow UI (added 2026-06-27).** On import, the LLM (Anthropic) infers attendees / projects / follow-up action items from the transcript; the bridge matches People + Projects by name and links them, and creates linked follow-up Check List Tasks (assignee + due date). Requires `ANTHROPIC_API_KEY`. Names not yet in the system surface in the meetings view with a **"glow" (Container-Model) prompt to add the profile** (not yet built). | F24 | ⏳ Needs Anthropic key + glow UI build |
+| OQ18 | **Food macros/calories source (added 2026-06-27).** Food Logger v1 intentionally skips calorie/macro math — it tracks green-Med **compliance** only. Future: hand logged entries to the **MyFitnessPal API** for calorie/macro counting. | F13 | ⏳ Future feature |
 
 ---
 
@@ -258,7 +261,7 @@ Phase 2 trigger: one full quarter as daily driver + qualitative signal passed.
 
 ## ✅ PDD COMPLETE
 
-**All four gates passed. Approved by Clint 2026-06-25.** *(Meetings capture + weight-capture workaround added 2026-06-26; meeting enrichment spec 2026-06-27 — see Addenda.)*
+**All four gates passed. Approved by Clint 2026-06-25.** *(Meetings capture + weight-capture workaround added 2026-06-26; meeting enrichment spec + Food Logger 2026-06-27 — see Addenda.)*
 
 | Document | Purpose |
 |---|---|
@@ -297,8 +300,7 @@ On import, each Plaud recording becomes a Meeting record with:
 Points **3, 4, 6 require the Anthropic API (LLM)** to enrich the record; enrichment runs in the bridge, gated on `ANTHROPIC_API_KEY`.
 
 ### Status (2026-06-27)
-- **Live-verified** end-to-end against real Plaud + SmartSuite: deterministic mapping (status / owner / full transcript) confirmed; ~12 recordings imported (of 93); SmartSuite 429s handled with retry/backoff.
-- LLM enrichment + follow-up-task creation + People/Projects linking **built, gated on `ANTHROPIC_API_KEY`** (verify when set).
+- **Live-verified** end-to-end against real Plaud + SmartSuite: deterministic mapping (status / owner / full transcript) confirmed; 17 recordings imported; enrichment run (14 enriched, ~111 follow-up tasks); SmartSuite 429s handled with retry/backoff.
 - **Glow UI** for unmatched attendees/projects — next frontend piece.
 - Plaud token durability — see OQ15.
 
@@ -311,6 +313,23 @@ Points **3, 4, 6 require the Anthropic API (LLM)** to enrich the record; enrichm
 **Phase-1 workaround:** Clint's Siri Shortcut logs weight to Apple Health, then sends the value to Claude. The `log-weight` skill (`skills/log-weight/SKILL.md` in Clint-s-Kompass) parses the message and writes a Stats record (app `6840927ebcfa2d2bfef039e2`) against the "Weight & BMI" priority (`68c893f4065d17a960dd8f6f`, under the Body goal "CRS- Personal Body by 12/31/25") — silent, trusted source, no inference prompt. A "Log Weight" launcher in the app's Shortcuts tab fires the iOS shortcut ("Log Weight to TSW").
 
 **⚠️ Not productizable.** This depends on one person's Siri Shortcut + Apple Health + Claude. For a licensed / multi-user product, weight must come from a per-user source — a HealthKit companion app, or a per-user health integration — not this manual bridge. Do **not** ship the Siri-Shortcut path to other users. Tracked in OQ16 for Phase 2 / licensing.
+
+---
+
+## Addendum 3 — Project Tools & Food Logger (F13) (added 2026-06-27)
+
+**What a Project Tool is.** A self-contained, purpose-built mini-app for one bounded need — the pattern of the existing study apps (Max's US-capitals app, Brynn's study app). Sub-types seen so far: **trackers/regimens** (Food Logger; a dose tracker like Brynn's ear-drop prescription) and **learning apps** (study/quiz). Tools are built one at a time for Clint now; a **multi-tool catalog** (activate tools into a user's project/app experience) is a future expansion, not v1.
+
+**F13 v1 — Food Logger (green-Mediterranean compliance).** Built for Clint, tied to the visceral-fat protocol (`08-health/visceral-fat-protocol.md`).
+- **Reframe (Clint, 2026-06-27):** not a calorie counter — a **compliance lens**. Capture the *what* and *when*; Claude **vision** judges each meal **compliant: yes/no** vs the green-Med pattern (lean protein + greens/olive oil/walnuts, less red/processed meat, no liquid sugar, minimal alcohol); track **% of meals compliant** against a goal (default 80%). The verdict is overridable.
+- **Flow:** photo → `POST /api/food-log/evaluate` (Claude vision + structured tool via `lib/anthropic.ts` `claudeImageTool`) → `{food, compliant, reason}` → logged → today + 7-day compliance %.
+- **Persistence:** **localStorage v1** (no SmartSuite writes — avoids API rate limits). See OQ14.
+- **Reached from:** Body domain home → `/tools/food-log`.
+
+**Deferred / future:**
+- **Calories & macros via the MyFitnessPal API** — hand logged entries to MyFitnessPal for the heavy lifting (Clint's idea; intentionally out of v1). See OQ18.
+- **Stats/Goal write-back** — a "Green-Med Compliance" measurable + goal so the % shows in the Goal engine / GYR.
+- **Multi-tool catalog** + the project-with-four-pillars layer, once more tools exist.
 
 ---
 
