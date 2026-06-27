@@ -3,7 +3,7 @@
 > **Status:** ✅ PDD COMPLETE — All gates passed. Ready for Data Integration Doc + Technical Spec + UI/UX Doc.
 > **Methodology:** Ryan Falke's Design Templates, adapted for Stitser Way
 > **Decision-maker:** Clint Stitser
-> **Last updated:** 2026-06-26
+> **Last updated:** 2026-06-27
 
 ---
 
@@ -17,7 +17,7 @@
 | Gate 4 | §6 Scope + §7 Metrics + §8 Timeline + §9 Open Questions | ✅ Complete — approved by Clint 2026-06-25 |
 | ✅ PDD Done | All gates passed | Data Integration Doc + Technical Spec + UI/UX Doc can begin |
 
-> **Post-approval additions:** Meetings capture (entity #45, feature F24) added 2026-06-26 during build — see the Addendum. Weight-capture workaround also added 2026-06-26 — see Addendum 2 + OQ16.
+> **Post-approval additions:** Meetings capture (entity #45, feature F24) added 2026-06-26 during build — see the Addendum. Weight-capture workaround also added 2026-06-26 — see Addendum 2 + OQ16. Meeting enrichment spec added 2026-06-27 — see the Addendum + OQ17.
 
 ---
 
@@ -146,7 +146,7 @@ F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 
 | W05 | Setting a New Goal | F04, F11 | < 10 min |
 | W06 | Building a Project Tool | F13, F15 | < 5 exchanges |
 | W07 | Quarter Start — New Habit | F10, F06, F04 | < 5 min setup |
-| W08 | Capturing a Meeting *(added 2026-06-26)* | F24 | passive — auto-ingested from Plaud / Google Meet |
+| W08 | Capturing a Meeting *(added 2026-06-26)* | F24 | passive — auto-ingested from Plaud / Google Meet, then LLM-enriched |
 | W09 | Logging Weight *(added 2026-06-26)* | F08 | passive — Siri Shortcut → Apple Health → Claude `log-weight` skill → Stats (Phase-1 workaround) |
 
 ---
@@ -164,7 +164,7 @@ F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 
 
 **In scope:** All 23 features, 44 entities, 7 workflows. Single user. SmartSuite data layer via Kompass MCP. Oura REST API (PAT). Strava MCP. GitHub API (read-only). Google Drive links (native, no API). Claude via Anthropic API. Railway. Next.js / React / TypeScript / Tailwind v4 — mobile-first.
 
-> **Added 2026-06-26:** F24 Meetings Capture + entity #45. Plaud → SmartSuite Meetings bridge (in-app, Railway) plus an in-app Meetings view reached from the Shortcuts tab. Google Meet is the phase-2 provider behind the same ingestion seam.
+> **Added 2026-06-26:** F24 Meetings Capture + entity #45. Plaud → SmartSuite Meetings bridge (in-app, Railway) plus an in-app Meetings view reached from the Shortcuts tab. Google Meet is the phase-2 provider behind the same ingestion seam. **2026-06-27:** ingested records are LLM-enriched (attendees, projects, follow-up tasks) — see Addendum + OQ17.
 
 **Health data architecture (corrected 2026-06-26):**
 ```
@@ -200,7 +200,7 @@ Weight (Phase-1 PERSONAL WORKAROUND — Oura API has no weight endpoint):
 **Monthly:** All Goals have GYR grades. Measurables tracking without forms. Lesson tapped more days than not.
 **Quarterly:** One active Habit. Misogi as Project. Kevin's Rule in BAC.
 **Annually:** Vivid Vision reviewed. Identity statements for past Habits.
-**Meetings:** Every Plaud / Google Meet conversation lands in the Meetings table with no manual entry; searchable in-app within minutes of the recording finishing.
+**Meetings:** Every Plaud / Google Meet conversation lands in the Meetings table with no manual entry; attendees, projects, and follow-up tasks are auto-extracted; searchable in-app within minutes of the recording finishing.
 **Qualitative:** App feels like a partner, not a tool.
 **Anti-metrics:** Forms > 2x/week. Rings > 10 items. No Spiral in 30+ days. Same thought twice in 7 days. Separate chat for rituals.
 
@@ -233,13 +233,14 @@ Phase 2 trigger: one full quarter as daily driver + qualitative signal passed.
 | OQ07 | Learning Engine visual metaphor | F06 | ⏳ Clint |
 | OQ08 | Domain rename for public brand | All labels | ⏳ Clint — evolving |
 | OQ09 | Day Mode Log automation timing | F01 | ⏳ Tech Spec |
-| OQ10 | **Oura PAT confirmed. Single REST integration — sleep, readiness, activity, HR, SpO2. (Weight NOT available — see OQ16.) Pull on app open + morning sweep.** PAT in hand 2026-06-26 — ready to wire. | F08 | ✅ Resolved 2026-06-25 |
+| OQ10 | **Oura PAT confirmed + LIVE 2026-06-27. Single REST integration — sleep, readiness, activity, HRV. (Weight NOT available — see OQ16.) Pull on app open + morning sweep.** | F08 | ✅ Live |
 | OQ11 | ~~No iOS companion needed; Oura syncs weight from Apple Health automatically.~~ ⚠️ **Superseded by OQ16 (2026-06-26)** — Oura API has no weight endpoint, so this assumption was wrong. | F08 | ⚠️ Superseded by OQ16 |
 | OQ12 | Key Doc storage — JSON vs. Supabase? | F21 | ⏳ Tech Spec |
 | OQ13 | Spec Sheet storage — local, GitHub, or Supabase? | F22 | ⏳ Tech Spec |
 | OQ14 | Project Tool archive — Gist, Supabase blob, or SmartSuite attachment? | F13 | ⏳ Tech Spec |
-| OQ15 | **Plaud ingestion auth (added 2026-06-26).** Official OAuth dev API applied for. Fallback confirmed viable: the `pld_tokenstr` web-session token works as `Authorization: Bearer` against `api.plaud.ai` (web API: `GET /file/simple/web`, `GET /file/detail/{id}`), ~300-day lifetime. Also pending: SmartSuite Meetings `Source` single-select option codes. | F24 | ⏳ Wire token (in progress 2026-06-26) |
+| OQ15 | **Plaud ingestion auth (added 2026-06-26; live-verified 2026-06-27).** Plaud web API (`api.plaud.ai`): `GET /file/simple/web` (list) + `GET /file/detail/{id}` (transcript), `Authorization: Bearer <workspace token>`. Current web auth = a long-lived (~300d) USER access token (OTP login `/auth/otp-login`) that mints short (~24h) WORKSPACE tokens via `POST /user-app/auth/workspace/token/{wid}`; the bridge auto-mints + caches (`PLAUD_ACCESS_TOKEN`), with a pasted 24h token as fallback. Source single-select codes resolved (Plaud=`a9wZ9`, Google Calendar=`4yhuK`, Manual=`mTFZ5`). Official OAuth dev API applied for. ⚠️ Caveat: Clint's Plaud is Google SSO — email-OTP for the durable token needs testing. | F24 | ✅ Live on 24h token / ⏳ durable OTP access token |
 | OQ16 | **Oura weight source — workaround in place (added 2026-06-26).** Oura REST v2 has no weight endpoint. **Phase-1 resolution:** Siri Shortcut logs to Apple Health and sends the value to Claude; the `log-weight` skill writes it to Stats (against the "Weight & BMI" priority `68c893f4065d17a960dd8f6f`). ⚠️ **Workaround only — NOT productizable:** depends on Clint's personal Siri Shortcut + Apple Health + Claude. A licensed/multi-user release needs a per-user health source (HealthKit companion or per-user Oura/Health integration). | F08 | ✅ Phase-1 workaround live / ⏳ open for licensing + Phase 2 |
+| OQ17 | **Meeting enrichment + glow UI (added 2026-06-27).** On import, the LLM (Anthropic) infers attendees / projects / follow-up action items from the transcript; the bridge matches People + Projects by name and links them, and creates linked follow-up Check List Tasks (assignee + due date). Requires `ANTHROPIC_API_KEY`. Names not yet in the system surface in the meetings view with a **"glow" (Container-Model) prompt to add the profile** (not yet built). | F24 | ⏳ Needs Anthropic key + glow UI build |
 
 ---
 
@@ -257,7 +258,7 @@ Phase 2 trigger: one full quarter as daily driver + qualitative signal passed.
 
 ## ✅ PDD COMPLETE
 
-**All four gates passed. Approved by Clint 2026-06-25.** *(Meetings capture + weight-capture workaround added 2026-06-26 — see Addenda.)*
+**All four gates passed. Approved by Clint 2026-06-25.** *(Meetings capture + weight-capture workaround added 2026-06-26; meeting enrichment spec 2026-06-27 — see Addenda.)*
 
 | Document | Purpose |
 |---|---|
@@ -276,17 +277,30 @@ Added during the build at Clint's direction, after the 2026-06-25 gate approvals
 ### Entity #45 — Meeting
 - **Source of truth:** SmartSuite Meetings table `6a0cff32f77ad06285909dcf`.
 - **Purpose:** Every meeting and conversation is captured — transcript, summary, decisions, action items, attendees — so the full record is searchable. The "second brain."
-- **Key fields:** Meeting Title, Meeting Date / Start / End, Duration, Meeting Type, **Source** (single-select), Status, Attendees, Summary/Overview, Discussion Notes, Decisions Made, Action Items (+ Source Text), **Plaud Recording Link / Visual Link / Recording ID**, **Meet Recording / Transcript Link**, Transcript Available, Tags.
+- **Key fields:** Meeting Title, Meeting Date / Start / End, Duration, Meeting Type, **Source** (single-select), **Status**, **Meeting Owner** (`s00f0f4c32` → People), **Attendees** (`s813812ff6` → People), **Linked Projects** (`s9945b5b0c` → Projects), Summary/Overview, Discussion Notes, Decisions Made, **Action Items** (`sced02d07c` → Check List Tasks), Action Items (Source Text), **Plaud Recording Link / Visual Link / Recording ID**, **Meet Recording / Transcript Link**, Transcript Available, Tags, **Transcription/Notes / Other** (`se3b7e7c4b` — full transcript).
 
 ### F24 — Meetings Capture / Second Brain
 - **In-app (read):** a `/meetings` list + detail view (summary, decisions, action items, attendees, transcript), reached from the Shortcuts tab. Reads via the same `DataSource` seam as every other feature (fixtures now, SmartSuite live later).
-- **Ingestion bridge (write):** a Railway-hosted job in the app that pulls new recordings from a provider, maps them to the Meetings fields, and upserts idempotently on **Plaud Recording ID**. Triggered via `POST /api/meetings/sync` (secret-guarded).
-- **Provider 1 — Plaud:** reverse-engineered web API (`api.plaud.ai`), `Authorization: Bearer <pld_tokenstr>`. Official OAuth dev API applied for as the durable path (see OQ15).
-- **Provider 2 — Google Meet (phase 2):** Calendar + Drive transcript → the same `Source` = Google Meet path, populating the Meet* fields. Behind the same normalized-recording seam.
+- **Ingestion bridge (write):** a Railway-hosted job in the app that pulls new recordings from a provider, maps them to the Meetings fields, and upserts idempotently on **Plaud Recording ID**. Triggered via `POST /api/meetings/sync` (secret-guarded). SmartSuite calls retry on 429/503.
+- **Provider 1 — Plaud:** web API (`api.plaud.ai`), `Authorization: Bearer <workspace token>` (auto-minted from a long-lived access token; see OQ15).
+- **Provider 2 — Google Meet (phase 2):** Calendar + Drive transcript → the same `Source` = Google Calendar path, populating the Meet* fields. Behind the same normalized-recording seam.
 
-### Status (2026-06-26)
-- Read view + bridge scaffold built and verified; bridge runs in scaffold mode (no-op) until Plaud + SmartSuite credentials are set.
-- Open: OQ15 (Plaud auth / Source option codes), OQ16 (Oura weight source).
+### Meeting enrichment (added 2026-06-27, from Clint's import review)
+On import, each Plaud recording becomes a Meeting record with:
+1. **Status = Complete** — a recording is a finished meeting. *(deterministic)*
+2. **Meeting Owner = the Plaud account holder** — Clint (People `683f72d0591c71a2159825b8`). *(deterministic)*
+3. **Attendees — inferred from the transcript by an LLM** (Anthropic), matched to People by name and linked (`s813812ff6`). Names **not yet in People** are surfaced in the meetings view with a **"glow"** (Container-Model) prompt offering to add the profile.
+4. **Linked Projects — same LLM inference + match** against Projects, linked (`s9945b5b0c`); unmatched offered via the same glow prompt.
+5. **Full transcription → `se3b7e7c4b`** ("Transcription/Notes / Other"). *(deterministic)*
+6. **Follow-up tasks** — action items become **Check List Tasks** (`68a8e17251dc814e8c529f3f`) with assignee (`s93fe32a4b`) + due date, linked back to the meeting via **`sced02d07c`**.
+
+Points **3, 4, 6 require the Anthropic API (LLM)** to enrich the record; enrichment runs in the bridge, gated on `ANTHROPIC_API_KEY`.
+
+### Status (2026-06-27)
+- **Live-verified** end-to-end against real Plaud + SmartSuite: deterministic mapping (status / owner / full transcript) confirmed; ~12 recordings imported (of 93); SmartSuite 429s handled with retry/backoff.
+- LLM enrichment + follow-up-task creation + People/Projects linking **built, gated on `ANTHROPIC_API_KEY`** (verify when set).
+- **Glow UI** for unmatched attendees/projects — next frontend piece.
+- Plaud token durability — see OQ15.
 
 ---
 
@@ -294,7 +308,7 @@ Added during the build at Clint's direction, after the 2026-06-25 gate approvals
 
 **Why:** Oura's REST API exposes no weight endpoint, so the original "Oura aggregates weight" assumption (OQ10/OQ11) does not hold.
 
-**Phase-1 workaround:** Clint's Siri Shortcut logs weight to Apple Health, then sends the value to Claude. The `log-weight` skill (`skills/log-weight/SKILL.md` in Clint-s-Kompass) parses the message and writes a Stats record (app `6840927ebcfa2d2bfef039e2`) against the "Weight & BMI" priority (`68c893f4065d17a960dd8f6f`, under the Body goal "CRS- Personal Body by 12/31/25") — silent, trusted source, no inference prompt. A "Log Weight" launcher in the app's Shortcuts tab fires the iOS shortcut.
+**Phase-1 workaround:** Clint's Siri Shortcut logs weight to Apple Health, then sends the value to Claude. The `log-weight` skill (`skills/log-weight/SKILL.md` in Clint-s-Kompass) parses the message and writes a Stats record (app `6840927ebcfa2d2bfef039e2`) against the "Weight & BMI" priority (`68c893f4065d17a960dd8f6f`, under the Body goal "CRS- Personal Body by 12/31/25") — silent, trusted source, no inference prompt. A "Log Weight" launcher in the app's Shortcuts tab fires the iOS shortcut ("Log Weight to TSW").
 
 **⚠️ Not productizable.** This depends on one person's Siri Shortcut + Apple Health + Claude. For a licensed / multi-user product, weight must come from a per-user source — a HealthKit companion app, or a per-user health integration — not this manual bridge. Do **not** ship the Siri-Shortcut path to other users. Tracked in OQ16 for Phase 2 / licensing.
 
