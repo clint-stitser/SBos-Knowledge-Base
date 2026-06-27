@@ -3,7 +3,7 @@
 > **Status:** ✅ PDD COMPLETE — All gates passed. Ready for Data Integration Doc + Technical Spec + UI/UX Doc.
 > **Methodology:** Ryan Falke's Design Templates, adapted for Stitser Way
 > **Decision-maker:** Clint Stitser
-> **Last updated:** 2026-06-25
+> **Last updated:** 2026-06-26
 
 ---
 
@@ -16,6 +16,8 @@
 | Gate 3 | §4 Features + §5 Workflows | ✅ Complete — approved by Clint 2026-06-25 |
 | Gate 4 | §6 Scope + §7 Metrics + §8 Timeline + §9 Open Questions | ✅ Complete — approved by Clint 2026-06-25 |
 | ✅ PDD Done | All gates passed | Data Integration Doc + Technical Spec + UI/UX Doc can begin |
+
+> **Post-approval additions:** Meetings capture (entity #45, feature F24) added 2026-06-26 during build — see the Addendum at the end of this doc.
 
 ---
 
@@ -80,7 +82,7 @@ Not a task manager. Not a journal app. Not S-BOS. Not tools glued together. Not 
 
 ## §3 — Core Entities
 
-> 44 entities. Full definitions and app IDs in TSW_memory.md and prior commit history.
+> 45 entities (44 approved 2026-06-25; Meetings #45 added 2026-06-26). Full definitions and app IDs in TSW_memory.md and prior commit history.
 
 **Game App:** Goals (#1), Priorities (#2), Milestones (#3), Stats (#4), Stat Menu Items (#5), GYR Status Reports (#6)
 **Stitser Way:** Journal Entries (#8), Day Mode Log (#9), Decisions (#10), Principles/Realizations (#11), BAC Day Types (#12), BAC Calendar Events (#13), BAC Goals (#14)
@@ -93,6 +95,7 @@ Not a task manager. Not a journal app. Not S-BOS. Not tools glued together. Not 
 **GitHub:** Vivid Vision (#36), Annual Commitments (#37), Clint's Profile (#38), Family Profiles (#39)
 **App config:** Key Doc (#40)
 **SB Training & Certifications:** Lesson (#41), Course (#42), Learning Track (#43), Progress Record (#44)
+**Meetings capture (added 2026-06-26):** Meeting (#45) — SmartSuite Meetings table `6a0cff32f77ad06285909dcf`, captured from Plaud + Google Meet. See Addendum.
 
 > **Goal entity — Domain field (confirmed 2026-06-25):**
 > Field name: Domain. Field ID: `s5deb9616e`. Type: Multi-select. Values: Body / Being / Balance / Business.
@@ -112,9 +115,9 @@ Not a task manager. Not a journal app. Not S-BOS. Not tools glued together. Not 
 
 ## §4 — Core Features
 
-> **23 features — ✅ Approved by Clint 2026-06-25**
+> **24 features — 23 approved by Clint 2026-06-25; F24 added 2026-06-26**
 
-F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 Universal Goal Engine — F05 GYR Spiral — F06 Learning Engine — F07 Daily Reminder Engine — F08 Body Domain Health Tracking & Vault — F09 Big Ass Calendar — F10 Quarterly Habit Arc — F11 Container Model — F12 About Me + Vivid Vision — F13 Project + Tool Layer — F14 Kompass Operating Platform — F15 Shortcuts Tab — F16 Journal & Decisions Library — F17 Being Domain — F18 Balance Domain — F19 Business Domain — F20 Week at a Glance — F21 Key Docs — F22 In-App Spec Sheet — F23 App Shell & Navigation
+F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 Universal Goal Engine — F05 GYR Spiral — F06 Learning Engine — F07 Daily Reminder Engine — F08 Body Domain Health Tracking & Vault — F09 Big Ass Calendar — F10 Quarterly Habit Arc — F11 Container Model — F12 About Me + Vivid Vision — F13 Project + Tool Layer — F14 Kompass Operating Platform — F15 Shortcuts Tab — F16 Journal & Decisions Library — F17 Being Domain — F18 Balance Domain — F19 Business Domain — F20 Week at a Glance — F21 Key Docs — F22 In-App Spec Sheet — F23 App Shell & Navigation — F24 Meetings Capture / Second Brain *(added 2026-06-26)*
 
 ---
 
@@ -124,6 +127,7 @@ F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 
 - [x] All features have success criteria — ✅ Approved by Clint 2026-06-25
 - [x] No feature references an entity not in §3 — ✅ Approved by Clint 2026-06-25
 - [x] Full review complete — no gaps ✅
+- [ ] F24 Meetings Capture — added post-approval 2026-06-26; pending Clint's gate sign-off (see Addendum)
 
 ---
 
@@ -140,6 +144,7 @@ F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 
 | W05 | Setting a New Goal | F04, F11 | < 10 min |
 | W06 | Building a Project Tool | F13, F15 | < 5 exchanges |
 | W07 | Quarter Start — New Habit | F10, F06, F04 | < 5 min setup |
+| W08 | Capturing a Meeting *(added 2026-06-26)* | F24 | passive — auto-ingested from Plaud / Google Meet |
 
 ---
 
@@ -155,6 +160,8 @@ F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 
 ### Phase 1 — Clint Only
 
 **In scope:** All 23 features, 44 entities, 7 workflows. Single user. SmartSuite data layer via Kompass MCP. Oura REST API (PAT). Strava MCP. GitHub API (read-only). Google Drive links (native, no API). Claude via Anthropic API. Railway. Next.js / React / TypeScript / Tailwind v4 — mobile-first.
+
+> **Added 2026-06-26:** F24 Meetings Capture + entity #45. Plaud → SmartSuite Meetings bridge (in-app, Railway) plus an in-app Meetings view reached from the Shortcuts tab. Google Meet is the phase-2 provider behind the same ingestion seam.
 
 **Health data architecture:**
 ```
@@ -175,6 +182,7 @@ Siri → Apple Health → Oura sync (automatic)
 **Sprint 4 — Intelligence layer:** F03, F06, F14
 **Sprint 5 — Planning layer:** F09, F10, F12
 **Sprint 6 — Tools + Library:** F13, F15, F16, F21, F22
+**Out of sequence — Meetings:** F24 built 2026-06-26 (read view + Plaud bridge scaffold) ahead of the numbered sprints, at Clint's direction.
 
 ---
 
@@ -185,6 +193,7 @@ Siri → Apple Health → Oura sync (automatic)
 **Monthly:** All Goals have GYR grades. Measurables tracking without forms. Lesson tapped more days than not.
 **Quarterly:** One active Habit. Misogi as Project. Kevin's Rule in BAC.
 **Annually:** Vivid Vision reviewed. Identity statements for past Habits.
+**Meetings:** Every Plaud / Google Meet conversation lands in the Meetings table with no manual entry; searchable in-app within minutes of the recording finishing.
 **Qualitative:** App feels like a partner, not a tool.
 **Anti-metrics:** Forms > 2x/week. Rings > 10 items. No Spiral in 30+ days. Same thought twice in 7 days. Separate chat for rituals.
 
@@ -222,6 +231,8 @@ Phase 2 trigger: one full quarter as daily driver + qualitative signal passed.
 | OQ12 | Key Doc storage — JSON vs. Supabase? | F21 | ⏳ Tech Spec |
 | OQ13 | Spec Sheet storage — local, GitHub, or Supabase? | F22 | ⏳ Tech Spec |
 | OQ14 | Project Tool archive — Gist, Supabase blob, or SmartSuite attachment? | F13 | ⏳ Tech Spec |
+| OQ15 | **Plaud ingestion auth (added 2026-06-26).** Official OAuth dev API applied for. Fallback confirmed viable: the `pld_tokenstr` web-session token works as `Authorization: Bearer` against `api.plaud.ai` (web API: `GET /file/simple/web`, `GET /file/detail/{id}`), ~300-day lifetime. Also pending: SmartSuite Meetings `Source` single-select option codes; Oura has no weight endpoint (weight source still open). | F24 | ⏳ Official API approval / wire token |
+| OQ16 | **Oura weight source (added 2026-06-26).** Oura REST v2 exposes no weight endpoint, so the Apple Health → Oura weight does not reach the API. Need an alternate source for the weight metric (revisits OQ10/OQ11 assumption). | F08 | ⏳ Clint / Tech Spec |
 
 ---
 
@@ -239,7 +250,7 @@ Phase 2 trigger: one full quarter as daily driver + qualitative signal passed.
 
 ## ✅ PDD COMPLETE
 
-**All four gates passed. Approved by Clint 2026-06-25.**
+**All four gates passed. Approved by Clint 2026-06-25.** *(Meetings capture added 2026-06-26 — see Addendum.)*
 
 | Document | Purpose |
 |---|---|
@@ -248,6 +259,27 @@ Phase 2 trigger: one full quarter as daily driver + qualitative signal passed.
 | **UI/UX Doc** | Wireframes, components, mobile-first — §4 + F23 |
 
 **Hand off to Claude Code with this PDD as source of truth.**
+
+---
+
+## Addendum — Meetings Capture / Second Brain (added 2026-06-26)
+
+Added during the build at Clint's direction, after the 2026-06-25 gate approvals. Captured here so the PDD stays the single source of truth.
+
+### Entity #45 — Meeting
+- **Source of truth:** SmartSuite Meetings table `6a0cff32f77ad06285909dcf`.
+- **Purpose:** Every meeting and conversation is captured — transcript, summary, decisions, action items, attendees — so the full record is searchable. The "second brain."
+- **Key fields:** Meeting Title, Meeting Date / Start / End, Duration, Meeting Type, **Source** (single-select), Status, Attendees, Summary/Overview, Discussion Notes, Decisions Made, Action Items (+ Source Text), **Plaud Recording Link / Visual Link / Recording ID**, **Meet Recording / Transcript Link**, Transcript Available, Tags.
+
+### F24 — Meetings Capture / Second Brain
+- **In-app (read):** a `/meetings` list + detail view (summary, decisions, action items, attendees, transcript), reached from the Shortcuts tab. Reads via the same `DataSource` seam as every other feature (fixtures now, SmartSuite live later).
+- **Ingestion bridge (write):** a Railway-hosted job in the app that pulls new recordings from a provider, maps them to the Meetings fields, and upserts idempotently on **Plaud Recording ID**. Triggered via `POST /api/meetings/sync` (secret-guarded).
+- **Provider 1 — Plaud:** reverse-engineered web API (`api.plaud.ai`), `Authorization: Bearer <pld_tokenstr>`. Official OAuth dev API applied for as the durable path (see OQ15).
+- **Provider 2 — Google Meet (phase 2):** Calendar + Drive transcript → the same `Source` = Google Meet path, populating the Meet* fields. Behind the same normalized-recording seam.
+
+### Status (2026-06-26)
+- Read view + bridge scaffold built and verified; bridge runs in scaffold mode (no-op) until Plaud + SmartSuite credentials are set.
+- Open: OQ15 (Plaud auth / Source option codes), OQ16 (Oura weight source).
 
 ---
 
