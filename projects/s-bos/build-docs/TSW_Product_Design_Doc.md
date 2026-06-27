@@ -17,7 +17,7 @@
 | Gate 4 | §6 Scope + §7 Metrics + §8 Timeline + §9 Open Questions | ✅ Complete — approved by Clint 2026-06-25 |
 | ✅ PDD Done | All gates passed | Data Integration Doc + Technical Spec + UI/UX Doc can begin |
 
-> **Post-approval additions:** Meetings capture (entity #45, feature F24) added 2026-06-26 during build — see the Addendum at the end of this doc.
+> **Post-approval additions:** Meetings capture (entity #45, feature F24) added 2026-06-26 during build — see the Addendum. Weight-capture workaround also added 2026-06-26 — see Addendum 2 + OQ16.
 
 ---
 
@@ -104,6 +104,8 @@ Not a task manager. Not a journal app. Not S-BOS. Not tools glued together. Not 
 
 > **Entity #32 clarification (2026-06-25):** Originally "Apple Health Weight Record." Updated to "Oura Weight Record" — Oura natively syncs weight from Apple Health. Single integration point. No iOS companion needed.
 
+> **Entity #32 CORRECTION (2026-06-26):** The Oura REST API exposes **no weight endpoint**, so the assumed Apple Health → Oura → API weight path does **not** work. Phase-1 weight is captured by a personal workaround: **Siri Shortcut → Apple Health → Claude `log-weight` skill → Stats** (logged against the "Weight & BMI" priority). ⚠️ Personal-only — does **not** scale to licensed/multi-user. See Addendum 2 and OQ16.
+
 ---
 
 ## §3 Gate 2 Checklist
@@ -145,6 +147,7 @@ F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 
 | W06 | Building a Project Tool | F13, F15 | < 5 exchanges |
 | W07 | Quarter Start — New Habit | F10, F06, F04 | < 5 min setup |
 | W08 | Capturing a Meeting *(added 2026-06-26)* | F24 | passive — auto-ingested from Plaud / Google Meet |
+| W09 | Logging Weight *(added 2026-06-26)* | F08 | passive — Siri Shortcut → Apple Health → Claude `log-weight` skill → Stats (Phase-1 workaround) |
 
 ---
 
@@ -163,16 +166,20 @@ F01 Day Mode Engine — F02 Horizon Rings — F03 Stat Inference Engine — F04 
 
 > **Added 2026-06-26:** F24 Meetings Capture + entity #45. Plaud → SmartSuite Meetings bridge (in-app, Railway) plus an in-app Meetings view reached from the Shortcuts tab. Google Meet is the phase-2 provider behind the same ingestion seam.
 
-**Health data architecture:**
+**Health data architecture (corrected 2026-06-26):**
 ```
-Siri → Apple Health → Oura sync (automatic)
-  → Oura REST API (PAT, Railway env var)
-  → Railway backend (on app open / morning sweep)
-  → Stitser Way + Claude
-  → Stats table → Goal % updated (silent — no prompt)
-```
+Sleep / Readiness / Activity / HRV:
+  Oura ring → Oura REST API (PAT, Railway env var)
+    → Railway backend (on app open / morning sweep) → Stitser Way + Claude
 
-**Out of scope for Phase 1:** Family profiles (interactive), per-member auth, family Table Talk, Supabase migration, native mobile app, iOS HealthKit companion, offline mode, push notifications, public/multi-tenant.
+Weight (Phase-1 PERSONAL WORKAROUND — Oura API has no weight endpoint):
+  Siri Shortcut → Apple Health (logs weight)
+    → same shortcut sends the value to Claude with the `log-weight` skill
+    → Stats table, against the "Weight & BMI" priority (silent, trusted source)
+```
+> ⚠️ **The weight path is a personal workaround.** It depends on Clint's own Siri Shortcut, his Apple Health, and his Claude. It is **not productizable** for a licensed / multi-user release — that requires a per-user health source (HealthKit companion or a per-user Oura/Health integration). Tracked in OQ16.
+
+**Out of scope for Phase 1:** Family profiles (interactive), per-member auth, family Table Talk, Supabase migration, native mobile app, iOS HealthKit companion *(but a licensed multi-user product will need exactly this — or a per-user health integration — to replace the Phase-1 weight workaround; see OQ16)*, offline mode, push notifications, public/multi-tenant.
 
 ### Build sequence
 
@@ -226,13 +233,13 @@ Phase 2 trigger: one full quarter as daily driver + qualitative signal passed.
 | OQ07 | Learning Engine visual metaphor | F06 | ⏳ Clint |
 | OQ08 | Domain rename for public brand | All labels | ⏳ Clint — evolving |
 | OQ09 | Day Mode Log automation timing | F01 | ⏳ Tech Spec |
-| OQ10 | **Oura PAT confirmed. Single REST integration — sleep, readiness, activity, HR, SpO2, weight. Pull on app open + morning sweep. Weight logged silently.** | F08 | ✅ Resolved 2026-06-25 |
-| OQ11 | **No iOS companion needed. Oura syncs weight from Apple Health automatically. Single integration point.** | F08 | ✅ Resolved 2026-06-25 |
+| OQ10 | **Oura PAT confirmed. Single REST integration — sleep, readiness, activity, HR, SpO2. (Weight NOT available — see OQ16.) Pull on app open + morning sweep.** PAT in hand 2026-06-26 — ready to wire. | F08 | ✅ Resolved 2026-06-25 |
+| OQ11 | ~~No iOS companion needed; Oura syncs weight from Apple Health automatically.~~ ⚠️ **Superseded by OQ16 (2026-06-26)** — Oura API has no weight endpoint, so this assumption was wrong. | F08 | ⚠️ Superseded by OQ16 |
 | OQ12 | Key Doc storage — JSON vs. Supabase? | F21 | ⏳ Tech Spec |
 | OQ13 | Spec Sheet storage — local, GitHub, or Supabase? | F22 | ⏳ Tech Spec |
 | OQ14 | Project Tool archive — Gist, Supabase blob, or SmartSuite attachment? | F13 | ⏳ Tech Spec |
-| OQ15 | **Plaud ingestion auth (added 2026-06-26).** Official OAuth dev API applied for. Fallback confirmed viable: the `pld_tokenstr` web-session token works as `Authorization: Bearer` against `api.plaud.ai` (web API: `GET /file/simple/web`, `GET /file/detail/{id}`), ~300-day lifetime. Also pending: SmartSuite Meetings `Source` single-select option codes; Oura has no weight endpoint (weight source still open). | F24 | ⏳ Official API approval / wire token |
-| OQ16 | **Oura weight source (added 2026-06-26).** Oura REST v2 exposes no weight endpoint, so the Apple Health → Oura weight does not reach the API. Need an alternate source for the weight metric (revisits OQ10/OQ11 assumption). | F08 | ⏳ Clint / Tech Spec |
+| OQ15 | **Plaud ingestion auth (added 2026-06-26).** Official OAuth dev API applied for. Fallback confirmed viable: the `pld_tokenstr` web-session token works as `Authorization: Bearer` against `api.plaud.ai` (web API: `GET /file/simple/web`, `GET /file/detail/{id}`), ~300-day lifetime. Also pending: SmartSuite Meetings `Source` single-select option codes. | F24 | ⏳ Wire token (in progress 2026-06-26) |
+| OQ16 | **Oura weight source — workaround in place (added 2026-06-26).** Oura REST v2 has no weight endpoint. **Phase-1 resolution:** Siri Shortcut logs to Apple Health and sends the value to Claude; the `log-weight` skill writes it to Stats (against the "Weight & BMI" priority `68c893f4065d17a960dd8f6f`). ⚠️ **Workaround only — NOT productizable:** depends on Clint's personal Siri Shortcut + Apple Health + Claude. A licensed/multi-user release needs a per-user health source (HealthKit companion or per-user Oura/Health integration). | F08 | ✅ Phase-1 workaround live / ⏳ open for licensing + Phase 2 |
 
 ---
 
@@ -244,13 +251,13 @@ Phase 2 trigger: one full quarter as daily driver + qualitative signal passed.
 - [x] Timeline milestones defined ✅
 - [x] Open questions captured ✅
 - [x] OQ01 field confirmed — data population flagged ✅
-- [x] OQ10 + OQ11 resolved ✅
+- [x] OQ10 resolved; OQ11 superseded by OQ16 ✅
 
 ---
 
 ## ✅ PDD COMPLETE
 
-**All four gates passed. Approved by Clint 2026-06-25.** *(Meetings capture added 2026-06-26 — see Addendum.)*
+**All four gates passed. Approved by Clint 2026-06-25.** *(Meetings capture + weight-capture workaround added 2026-06-26 — see Addenda.)*
 
 | Document | Purpose |
 |---|---|
@@ -280,6 +287,16 @@ Added during the build at Clint's direction, after the 2026-06-25 gate approvals
 ### Status (2026-06-26)
 - Read view + bridge scaffold built and verified; bridge runs in scaffold mode (no-op) until Plaud + SmartSuite credentials are set.
 - Open: OQ15 (Plaud auth / Source option codes), OQ16 (Oura weight source).
+
+---
+
+## Addendum 2 — Weight Capture (added 2026-06-26)
+
+**Why:** Oura's REST API exposes no weight endpoint, so the original "Oura aggregates weight" assumption (OQ10/OQ11) does not hold.
+
+**Phase-1 workaround:** Clint's Siri Shortcut logs weight to Apple Health, then sends the value to Claude. The `log-weight` skill (`skills/log-weight/SKILL.md` in Clint-s-Kompass) parses the message and writes a Stats record (app `6840927ebcfa2d2bfef039e2`) against the "Weight & BMI" priority (`68c893f4065d17a960dd8f6f`, under the Body goal "CRS- Personal Body by 12/31/25") — silent, trusted source, no inference prompt. A "Log Weight" launcher in the app's Shortcuts tab fires the iOS shortcut.
+
+**⚠️ Not productizable.** This depends on one person's Siri Shortcut + Apple Health + Claude. For a licensed / multi-user product, weight must come from a per-user source — a HealthKit companion app, or a per-user health integration — not this manual bridge. Do **not** ship the Siri-Shortcut path to other users. Tracked in OQ16 for Phase 2 / licensing.
 
 ---
 
