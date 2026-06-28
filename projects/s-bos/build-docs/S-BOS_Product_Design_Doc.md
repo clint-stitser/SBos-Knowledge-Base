@@ -118,6 +118,9 @@ This is a Phase-1 design input that flows into the Auth plan and the Recovery pl
 ## 4. Core Features
 ⏳ Not Started
 
+> **Captured during migration (pre-fill — to formalize when this section is worked):**
+> - **Project Prioritization** — a *feature*, not a table. Delivered through the **decision-gates** system (stage-based checklists that determine what advances/prioritizes at each stage). The legacy "Project Prioritization Tool" table (SB UW & Estimating solution) is **not migrated** — built long ago, never launched. The Master Property → Project Prioritization link is dropped (marked `x-`). *(Decision: 2026-06-28.)*
+
 ## 5. User Workflows
 ⏳ Not Started
 
