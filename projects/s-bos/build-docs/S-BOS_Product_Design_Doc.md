@@ -132,11 +132,17 @@ Everything links to these three.
 
 - **Companies are polymorphic across the four financial-statement roles — Revenue (customer) · Cost (vendor) · Lender (debt) · Equity Partner —** and one Company holds **multiple accounting identities at once** (`vendor_id`, `customer_id`, `location_id`): the same company can be a customer on one project, a vendor on another, and an owned entity/location on a third. **Roles are contextual per project/department, never hard-typed.** (Live `companies` already carries `intacct_vendor`, `intacct_customer_id`, `intacct_location_id`.)
 - **People** likewise play contextual roles (team, agent, contact, signer…) via role-bearing links, not types.
+- **People carry relationship tiers** (the **Account/Authority Pyramid**: Channel Account → Referral Partner → Top-50/Newspaper List) for biz-dev / audience development, with an **Audience-Health target** ("Authority Lock"). Tiers are **driven by status-as-customer, referral count, or a specific tag** — not hand-sorted. This is the **People-side game**, parallel to the project/goal game, and ties to TSW "Stay in Flow" / Printed-Newspaper outreach.
+
+> **One universal Task table.** The tasks feeding **Goals/Priorities/Milestones** are the **same table** as project/checklist/meeting-follow-up tasks. SmartSuite currently has several task tables; they **consolidate into one robust Task table** (a task is *typed/linked* to either the strategic ecosystem or a project/checklist/meeting — not split across tables).
 
 ### Project — the hub, one entity across verticals
 One **Project** spans **construction/development AND brokerage** — the SP (Stitser Properties) app **merges into the same shell/tables.** A brokerage project is simply a Project of a brokerage **type/Category** with different facets (Agency Contract, Property Contracts), different **checklists** (required docs & disclosures), and different **budget items** (commission splits, signs, …). Live Project facets: Details · Decisions/Ratings · Reporting/Planning · Team · Project Drive · Schedule · Tasks/Checklists · Budget(s) & Pay App(s) · Project CRM, + Parent/Child relations + comments. (Formation Projects = a sub-type.)
 
 **A Project can span multiple disciplines / entities / teams at once.** An entry-level-housing deal can carry **land development, construction, AND brokerage** work in parallel, each discipline contributing **its own Pillars**, its own **Blueprint + mini-apps/catalogs**, its own **Budget (G-702)**, and its own **QC / required-doc checklists & audit cycles** — so a single Project legitimately has **multiple G-702s and multiple checklist/audit cycles** (note the live facets are already plural: "Budget(s) & Pay App(s)"). A **single Schedule with parent-child views** unifies them so the full cross-discipline flow is visible in one place. *(This matters most for the **platform operator** running several disciplines on one deal; a third-party tenant using a single vertical won't need the multi-discipline layering — it's enabled by config, not forced.)*
+
+### Decision Gates / Ratings (Project facet)
+The go/no-go **scoring engine** that drives prioritization + phase-gating. Per-gate weighted ratings — **Strategic Fit · Market/Product Fit · Financial Viability · Constructability · Jurisdictional & Legal · Operational Capacity → Overall Assessment → Final Decision** — tied to a **Decision Gate** (live in the Check Lists schema as those rating formula fields). This **is** "Project Prioritization = a feature" and the live counterpart to the Blueprint's per-gate decision questions; a project advances stages by clearing its gates.
 
 ### Master Property — a LINK / lens, not a parent
 A **Property** (address/parcel; **lots are Properties too**) is a **reference anchor, not a hierarchical owner.** Projects, Notes/Comments, Contracts, and Loans **link to** a Property; querying an address returns **all linked history.** *(E.g. type "123 Main St" in 2030 → instantly surface every CRM note, both project records with their decision/DD checklists, the contract docs.)* Property is the **history-value lens** — consistent with roll-up-not-parent.
@@ -153,20 +159,46 @@ A **Property** (address/parcel; **lots are Properties too**) is a **reference an
 ### Accounting reference layer — mirrored; accounting = source of truth
 Cost Codes, Department Codes, Account Codes, and entity IDs (vendor/customer/location) live in **reference tables mirrored from the accounting system (Intacct today, QB future) — the accounting software is the single source of truth** for the codes that tie back to the GL. Budgets (G-702/G-703), Time Cards, and financials all draw codes from this one mirrored set.
 
-### Budgets & Pay Apps
-**Project Budget (G-702) → Budget Line Items (G-703) → Pay Apps**, account-coded — the financial spine under each Project. (Live: `project_budget_items` with `account_code`, `cash_flow_section`.) Per Pillar A, these evolve **estimate → baseline** at the gating phase.
+### Budgets & Pay Apps (the financial spine + AP workflow)
+🔎 *From the live schema (Layer A breadcrumb work) + the `pay-app` / `pay-app-audit-checklist` skills; the live Budget tab wouldn't render via automation — confirm UI specifics.*
+- **G-702** (Project Budget Mgmt) — the Application-for-Payment summary (contract sum, change orders, completed/stored, retention, balance). **A multi-discipline project can have multiple G-702s.**
+- **G-703** (Budget Line Items) — the schedule of values by **cost code** (e.g. "Superintendent"); scheduled value, work completed this period/to-date, retention, balance. Evolves **estimate → baseline** at the gating phase (Pillar A); **baseline edits go through a change-order / revision log** (approval-gated — see Access).
+- **Pay Apps** — periodic (monthly) pay applications stamped **PA-N**; current-period values roll up from G-703; retention release; **lock workflow**.
+- **Bills & Invoices** — sub/vendor invoices linked to Project + G-702 + line item + Pay App, with **parent/child invoice splits** (live: `Parent Invoice Being Split` / `Child Invoices`; e.g. `[SPLIT] Property Acquisition`).
+- **Invoice processing + compliance checklist** — a per-invoice **PM audit** (standard audit tasks: value, completion, documentation, lien waiver) linked to each invoice.
+- **Pay App print → sign-off → AP** — generate the **Application-for-Payment package** (G-702/G-5 + NRS conditional lien waiver + draft email) to the PA Drive folder for **Senior Management sign-off** and **Accounts Payable approval**.
+- **Change Orders → CO Line Items** feed G-702/G-703 (revised contract sum). Cost/account codes come from the **mirrored accounting reference layer**.
 
 ### The Game — Strategic layer (Goal → Situation → Priority)
 **Company Goal** (Purpose · Metric · Target · Progress · GYR · Date) → **Situations** (operational pipeline-planning fronts the value chain flows through — Biz Dev → Underwriting → Construction → Customer Service, plus strategic situations) → **Strategic Priorities** (target a stat in a Situation by a date). The relationship is **roll-up/contribution**: *Projects → Goals/Priorities* mirrors *Priorities → Situations* — a project **contributes**, it isn't owned. `org_id` keys every row (multi-tenant / licensing).
 
-### Access model 🔎 (detail in Auth plan / Tech Spec)
-Supabase row access = **RLS policies keyed off the People/Companies linked to a record** (e.g., the agent Company + brokerage Company linked to a brokerage Project can see it). Softr's per-user-group UI permissions (e.g., hiding a Delete button) become **role flags + RLS + conditional UI** — policy-as-code rather than UI toggles. *(Open: confirm the role → permission matrix; see `sb-crm-poc/docs/auth-plan.md`.)*
+### Access model (confirmed 2026-06-29 — Clint)
+Enforced in **Supabase RLS** (policy-as-code), not UI toggles. **Groups:** Customer · Investor · Vendor · Production Staff · Production Manager · Department Head · Senior Management (· System Admin).
 
-> 🔎 §3 traces to the live schema + Clint's 2026-06-29 answers + the app research; awaiting Gate 2 sign-off.
+**Rules:**
+- **Meetings:** visible if the user was **invited** OR is **Senior Management**. If the meeting is **project-specific** (e.g., an OAC meeting) → **all project participants** see it.
+- **User-level items not linked to a shared Project/Person/Company** (tasks, journals, notes/comments) → visible to **that user only** (private).
+- **CRU on Project · People · Companies + all supporting tables** (notes/comments, decisions, tasks, GYR reports, 702/703, change orders, budgets, checklists):
+  - **Management** access is **driven by the entity link** → people linked to that entity get access.
+  - **Production Staff** access is **driven by the Project Stakeholder Bridge** (you're a stakeholder on the project → you get the project + its supporting records).
+- **Baseline editing** (change orders to **schedule, budget & scope** via the change-order/revision log) requires **Senior Production Manager or higher** (Senior PM / Construction Dept Head) **approval**.
+- **Invoices · project budgets · AR/AP reports · project financials** → accessible to **Production Staff**.
+- **Department financials** → **Department Heads + Senior Management**.
+- **Entity financial tables** (loans, time-card reports, entity financials) → **Accounting Dept Head + Senior Management** only.
+- **Admin tasks** (system fix, data-structure changes, record deletion, record restore) → **System Admin** only.
+- **Entity / Department / Project Dashboards** → access based on **selections made at the dashboard level**.
+
+> These map to RLS policies keyed off entity links + the Stakeholder Bridge + group/role flags; detailed in `sb-crm-poc/docs/auth-plan.md` + the Tech Spec.
+
+> 🔎 §3 traces to the live schema + Clint's 2026-06-29 answers + the app research. Access model & Situations confirmed; ready for Gate 2.
 
 ## 4. Core Features
-⏳ Not Started.
-> **Pre-filled:** **Project Prioritization** = a *feature* via decision-gates (the legacy "Project Prioritization Tool" table is **not** migrated). *(Decision 2026-06-28.)*
+⏳ Not Started — to be worked after Gate 2.
+> **Pre-filled features captured:**
+> - **Working List** (S-BOS "My Responsibilities" ≡ TSW "Horizon") — one per-user view over the universal Task table + Notes/Comments follow-ups + GYR follow-ups + owned Goals/Priorities/Milestones (both tracks). It's a *view/feature*, not an entity.
+> - **Project Prioritization** = a *feature* via **Decision Gates/Ratings** (§3); the legacy "Project Prioritization Tool" table is **not** migrated. *(Decision 2026-06-28.)*
+> - **Pay-App / Invoice workflow** (§3 Budgets) — per-invoice audit, splits, pay-app print → sign-off → AP.
+> - **Account/Authority Pyramid** — relationship-tier development + audience-health target.
 
 ## 5. User Workflows
 ⏳ Not Started — incl. the migration's **bidirectional mirror** (two-way sync SmartSuite ↔ Supabase during transition; not single-source-of-truth — Clint, 2026-06-29) and the **feedback-as-triage** support model (answer / route-to-training / accept-as-fix) + MarketingSecrets-style onboarding.
