@@ -11,7 +11,7 @@
 - **App Description:** A **universal operator shell** — domain-structured operating system + trained assistant — replacing SmartSuite + Softr with a proprietary stack. S-BOS (internal) and the four Kompass verticals (Developer/Contractor/Agent/**Personal=TSW**) are **configurations of one shell**, isolated per `org_id` (licensable/franchisable).
 - **Goal (V1):** Biz Dev CRM module fully live on the new stack at parity with Softr; then migrate remaining modules.
 - **Philosophy:** Claude-serviceable, expansion-ready, no vendor lock-in, **parallel-run via a bidirectional mirror** (no whole-company big-bang). Calibrated honesty over confident answers.
-- **Current Phase:** Migration in progress (POC live). **PDD: Gate 1 PASSED (2026-06-29); §2.5 Vision written; Core Entities next.**
+- **Current Phase:** Migration in progress (POC live). **PDD: Gate 1 + Gate 2 PASSED (2026-06-29) — Core Entities locked for now; Core Features (§4) next.**
 
 ---
 
@@ -65,7 +65,7 @@
 - **Phase gating → control tools evolve estimate→baseline** (discovery/refinement → "game on"/commitment); Blueprints make estimates accurate-early + estimate→baseline fast (added to PDD Pillar A).
 - **More research (My Responsibilities / Account Pyramid / Decisions-Ratings / Budget):**
   - **My Responsibilities = S-BOS twin of TSW Horizon** — per-user working list (Goals/Priorities/Milestones + universal Tasks + Notes follow-ups + GYR follow-ups). A *feature/view* → PDD §4.
-  - **Account = Authority Pyramid:** People relationship tiers (Channel Account → Referral Partner → Top-50/Newspaper) + Audience-Health target ("Authority Lock"). Tiers **driven by status-as-customer, referral count, or a tag** (not hand-sorted). People-side game; ties to TSW Stay-in-Flow/PN outreach.
+  - **Account = Authority Pyramid:** People relationship tiers (Channel Account → Referral Partner → Top-50/Newspaper), **driven by status-as-customer, referral count, or a tag** (not hand-sorted). The Pyramid is a **mini-app (Execution Tool, Pillar D) for biz-dev efficiency & context** — surfaces relationships/tiers/cadence + an Audience-Health target ("Authority Lock"). Tiers/tags = People data; the Pyramid = the tool. Ties to TSW Stay-in-Flow/PN outreach.
   - **One universal Task table:** the table feeding Goals/Priorities = the same as project/checklist/meeting tasks. Multiple SmartSuite task tables **consolidate into one robust Task table** (typed/linked, not split).
   - **Decision Gates / Ratings** (Project facet) = the prioritization engine: per-gate ratings (Strategic Fit · Market/Product Fit · Financial Viability · Constructability · Jurisdictional & Legal · Operational Capacity → Overall Assessment → Final Decision) → "Project Prioritization = a feature."
   - **Budgets & Pay Apps** (schema + pay-app skills; live tab wouldn't render): G-702 (App-for-Payment summary; multiple per multi-discipline project) → G-703 (schedule of values by cost code; estimate→baseline, baseline edits change-order-gated) → Pay Apps (PA-N, retention release, lock) → Bills & Invoices (parent/child splits) → per-invoice PM audit/compliance checklist → pay-app print → Senior Mgt sign-off → AP approval (PA Drive package: G-702/G-5 + NRS lien waiver). Change Orders→CO Line Items feed 702/703.
