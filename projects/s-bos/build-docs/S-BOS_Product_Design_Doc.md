@@ -14,8 +14,8 @@
 | Target Users / Personas | ✅ Done | Personas + access model |
 | 🚦 Gate 1 | ✅ Done | **Signed off by Clint 2026-06-29** |
 | Product Vision & Architecture | 🔄 In Progress | Four pillars + Blueprint Catalog + TSW module catalog — deepens as features develop |
-| Core Entities | 🔄 In Progress | Drafted from live schema + 2026-06-29 research — awaiting Gate 2 |
-| 🚦 Gate 2 | ❓ Needs Discussion | Core Entities sign-off |
+| Core Entities | ✅ Done | **Signed off (Gate 2) 2026-06-29** — locked for now; deepens in later stages |
+| 🚦 Gate 2 | ✅ Done | **Approved by Clint 2026-06-29** |
 | Core Features | ⏳ Not Started | |
 | User Workflows | ⏳ Not Started | |
 | 🚦 Gate 3 | ⏳ Not Started | |
@@ -132,7 +132,7 @@ Everything links to these three.
 
 - **Companies are polymorphic across the four financial-statement roles — Revenue (customer) · Cost (vendor) · Lender (debt) · Equity Partner —** and one Company holds **multiple accounting identities at once** (`vendor_id`, `customer_id`, `location_id`): the same company can be a customer on one project, a vendor on another, and an owned entity/location on a third. **Roles are contextual per project/department, never hard-typed.** (Live `companies` already carries `intacct_vendor`, `intacct_customer_id`, `intacct_location_id`.)
 - **People** likewise play contextual roles (team, agent, contact, signer…) via role-bearing links, not types.
-- **People carry relationship tiers** (the **Account/Authority Pyramid**: Channel Account → Referral Partner → Top-50/Newspaper List) for biz-dev / audience development, with an **Audience-Health target** ("Authority Lock"). Tiers are **driven by status-as-customer, referral count, or a specific tag** — not hand-sorted. This is the **People-side game**, parallel to the project/goal game, and ties to TSW "Stay in Flow" / Printed-Newspaper outreach.
+- **People carry relationship tiers** (Channel Account → Referral Partner → Top-50/Newspaper List), **driven by status-as-customer, referral count, or a specific tag** — not hand-sorted. The **Account/Authority Pyramid is a mini-app (Execution Tool, Pillar D) for business-development efficiency & context** — it surfaces the right relationships, tiers, outreach cadence, and an Audience-Health target ("Authority Lock") so biz-dev runs fast and informed. (The *tiers/tags* are People data; the *Pyramid* is the tool that works them. Ties to TSW "Stay in Flow" / Printed-Newspaper outreach.)
 
 > **One universal Task table.** The tasks feeding **Goals/Priorities/Milestones** are the **same table** as project/checklist/meeting-follow-up tasks. SmartSuite currently has several task tables; they **consolidate into one robust Task table** (a task is *typed/linked* to either the strategic ecosystem or a project/checklist/meeting — not split across tables).
 
@@ -190,7 +190,7 @@ Enforced in **Supabase RLS** (policy-as-code), not UI toggles. **Groups:** Custo
 
 > These map to RLS policies keyed off entity links + the Stakeholder Bridge + group/role flags; detailed in `sb-crm-poc/docs/auth-plan.md` + the Tech Spec.
 
-> 🔎 §3 traces to the live schema + Clint's 2026-06-29 answers + the app research. Access model & Situations confirmed; ready for Gate 2.
+> 🔎 §3 traces to the live schema + Clint's 2026-06-29 answers + the app research. **Gate 2 signed off 2026-06-29 — locked for now; entities deepen as later stages unlock.**
 
 ## 4. Core Features
 ⏳ Not Started — to be worked after Gate 2.
