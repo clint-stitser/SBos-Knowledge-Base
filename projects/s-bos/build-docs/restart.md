@@ -7,9 +7,9 @@
 
 ## Session Info
 
-- **Date:** 2026-06-29
+- **Date:** 2026-06-29 (session 2)
 - **Project:** S-BOS
-- **Status:** In Progress — **PDD Gate 1 PASSED**; Product Vision & Architecture (§2.5) back-filled; Core Entities next.
+- **Status:** In Progress — Gate 1 PASSED; §2.5 Vision done; **Core Entities (§3) DRAFTED — awaiting Gate 2 sign-off.**
 
 ---
 
@@ -29,10 +29,10 @@ Consolidated the two efforts (the SmartSuite/TSW work + the Supabase `sb-crm-poc
 
 ## Next Steps (in order)
 
-1. [ ] **Core Entities (PDD §3)** — back-fill from the live Supabase schema **+ the Vision**: polymorphic roles, **Master Property**, **Category** (blueprint host + roll-up dim), two-track + contribution roll-up, **`org_id`** on every row. This is the immediate next action.
-2. [ ] **Capability walkthrough of `app.stitserbuilt.com`** (Clint logged in, browser connected) as a live input to Core Entities + the Blueprint Catalog model.
-3. [ ] Core Features → Workflows (incl. the **bidirectional mirror** sync spec + the feedback-triage/onboarding support layer) → Gate 3/4.
-4. [ ] DB Schema, Tech Spec, Decisions Log (ADRs from decisions in memory.md).
+1. [ ] **Gate 2 sign-off** — Clint reviews Core Entities (§3, drafted from schema + 2026-06-29 research). Immediate next action.
+2. [ ] Confirm the **access model** role→permission matrix (RLS keyed off linked People/Companies; replicate Softr per-group UI perms) — feeds auth-plan + Tech Spec.
+3. [ ] Core Features → Workflows (incl. the **SP↔SB merge** into one Project model, the **bidirectional mirror** sync spec, feedback-triage/onboarding support layer) → Gate 3/4.
+4. [ ] DB Schema (reconcile live `sb-crm-poc` schema to §3 — add Loans, Time Cards, Contracts, accounting reference tables, Property-as-link, Game entities), Tech Spec, Decisions Log.
 
 ---
 
@@ -58,5 +58,5 @@ Consolidated the two efforts (the SmartSuite/TSW work + the Supabase `sb-crm-poc
 ## How to Resume
 
 1. Read `S-BOS_Operating_Agreement.md`, then `memory.md`, `restart.md`, `S-BOS_Design_Context.md`.
-2. Open `S-BOS_Product_Design_Doc.md` to §3 Core Entities.
-3. Say "let's go" — first action is **Core Entities back-fill** (schema + the §2.5 Vision), then the `app.stitserbuilt.com` capability walkthrough.
+2. Open `S-BOS_Product_Design_Doc.md` to §3 Core Entities (drafted) + the Gate 2 block.
+3. Say "let's go" — first action is **Gate 2 sign-off** on Core Entities, then the access-model matrix + Core Features.
