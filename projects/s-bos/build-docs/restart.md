@@ -7,62 +7,56 @@
 
 ## Session Info
 
-- **Date:** 2026-06-17
+- **Date:** 2026-06-29
 - **Project:** S-BOS
-- **Status:** In Progress — PDD at Gate 1
+- **Status:** In Progress — **PDD Gate 1 PASSED**; Product Vision & Architecture (§2.5) back-filled; Core Entities next.
 
 ---
 
 ## What We Were Doing
 
-Back-filling the **Product Design Doc** (`S-BOS_Product_Design_Doc.md`), Ryan's first design doc. Scope confirmed: **whole S-BOS platform, with the Biz Dev CRM module as Phase 1.** Also built the roadmap integration (App Items + per-Kind doc checklists — see below).
+Consolidated the two efforts (the SmartSuite/TSW work + the Supabase `sb-crm-poc` build) into **one Claude Code chat** (the other chat is paused). Back-filled the PDD's **Product Vision & Architecture (§2.5)** from a long design conversation, and **Clint signed off Gate 1.**
 
 ---
 
 ## Where We Stopped
 
-PDD **Sections 1–2 drafted and Gate 1 checklist passed** — awaiting Clint's explicit sign-off:
-- **Problem Statement** ✅ — SmartSuite API limits + no-code bottleneck (only Clint changes structure) + no licensing path.
-- **Target Users** ✅ — Internal Staff (all roles) = Phase-1 primary; the **CRM is the platform's shared backbone** (People/Companies are polymorphic: customer/vendor/staff/investor-lender — roles are *contextual, not fixed types* → drives Core Entities). Clint = admin/builder; external + franchisees = future.
-- **Access model captured:** internal **CRU + 60-day audit/restore**, **delete = admin-only**, external **view-only on scoped elements**. (Updates recovery-plan window 30→60; refines auth roles.)
-
-Everything is on GitHub (`SBos-Knowledge-Base/projects/s-bos/build-docs/`).
+- **Gate 1 ✅ APPROVED (Clint, 2026-06-29).** Problem + Target Users done.
+- **PDD §2.5 Product Vision & Architecture written** (🔄, deepens as features develop): the **universal shell** (one codebase, configured per `org_id`; TSW = Personal Kompass config), four pillars — (A) Execution/Org incl. **Master Property** persistent anchor + two-track roll-up, (B) the **Brain** (6 stores; 3 exist, Vendor Ratings + Knowledge Library to build), (C) the **Kompass assistant + Feed** (first surface = Task-Level AI Assistant), (D) **Execution Tools** — plus the **Blueprint/Template Catalog** (Category-anchored, activatable; grounded in the CrossMod land-dev stage-gate example) and the **TSW module catalog** (Kevin's Rule + Misogi removed; habit kept).
+- **Recovery resolved:** the morning incident did NOT lose automation captures — 4 documented/in-progress + 9 screenshots intact, 0 orphans (verified against live Supabase).
 
 ---
 
 ## Next Steps (in order)
 
-1. [ ] **Gate 1 sign-off** — Clint approves Problem + Users (checklist already passes in the PDD). This is the immediate next action.
-2. [ ] **Core Entities (PDD §3)** — back-fill from the live Supabase schema (9 CRM tables + junctions). Model the **polymorphic-role** insight: People/Companies relate to projects via *role-bearing relationships*, not hard types.
-3. [ ] Core Features → User Workflows (Gate 3) → Scope/Metrics/Timeline/Open Questions (Gate 4).
-4. [ ] Then DB Schema, Technical Spec, Decisions Log (ADRs from decisions already made — see memory.md).
+1. [ ] **Core Entities (PDD §3)** — back-fill from the live Supabase schema **+ the Vision**: polymorphic roles, **Master Property**, **Category** (blueprint host + roll-up dim), two-track + contribution roll-up, **`org_id`** on every row. This is the immediate next action.
+2. [ ] **Capability walkthrough of `app.stitserbuilt.com`** (Clint logged in, browser connected) as a live input to Core Entities + the Blueprint Catalog model.
+3. [ ] Core Features → Workflows (incl. the **bidirectional mirror** sync spec + the feedback-triage/onboarding support layer) → Gate 3/4.
+4. [ ] DB Schema, Tech Spec, Decisions Log (ADRs from decisions in memory.md).
 
 ---
 
 ## Open Questions / Decisions Pending
 
-- Automation rebuild approach (103 automations captured via screenshots; not API-extractable).
+- Automation rebuild approach (103 captured via screenshots — intact; not API-extractable).
 - Remote CRUD MCP host: Supabase Edge Functions vs Railway (decide at build time).
-- *(Resolved: PDD scope = platform + CRM Phase 1. Resolved: build modules now represented as App Items on the v2.4 roadmap.)*
+- **Bidirectional sync mechanics** (ID pairing, field-level last-write-wins, sync ledger, loop prevention) — spec when Workflows is worked.
+- **Cutover pace:** Clint wants to go faster than a cautious read; CRM-module forcing-function is the candidate (NOT whole-company big-bang). Gated on parity + the support layer.
+- App cleanup: strip "Kevin's Rule" + "Misogi" from TSW app files (`03-stitser-way/messaging.md`, `web/README.md`, + sweep fixtures).
+- Accounting structure (family-trust QB; Intacct→QB consolidation) — deferred input.
 
 ---
 
 ## Environment Notes
 
-- **GitHub connector is live** in claude.ai (2026-06-16) — sessions read build-docs directly from the repo.
-- **Two write surfaces** (Claude Code + claude.ai/iPhone) → **sync before edit, one surface per file.** The roadmap app (`sb-planning-tools` repo: `roadmap/index.html`, `server.js`) is **claude.ai-owned** — don't edit from Claude Code without syncing.
-- **Roadmap integration done:** the 6 build modules now exist as **App Item Project records** (IT/Systems dept) on the v2.4 roadmap, each with a **Build Docs checklist** of per-Kind required-doc tasks. See `S-BOS_App_Item_Doc_Requirements.md` for the Kind→docs mapping.
-
----
-
-## Current File Status
-
-> Lives in `S-BOS_Design_Context.md` → File Inventory. PDD = 🔄 In Progress (Gate 1 awaiting sign-off); all other design docs ⏳ Not Started.
+- **Build is now driven from the Claude Code chat**, working `sb-crm-poc` **in place** at `/Users/clintstitseroffice/Documents/sb-crm-poc` (the other claude.ai chat is paused — single write surface). `.env.local` has Supabase creds; `node scripts/db.mjs` + the Storage API both verified.
+- Build docs: `SBos-Knowledge-Base/projects/s-bos/build-docs/` (read/write via GitHub). Code: `sb-crm-poc`.
+- Roadmap app (`sb-planning-tools` repo) is claude.ai-owned — sync before editing.
 
 ---
 
 ## How to Resume
 
 1. Read `S-BOS_Operating_Agreement.md`, then `memory.md`, `restart.md`, `S-BOS_Design_Context.md`.
-2. Open `S-BOS_Product_Design_Doc.md` to the Gate 1 block.
-3. Say "let's go" — first action is **Gate 1 sign-off**, then Core Entities.
+2. Open `S-BOS_Product_Design_Doc.md` to §3 Core Entities.
+3. Say "let's go" — first action is **Core Entities back-fill** (schema + the §2.5 Vision), then the `app.stitserbuilt.com` capability walkthrough.
