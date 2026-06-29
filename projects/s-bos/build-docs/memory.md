@@ -8,10 +8,10 @@
 ## Project Identity
 
 - **Project Name:** S-BOS (Stitser Business Operating System)
-- **App Description:** Internal operating platform for Stitser BUILT (CRM, project mgmt, budgets, financials, training), replacing SmartSuite + Softr with a proprietary stack.
-- **Goal (V1):** Biz Dev CRM module fully live on the new stack at parity with Softr, invisible to users; then migrate remaining modules.
-- **Philosophy:** Claude-serviceable, expansion-ready, no vendor lock-in, parallel-run (no big-bang cutover). Calibrated honesty over confident answers.
-- **Current Phase:** Migration in progress (POC live; remainder in design/triage).
+- **App Description:** A **universal operator shell** — domain-structured operating system + trained assistant — replacing SmartSuite + Softr with a proprietary stack. S-BOS (internal) and the four Kompass verticals (Developer/Contractor/Agent/**Personal=TSW**) are **configurations of one shell**, isolated per `org_id` (licensable/franchisable).
+- **Goal (V1):** Biz Dev CRM module fully live on the new stack at parity with Softr; then migrate remaining modules.
+- **Philosophy:** Claude-serviceable, expansion-ready, no vendor lock-in, **parallel-run via a bidirectional mirror** (no whole-company big-bang). Calibrated honesty over confident answers.
+- **Current Phase:** Migration in progress (POC live). **PDD: Gate 1 PASSED (2026-06-29); §2.5 Vision written; Core Entities next.**
 
 ---
 
@@ -21,65 +21,71 @@
 |---|---|---|
 | Frontend | Next.js 16 / React 19 / TypeScript / Tailwind v4 | App Router, server actions |
 | Backend | Next.js Server Actions | Secret key server-side only |
-| Database | Supabase (Postgres) | Standard Postgres = portable |
-| Auth | Supabase Auth (Google + magic link) | **Planned** — invite/roles/RLS |
+| Database | Supabase (Postgres) | Portable; RLS + pgvector (for Knowledge Library) |
+| Auth | Supabase Auth (Google + magic link) | Planned — invite/roles/RLS; `org_id` multi-tenant |
 | Storage | Supabase Storage | Public bucket for tracker screenshots |
-| Hosting | Railway | App host; live at sb-crm-poc-production.up.railway.app |
-| Claude DB access | `scripts/db.mjs` (pg pooler `aws-1-us-east-1`) | Direct SQL; no dashboard |
+| Hosting | Railway | `sb-crm-poc-production.up.railway.app` |
+| Claude DB access | `scripts/db.mjs` (pg pooler) | Direct SQL; no dashboard |
 
 ---
 
 ## Decisions (design-phase / cross-cutting)
 
-- **Supabase over SmartSuite** as the database platform (API limits + Claude-serviceability drove this).
-- **Railway hosts the app; Supabase is the data/auth/storage platform.** Railway Postgres considered and rejected — it's just a DB; we'd lose Supabase Auth/Storage/API.
-- **Supabase Auth over Cloudflare Access** — ties into RLS for per-row permissions; drops Cloudflare entirely.
-- **Invite/allowlist + roles + RLS** is the access model (not domain-restriction). Staff via Google (domain-restricted), external via magic link. Expansion-ready: `org_id` multi-tenant "instances" for licensing/franchise. (See `sb-crm-poc/docs/auth-plan.md`.)
-- **Recovery model:** soft-delete (recycle bin) + audit-log (field history) + Supabase PITR. (See `sb-crm-poc/docs/recovery-and-restore-plan.md`.)
-- **Formulas → Postgres views/computed columns**; proven with People "Comment Status" (live view, recomputes on read). (See `sb-crm-poc/docs/formula-audit-people-comment-status.md`.)
-- **Automations: NOT API-extractable** (confirmed). 103 across 8 solutions; captured via screenshots in the live Automation Tracker, then rebuilt from intent as Postgres triggers / Edge Functions.
-- **Notes & Comments is a hub** — one note links to many People/Companies/Projects + assigns follow-ups to team members (many-to-many via junction tables).
-- **Adopting Ryan Falke's build-doc methodology** (this folder) to formalize the migration design, mid-stream via back-fill.
-- **Access & permissions model (from PDD work).** Internal users = **C·R·U + audit trail + 60-day restore**; **delete = system-admin-only**; external stakeholders = **view-only on scoped elements**. Updates the recovery-plan window (30→60 days); refines auth roles (admin / internal / external).
-- **CRM is the platform's shared backbone — not a biz-dev silo.** People & Companies touch every project and play **customer / vendor / internal-staff / investor-lender** roles depending on context → roles are **contextual, not fixed types**. This polymorphic-role principle drives Core Entities (relate via role-bearing relationships, not hard-typed).
-- **Build modules represented as App Items on the v2.4 roadmap** (6 App Item Project records, IT/Systems dept, each with a "Build Docs" checklist). The Kind→required-docs convention lives in `S-BOS_App_Item_Doc_Requirements.md`. Roadmap app is **claude.ai-owned** (`sb-planning-tools` repo) — don't edit its files from Claude Code without syncing.
-- **Project Prioritization = a Feature, not a table** (decision 2026-06-28). Delivered via decision-gates/checklists. The legacy "Project Prioritization Tool" table is NOT migrated (built long ago, never launched); marked Drop in the Migration Menu. Captured in PDD §4.
-- **Remote CRUD MCP (PLANNED, coding-phase module).** To let claude.ai (web/iOS) perform CRUD on Supabase — not just Claude Code via `db.mjs` — we will host a **remote MCP server** at an HTTPS URL (claude.ai only supports remote connectors, not local MCP). It must: require auth on the endpoint, hold the service key server-side, and **enforce the permission model in the server** (internal C·R·U, delete admin-only, audit-log every change, 60-day soft-delete). This is the "Claude-serviceable from anywhere" capability and a building block for the licensable product. **Host: TBD** (Supabase Edge Functions vs Railway — decide at build time). Will get a formal ADR in the Decisions Log + a Tech Spec section.
+- **Supabase over SmartSuite** (API limits + Claude-serviceability). Railway hosts the app; Supabase = data/auth/storage. **Supabase Auth over Cloudflare Access** (ties to RLS).
+- **Invite/allowlist + roles + RLS** access model; `org_id` multi-tenant instances for licensing/franchise. Recovery: soft-delete + audit-log + PITR.
+- **Formulas → Postgres views/computed columns.** **Automations NOT API-extractable** (103 across 8 solutions; screenshot-captured, rebuilt as triggers/Edge Functions).
+- **Access model:** internal **C·R·U + audit + 60-day restore**; **delete = admin-only**; external **view-only scoped**.
+- **CRM is the platform's shared backbone** — People/Companies are **polymorphic (contextual roles, not fixed types)**.
+- **Project Prioritization = a Feature** (decision-gates), not a migrated table (2026-06-28).
+- **Remote CRUD MCP (PLANNED)** — remote HTTPS MCP so claude.ai/iOS can CRUD Supabase; enforces the permission model server-side. Host TBD (Edge vs Railway).
+
+### New decisions — 2026-06-28/29 (Vision back-fill + consolidation)
+- **Universal shell.** One codebase; S-BOS + the four Kompass verticals are **configurations** isolated by `org_id`. **TSW (The Stitser Way) = the Personal Kompass config — not a separate app.** Its frameworks (Capture, Today/Day-Mode, Horizon, dashboards = universal; Journals/Rituals, GYR Spiral, Scoreboard, **Habit** = personal modules) carry into the shell. **Removed: "Kevin's Rule" + "Misogi" (confusing). Habit building kept.**
+- **Execution/Org model:** `Entity → Category → Project` (Project carries People·Tasks·Budget·Schedule·Outcome). **Two tracks** — Strategic (Goal→Priority/Sprint→Milestone) + Operational (Project→atoms) — joined by **roll-up = contribution tag, not parent-child**. `project_type` + `department` are the current roll-up dims.
+- **Master Property = a Brain-layer persistent anchor** (confirmed). A parcel/asset outlives any single project; many projects anchor to one Property over time; the Property accumulates full longitudinal history (projects/tasks/comments). Only its dead "Prioritization Tool" link was dropped.
+- **The Brain — six intelligence stores.** ✅ exist: People Profiles, Decision Matrices, Decision Log. 🔄 build: Vendor Ratings (reviews→Companies), **Knowledge Library** (scoped Postgres + RLS + pgvector, scoped by entity/category/skill/vertical, multi-user). Project Data = built substrate. Master Property lives here.
+- **Kompass operator assistant + the Feed.** Domain-trained CoS with Brain access + skill execution + context triggers; the **Feed** is the human-in-the-loop outbox (Approve/Edit/Skip/Defer; full run history = audit log). **First surface = the Task-Level AI Assistant** ("person in the room": Gmail-MCP search by project people/vendors → status → draft/send email on approval → checks notes/comments → shared project brain).
+- **Execution Tools** = lightweight purpose-built apps (budget builder, study app, pay-app runner, scorecards) distinct from skills (LLM playbooks); read/write the Brain; part of the licensable "Software" layer.
+- **Blueprint / Template Catalog** = a Brain-layer store (sibling to Knowledge Library; reference vs. structure). Holds activatable bundles (task lists, budget items, schedule durations, roles, tool refs, skill refs), **anchored at the Category level**, scoped by category/vertical (RLS). **Activation = instantiation** onto a Project. Grounded in the **CrossMod land-dev stage-gate example** (G0–G5; each gate = entry/exit + decision questions + team/AHJs + tasks + cost items + durations + if-then branches + jurisdiction overlays).
+- **Migration = bidirectional mirror, NOT single-source-of-truth.** The system is too intertwined for one-way; both DBs stay current during transition via two-way sync (ID pairing, field-level last-write-wins, sync ledger, loop prevention). Per-module cutover; rollout Clint → +testers → company. Whole-company July-4 big-bang rejected (parity not there); CRM-module forcing-function is the candidate.
+- **Build consolidated into the Claude Code chat** (2026-06-29). `sb-crm-poc` worked **in place** at `/Users/clintstitseroffice/Documents/sb-crm-poc`; the other claude.ai chat is paused (single write surface).
+- **Recovery (2026-06-29):** the morning incident did NOT lose automation captures — 4 documented/in-progress + 9 screenshots, 0 orphans (verified vs live Supabase). Storage objects survive rewrites.
+- **Accounting (deferred):** family-trust accounting → QuickBooks (departments + projects); business on Intacct (inaccessible now); possible Intacct→QB multi-company consolidation. Accounting rides the same Entity→Category→Project tree (Entity=GL company, Category=class/product line, Project=job, Budget atom from QB/Intacct). Not Phase 1.
 
 ---
 
 ## Conventions Established
 
-- **`scripts/db.mjs`** is the single entry point for DB changes: `migrate <file>`, `migrate-all`, `sql "..."`, `query "..."`. No dashboard, no copy-paste.
-- **Migrations** live in `sb-crm-poc/supabase/migrations/` (001–010 applied; see Database Migration Checklist when back-filled).
-- **Writes go through Next.js server actions** using the Supabase secret key — never exposed to the browser.
-- **Real CRM data (PII) is gitignored**; regenerable from SmartSuite.
-- **Secrets** (`SUPABASE_SECRET_KEY`, DB password) live in `.env.local` (gitignored).
-- **Docs separate from code:** build docs in `SBos-Knowledge-Base/projects/s-bos/build-docs/`; code in `sb-crm-poc`.
-- **`TRACKER_ONLY=true`** deploy mode: middleware blocks all non-`/admin` routes + omits CRM read key → safe no-auth deployment for the automation tracker.
+- **`scripts/db.mjs`** = single entry point for DB changes (`migrate`, `sql`, `query`, `migrate-all`).
+- **Migrations** in `sb-crm-poc/supabase/migrations/` (001–011).
+- Writes via Next.js server actions (Supabase secret key, never browser). PII gitignored, regenerable from SmartSuite. Secrets in `.env.local`.
+- **Docs separate from code:** build docs in `SBos-Knowledge-Base/projects/s-bos/build-docs/` (read/write via GitHub); code in `sb-crm-poc`.
+- **Vision summaries reference the canonical platform docs** (`projects/kompass/platform/`) rather than re-paraphrasing them — one source of truth.
 
 ---
 
 ## Existing Artifacts (inputs to back-fill from)
 
-- **Code:** `sb-crm-poc` repo (GitHub `clint-stitser/sb-crm-poc`) — live Biz Dev CRM POC + admin tools (Automation Tracker, Migration Menu).
-- **Planning docs (`sb-crm-poc/docs/`):** `atlas/01-biz-dev-crm.md`, `atlas/automation-capture-guide.md`, `atlas/daughter-quickstart.md`, `auth-plan.md`, `recovery-and-restore-plan.md`, `formula-audit-people-comment-status.md`, `biz-dev-crm-poc-spec.md` (in kompass/docs).
-- **Live tools:** Automation Tracker (`/admin/automations`, 103 slots, ~3 documented) and Migration Menu (`/admin/migration-menu`, 197 tables triage) at the Railway URL.
-- **System Atlas:** Chapter 1 (9 Biz Dev CRM tables) complete; automation counts per solution known.
+- **Code:** `sb-crm-poc` (live CRM POC + Automation Tracker + Migration Menu).
+- **Planning docs:** `sb-crm-poc/docs/` (atlas/, auth-plan, recovery-and-restore, formula-audit) + `kompass/docs/biz-dev-crm-poc-spec.md`.
+- **Canonical platform docs:** `kompass/platform/platform-pdd.md` + `shared/` (brain-model, intelligence-stores, operator-assistant, feed-model, …) + `research/marketingsecrets-analysis.md`.
+- **Example blueprint:** CrossMod land-dev stage-gate framework (G0–G5) — Clint's draft for the Entry-Level Housing Category.
+- **System Atlas:** Chapter 1 (9 Biz Dev CRM tables) complete.
 
 ---
 
 ## Open Items
 
-- [ ] Back-fill the PDD (next session) — reverse-engineer from the running POC + planning docs.
-- [ ] Decide automation rebuild approach once screenshots are captured.
-- [ ] Module/cutover sequencing across the 27 solutions.
-- [ ] Triage the 197 tables in the Migration Menu (bring/drop/merge).
+- [ ] Core Entities (PDD §3) — back-fill from schema + §2.5 Vision.
+- [ ] Capability walkthrough of `app.stitserbuilt.com` (live input).
+- [ ] Bidirectional-mirror sync spec (Workflows section).
+- [ ] Strip Kevin's Rule + Misogi from TSW app files.
+- [ ] Automation rebuild approach; remote CRUD MCP host; cutover sequencing.
 
 ---
 
 ## Notes
 
-- Decision-maker is **Clint**. Ryan (CS friend) authored the build-doc methodology and vetted Supabase.
-- The in-browser automation tool has been flaky this effort — verify via `db.mjs` queries + server-rendered HTML rather than screenshots when it fails.
-- Work style: small sprints; dive deep when there's time/space; review async on phone where possible.
+- Decision-maker is **Clint**. Ryan (CS friend) authored the build-doc methodology.
+- In-browser automation tool has been flaky — verify via `db.mjs` + server-rendered HTML.
+- Work style: small sprints; deep dives when there's space; async phone review.
