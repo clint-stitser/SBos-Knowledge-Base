@@ -14,8 +14,8 @@
 | Target Users / Personas | ✅ Done | Personas + access model |
 | 🚦 Gate 1 | ✅ Done | **Signed off by Clint 2026-06-29** |
 | Product Vision & Architecture | 🔄 In Progress | Four pillars + Blueprint Catalog + TSW module catalog — deepens as features develop |
-| Core Entities | 🔄 In Progress | Next — back-fill from live Supabase schema + the Vision below |
-| 🚦 Gate 2 | ⏳ Not Started | |
+| Core Entities | 🔄 In Progress | Drafted from live schema + 2026-06-29 research — awaiting Gate 2 |
+| 🚦 Gate 2 | ❓ Needs Discussion | Core Entities sign-off |
 | Core Features | ⏳ Not Started | |
 | User Workflows | ⏳ Not Started | |
 | 🚦 Gate 3 | ⏳ Not Started | |
@@ -92,6 +92,7 @@ Runs their own isolated **`org_id` instance** of the universal shell, scoped to 
 - **Master Property (persistent anchor, brain-layer — confirmed Clint 2026-06-29):** a parcel/asset that **outlives any single project**. Many projects come and go against one Property over time; whenever the parcel re-enters an operator's world they see its **entire history** (projects, tasks, comments) against it. Projects *anchor to* a Property; the Property accumulates longitudinal history independent of any one project. *(Only the dead "Project Prioritization Tool" link was dropped — not the Property entity.)*
 - **Two parallel tracks** (`shared/brain-model.md`): **Strategic** (working *on* the business: Goal → Priority/Sprint → Milestone) and **Operational** (working *in* it: Project → Outcome/Phase → atoms), joined by **roll-up = a contribution tag, not parent-child** — a project contributes to multiple priorities across periods without being owned by any. Today's roll-up dims (`project_type` + `department`) are the seed of this.
 - **Winning the Game (the Strategic-layer measurement model).** The Goal isn't pursued in the abstract — **you win one Critical Situation, one Project, one Project Pillar at a time.** The Goal decomposes into **Key/Critical Situations** (strategic fronts — markets, product lines, business lines), each with a **production target**; each Situation holds **Projects**; each Project advances through **Pillars** (gated milestones, complete/partial). A **Goal Scoreboard** grades progress GYR and rolls **Pillar → Project → Situation → Goal** via a **3-bucket projected score** (Billed = G-702 actuals · Scheduled/committed · Pipeline) plus **Pipeline-by-Stage** movement (each stage with a deadline). This is how `project_type`/`department` roll-up + the contribution tag become a **scoreboard, not just a filter** — the operator always knows the single next critical situation/project/pillar that moves the goal. *(Modeled on the live 3rd-party Construction Scorecard — `sb-planning-tools/dashboards/construction-scorecard.html`: Goal Scoreboard tiles, Production Targets by Key Situation, Pipeline by Stage, pillar-complete/partial chips.)*
+- **Phase gating drives discovery → commitment.** Stage advancement evolves a project's **control tools (schedule · spec · budget)** from *estimates* → *baseline*. Pre-baseline = **discovery & refinement**; once a baseline locks (a phase reached, a contract signed, a decision made), **the game is on** — posture shifts to **competition & commitment** (actuals vs. baseline). This is a core reason the **Blueprint Catalog** matters: it makes early estimates as accurate as possible, and the **estimate → reliable baseline** path as fast as possible.
 
 ### Pillar B — The Brain (domain-structured memory; `shared/intelligence-stores.md`)
 Six intelligence stores the assistant draws from. **Status:**
@@ -123,12 +124,42 @@ TSW's frameworks become **modules of the universal shell** — *universal* (Capt
 ---
 
 ## 3. Core Entities
-🔄 **In Progress (next).** Back-fill from the live Supabase schema (9 CRM tables + junctions) **plus the Vision above.** Must model:
-- **Polymorphic roles** — People/Companies relate to Projects via role-bearing relationships, not hard types.
-- **Master Property** — persistent anchor; Project → Property (many projects per property over time).
-- **Category** — the blueprint host + a roll-up dimension; carries default task-list/budget/schedule/role/tool/skill bundles.
-- **Two-track + roll-up** — Strategic (Goal→Priority/Sprint→Milestone) and Operational (Project→atoms), joined by a contribution tag.
-- **`org_id`** — multi-tenant instance key on every row (expansion/licensing).
+🔄 In Progress. Back-filled from the live Supabase schema (`sb-crm-poc`) + §2.5 Vision + the 2026-06-29 live-app research (Clint's answers). 🔎 = inferred, confirm. Field-level detail back-fills when DB Schema is worked.
+
+### The three drivers — People · Companies · Projects
+Everything links to these three.
+
+- **Companies are polymorphic across the four financial-statement roles — Revenue (customer) · Cost (vendor) · Lender (debt) · Equity Partner —** and one Company holds **multiple accounting identities at once** (`vendor_id`, `customer_id`, `location_id`): the same company can be a customer on one project, a vendor on another, and an owned entity/location on a third. **Roles are contextual per project/department, never hard-typed.** (Live `companies` already carries `intacct_vendor`, `intacct_customer_id`, `intacct_location_id`.)
+- **People** likewise play contextual roles (team, agent, contact, signer…) via role-bearing links, not types.
+
+### Project — the hub, one entity across verticals
+One **Project** spans **construction/development AND brokerage** — the SP (Stitser Properties) app **merges into the same shell/tables.** A brokerage project is simply a Project of a brokerage **type/Category** with different facets (Agency Contract, Property Contracts), different **checklists** (required docs & disclosures), and different **budget items** (commission splits, signs, …). Live Project facets: Details · Decisions/Ratings · Reporting/Planning · Team · Project Drive · Schedule · Tasks/Checklists · Budget(s) & Pay App(s) · Project CRM, + Parent/Child relations + comments. (Formation Projects = a sub-type.)
+
+### Master Property — a LINK / lens, not a parent
+A **Property** (address/parcel; **lots are Properties too**) is a **reference anchor, not a hierarchical owner.** Projects, Notes/Comments, Contracts, and Loans **link to** a Property; querying an address returns **all linked history.** *(E.g. type "123 Main St" in 2030 → instantly surface every CRM note, both project records with their decision/DD checklists, the contract docs.)* Property is the **history-value lens** — consistent with roll-up-not-parent.
+
+### Contracts (brokerage)
+**Agency Contract → Property Contract → Close of Escrow.** Property Contracts link a Property + (as a brokerage Project's facet) the Project. The **agent and the brokerage are Companies linked to the Project** — which **drives access** (see below). "Match My ACH Deposits" reconciles commission deposits.
+
+### Loans (Credit Desk)
+**Loan** = first-class entity: Lender · Borrower(s) (Companies) · Rate · Principal · Due/Maturity · Status. **Secured loans** link to a Project/Property; **operating loans** are standalone (Financing department). Lenders are Companies (e.g. CSFT).
+
+### Time Cards → costing
+**Time Card** dimensions — **Cost Code · Department Code · Project ID · Customer ID · Account Code · Hours.** Direct roles (G-703 line like "Superintendent") cost to a Project; overhead roles (e.g. accountant) allocate to a **Department + the entity/customer served.**
+
+### Accounting reference layer — mirrored; accounting = source of truth
+Cost Codes, Department Codes, Account Codes, and entity IDs (vendor/customer/location) live in **reference tables mirrored from the accounting system (Intacct today, QB future) — the accounting software is the single source of truth** for the codes that tie back to the GL. Budgets (G-702/G-703), Time Cards, and financials all draw codes from this one mirrored set.
+
+### Budgets & Pay Apps
+**Project Budget (G-702) → Budget Line Items (G-703) → Pay Apps**, account-coded — the financial spine under each Project. (Live: `project_budget_items` with `account_code`, `cash_flow_section`.) Per Pillar A, these evolve **estimate → baseline** at the gating phase.
+
+### The Game — Strategic layer (Goal → Situation → Priority)
+**Company Goal** (Purpose · Metric · Target · Progress · GYR · Date) → **Situations** (operational pipeline-planning fronts the value chain flows through — Biz Dev → Underwriting → Construction → Customer Service, plus strategic situations) → **Strategic Priorities** (target a stat in a Situation by a date). The relationship is **roll-up/contribution**: *Projects → Goals/Priorities* mirrors *Priorities → Situations* — a project **contributes**, it isn't owned. `org_id` keys every row (multi-tenant / licensing).
+
+### Access model 🔎 (detail in Auth plan / Tech Spec)
+Supabase row access = **RLS policies keyed off the People/Companies linked to a record** (e.g., the agent Company + brokerage Company linked to a brokerage Project can see it). Softr's per-user-group UI permissions (e.g., hiding a Delete button) become **role flags + RLS + conditional UI** — policy-as-code rather than UI toggles. *(Open: confirm the role → permission matrix; see `sb-crm-poc/docs/auth-plan.md`.)*
+
+> 🔎 §3 traces to the live schema + Clint's 2026-06-29 answers + the app research; awaiting Gate 2 sign-off.
 
 ## 4. Core Features
 ⏳ Not Started.
