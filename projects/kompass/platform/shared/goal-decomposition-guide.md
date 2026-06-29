@@ -49,6 +49,159 @@ A Project **contributes to** a Priority. It does not **belong to** it.
 
 ---
 
+## The Third Pattern — Recurring Cadence (Department Mini-Sprints)
+
+Some work is neither a one-time project nor a strategic goal. It is a **recurring rhythm** — a department or function that produces the same unit of work on a predictable schedule, indefinitely.
+
+**The mental model:** The accounting department doesn't have one project. It has **12 projects a year** — one per month — each with the same structure, cloned from a template, completed and archived, then started again. Plus a handful of special projects (annual taxes, quarterly projections) that fall outside the monthly cadence but belong to the same department.
+
+**This is the Recurring Cadence pattern.**
+
+### Structure
+
+```
+DEPARTMENT / FUNCTION  (Category in S-BOS)
+  └── Annual Cadence
+        ├── Recurring Project × N  (monthly, weekly, quarterly — cloned from template)
+        │     └── Checklist · Schedule · People · Budget
+        └── Special Project × N  (one-off instances that belong to this department)
+              └── Checklist · Schedule · People · Budget
+```
+
+### How to Recognize It
+
+A function follows the Recurring Cadence pattern when:
+- The same type of work repeats on a fixed schedule
+- Each instance has a defined start, end, and completion checklist
+- Success means completing the instance — not arriving at a destination
+- The department isn't pursuing a Goal — it's **maintaining a standard**
+
+### Key Distinction — Cadence vs. Goal
+
+| Recurring Cadence | Strategic Goal |
+|---|---|
+| Accounting closes the books every month | Accounting closes within 10 business days by Q4 |
+| The function exists to maintain a standard | The Goal exists to raise the standard |
+| Projects are cloned from a template | Projects are scoped individually |
+| Done = checklist complete | Done = measurable outcome achieved |
+| No horizon — runs indefinitely | Has a horizon — arrives somewhere |
+
+**The department is not pursuing a Goal. It is executing a rhythm.**
+
+If you want to *improve* the rhythm — that's when a Goal and Priority enter the picture (see Improvement Layer below).
+
+### Examples of Recurring Cadence Functions
+
+| Department / Function | Recurring Project Cadence | Special Projects |
+|---|---|---|
+| Accounting | 12 monthly closes | Annual taxes, Q1/Q3 tax projections, audit prep |
+| Payroll | 26 biweekly runs | Year-end W-2s, new hire setup |
+| Pay App (Construction) | 1 per billing period per job | Lien releases, final billing |
+| Email Triage | Weekly sweep | Unsubscribe batch, inbox zero sprint |
+| Marketing | Weekly content publish | Campaign launch, brand refresh |
+| HR / People | Monthly 1-on-1 cycle | Annual reviews, comp adjustments |
+| Compliance (Brokerage) | Per-transaction audit | Annual license renewals, E&O renewal |
+
+### How to Structure a Recurring Cadence in S-BOS
+
+**Step 1 — Name the Department/Function** (this becomes the Category tag)
+
+**Step 2 — Define the recurring project template**
+Every instance of the recurring project should have the same core structure:
+- Standard checklist (the steps that must be completed every time)
+- Schedule (when it opens, when it's due)
+- People (who owns it, who reviews it)
+- Budget (cost of this instance — e.g., accounting bill for the month)
+
+**Step 3 — Identify special projects**
+What falls outside the regular cadence but belongs to this department? Name them separately. They are not recurring — they are one-off Projects that share the department Category.
+
+**Step 4 — Clone, don't recreate**
+Each new instance of the recurring project is cloned from the template. Completed instances are archived. The template itself never gets archived.
+
+### Worked Example — Accounting Department
+
+**Input:** "Accounting runs monthly closes, quarterly tax projections, and an annual tax filing."
+
+**Decomposition:**
+```
+CATEGORY: Accounting
+
+RECURRING PROJECT TEMPLATE: Monthly Close
+  Checklist:
+    □ All transactions reconciled
+    □ Bank statements matched
+    □ P&L reviewed and approved
+    □ Budget vs. actual updated
+    □ Management report distributed
+  Schedule: Opens 1st of month, due by Day 15
+  People: Lisa (owner), Clint (review/approval)
+  Budget: $X/month (accounting firm fee)
+
+RECURRING INSTANCES (clone from template):
+  January Close → February Close → March Close → ... → December Close
+
+SPECIAL PROJECTS (same category, not recurring):
+  Q1 Tax Projection (March)
+  Q3 Tax Projection (September)
+  Annual Tax Filing (April deadline)
+  Annual Audit Prep (if applicable)
+```
+
+**Roll-up:** Monthly Close projects contribute to any Business Goal that tracks financial health or self-funding metrics. No parent-child — the closes exist whether or not a Goal is attached.
+
+---
+
+### The Improvement Layer — When You Want to Get Better at the Cadence
+
+The Recurring Cadence runs the department. The Improvement Layer raises the standard.
+
+When an operator wants to improve a recurring function — close faster, reduce errors, cut cost — that improvement initiative becomes a **Goal + Priority**, and the recurring Projects become **contributors** to the improvement Priority.
+
+```
+STRATEGIC LAYER (improvement initiative)
+GOAL: Accounting closes within 10 business days by Q4 2026
+  PRIORITY (Q2): Reduce close from Day 15 to Day 12
+    MILESTONE: First Day-12 close — April
+    PROJECTS CONTRIBUTING: April Close, May Close, June Close
+    STAT: Close day (logged per month)
+
+  PRIORITY (Q3): Reduce close from Day 12 to Day 10
+    MILESTONE: First Day-10 close — September
+    PROJECTS CONTRIBUTING: July Close, August Close, September Close
+    STAT: Close day
+
+OPERATIONAL LAYER (cadence continues unchanged)
+Monthly Close × 12  (still runs every month regardless of improvement Goal)
+```
+
+The cadence doesn't stop or change because there's an improvement Goal. It continues. The Goal simply watches the cadence and measures whether it's getting better.
+
+---
+
+### How Claude Should Handle Recurring Cadence Inputs
+
+**Signals to look for:**
+- "We do X every month / week / quarter"
+- "Department X runs Y on a regular basis"
+- "X has N projects a year" (Clint's framing)
+- Any process described as ongoing, repeating, and standard
+
+**What to propose:**
+1. Name the Department/Function (Category)
+2. Identify the recurring project template and its cadence
+3. List the special projects that belong to the same department
+4. Ask: "Is there an improvement goal attached to this, or is this just the standard cadence?"
+   - If yes → layer in the Strategic Goal + Priority structure
+   - If no → the cadence stands alone, no Goal needed
+
+**What NOT to do:**
+- Don't create a Goal called "Run accounting" — that's a cadence, not a destination
+- Don't create a single Project called "Accounting 2026" — it's 12+ projects
+- Don't attach recurring projects as children of a Goal unless there's an explicit improvement initiative
+
+---
+
 ## The Five Record Types — How to Distinguish Them
 
 ### 1. GOAL
@@ -65,7 +218,7 @@ A Project **contributes to** a Priority. It does not **belong to** it.
 - "Each Stitser BUILT company is self-funded with operating cash flow" → Goal (Business domain)
 - "CCSFT has 12 months liquid cash net of short-term liabilities" → Goal (Business domain)
 
-**What it is NOT:** A thing you do. A process. A habit. A project.
+**What it is NOT:** A thing you do. A process. A habit. A recurring cadence.
 
 ---
 
@@ -84,7 +237,7 @@ A Project **contributes to** a Priority. It does not **belong to** it.
 - Goal: "Self-managing organizations" → Priority: "Install Division Leader for Construction by Q3"
 - Goal: "6-month liquidity buffer" → Priority: "Q1 cash flow — close $X in GP before March"
 
-**What it is NOT:** A goal (too big, no time box). A project (not a thing to produce). A habit (not time-bounded in the same way).
+**What it is NOT:** A goal (too big, no time box). A project (not a thing to produce). A recurring cadence (not improvement-oriented, just maintenance).
 
 ---
 
@@ -113,15 +266,15 @@ A Project **contributes to** a Priority. It does not **belong to** it.
 - Has a clear scope — you know when it's done
 - Has its own budget, schedule, people, and tasks
 - Would exist whether or not a Goal is attached to it
-- Produces something (a closed deal, a filed permit, a completed job)
+- Produces something (a closed deal, a filed permit, a completed month-end close)
 
 **Examples:**
 - Surge Flats Lot 7 — Construction → Project (tags to Q1 GP Priority as contributor)
-- Cold Creek Entitlement → Project (tags to Developer Kompass deal pipeline Priority)
-- Europe Trip Budget Tracker → Project (personal, may tag to Balance domain Priority)
-- S-BOS Build → Project (tags to Business self-managing systems Priority)
+- January Close → Project (cloned from Accounting template, tags to financial health Goal if one exists)
+- Cold Creek Entitlement → Project
+- Annual Tax Filing → Special Project under Accounting category
 
-**What it is NOT:** A Priority (too specific, has a deliverable). A Milestone (too small, has ongoing work). A habit (not bounded).
+**What it is NOT:** A Priority. A Milestone. A habit. A Goal.
 
 ---
 
@@ -139,6 +292,7 @@ A Project **contributes to** a Priority. It does not **belong to** it.
 - Oura readiness score → Stat (type: Readiness, linked to "Cardio age" Goal)
 - Alcohol units → Stat (type: Drinks, linked to Body domain Goal)
 - Rides with Max → Stat (type: Rides With Max, linked to Balance domain Goal)
+- Monthly close day → Stat (type: Close Day, linked to "10-day close" Goal)
 
 **A prescribed diet or workout protocol** is NOT a project. It is a **series of Stats + a Habit Arc**:
 - The protocol itself → documented as a Knowledge Library entry or checklist attached to the Goal
@@ -160,6 +314,8 @@ Every record belongs to a domain. Assign it before proposing a structure.
 | **Business** | Revenue, deal pipeline, team, organizational development |
 | **Wealth** | Asset cash flow, liquidity, investment, legacy |
 
+For business functions, the domain is Business and the **Category** is the department name (Accounting, Payroll, Construction Ops, Compliance, etc.).
+
 ---
 
 ## How to Handle Complex Inputs — The Decomposition Protocol
@@ -169,37 +325,28 @@ When given a goal, commitment, or protocol, follow this sequence:
 ### Step 1 — Read the full input before doing anything
 Don't decompose the first line. Read all of it. Patterns only emerge from the whole.
 
-### Step 2 — Separate the destination from the protocol
+### Step 2 — Identify the pattern first
+Before assigning record types, ask: is this Strategic, Operational, or a Recurring Cadence?
+
+- **Strategic:** Describes a destination. Has a horizon. Success is measured.
+- **Operational:** Describes a thing to produce. Bounded. Done when done.
+- **Recurring Cadence:** Describes a repeating rhythm. Maintains a standard. Runs indefinitely.
+
+### Step 3 — Separate the destination from the protocol
 - The destination = Goal(s)
 - The time-bound focus = Priority / Phase
 - The completion events = Milestones
-- The repeating execution = Stats / Habit Arc
+- The repeating execution = Stats / Habit Arc / Recurring Projects
 - The bounded deliverables = Projects
 
-### Step 3 — Identify roll-up relationships
+### Step 4 — Identify roll-up relationships
 Which Projects or Stats naturally contribute to which Priorities? Don't force a parent-child. Just note the contribution tag.
 
-### Step 4 — Flag ambiguous items
-Some things could be either a Goal or a Priority, or either a Project or a Milestone. Flag them explicitly with the options rather than deciding unilaterally.
+### Step 5 — Flag ambiguous items
+Some things could be either a Goal or a Priority, or either a Project or a Milestone, or either a Recurring Cadence or a one-off Project. Flag them explicitly with the options rather than deciding unilaterally.
 
-### Step 5 — Propose, don't create
-Surface the proposed structure as a table or outline and ask for confirmation before any records are created. The format:
-
-```
-DOMAIN: Body
-
-GOAL: I weigh 198–203 pounds
-  PRIORITY (Q2): Cut phase — target 205 by April 30
-    MILESTONE: Weigh-in at 205 — April 30
-    MILESTONE: Weigh-in at 201 — June 30
-    STAT (daily): Weight (lbs) — logged via Siri → Oura
-    STAT (daily): Readiness score — Oura
-    HABIT ARC: Cut protocol (Phase 1: 2400 cal / macro split / training schedule)
-
-  PRIORITY (Q3–Q4): Maintain phase — hold 198–203
-    STAT (daily): Weight (lbs)
-    STAT (weekly): Body fat %
-```
+### Step 6 — Propose, don't create
+Surface the proposed structure and ask for confirmation before any records are created.
 
 ---
 
@@ -227,7 +374,7 @@ GOAL: Weight 198–203 lbs (measured: Oura / Apple Health)
     MILESTONE: 201 lbs by September 30 (midpoint confirmation)
 ```
 
-**Roll-up:** No Projects attached. This is pure Strategic Layer + Stat tracking.
+**Roll-up:** No Projects attached. Pure Strategic Layer + Stat tracking.
 
 ---
 
@@ -284,15 +431,46 @@ GOAL: Each SB company self-funded with operating cash flow + 6-month liquidity b
     PROJECT CONTRIBUTING: S-BOS Build
 ```
 
-**Roll-up:** Multiple Projects (Surge Flats, Cold Creek, S-BOS Build) contribute to Business Priorities. None are owned by them — they exist independently.
+---
+
+### Example 4: Accounting Department (Recurring Cadence)
+
+**Input:** "Accounting has 12 monthly closes per year, plus quarterly tax projections and an annual tax filing."
+
+**Pattern identified:** Recurring Cadence — not a Goal, not a one-off Project.
+
+**Decomposition:**
+```
+CATEGORY: Accounting
+
+RECURRING PROJECT TEMPLATE: Monthly Close
+  Checklist: Reconcile → Match statements → Review P&L → Update BvA → Distribute report
+  Schedule: Opens 1st, due Day 15
+  People: Lisa (owner), Clint (approval)
+  Budget: Monthly accounting fee
+
+INSTANCES (cloned from template):
+  Jan Close · Feb Close · Mar Close · Apr Close · May Close · Jun Close
+  Jul Close · Aug Close · Sep Close · Oct Close · Nov Close · Dec Close
+
+SPECIAL PROJECTS (same Category, not recurring):
+  Q1 Tax Projection (March)
+  Q3 Tax Projection (September)
+  Annual Tax Filing (April)
+
+IMPROVEMENT LAYER (only if a Goal exists):
+  GOAL: Close within 10 business days by Q4 2026
+    PRIORITY (Q2): Reduce to Day 12
+      MILESTONE: First Day-12 close — April
+      STAT: Close day (monthly)
+      PROJECTS CONTRIBUTING: Apr Close, May Close, Jun Close
+```
 
 ---
 
-### Example 4: A Protocol Input (not a goal — needs decomposition)
+### Example 5: A Protocol Input (not a goal — needs decomposition)
 
 **Input:** A prescribed diet and workout plan with phases, macros, and weekly schedules.
-
-**This is NOT a single Goal or Project. Decompose it as:**
 
 | What it contains | Record type |
 |---|---|
@@ -302,34 +480,28 @@ GOAL: Each SB company self-funded with operating cash flow + 6-month liquidity b
 | Daily/weekly execution (workouts, meals logged) | Stats + Habit Arc |
 | The protocol document itself | Knowledge Library entry attached to Goal |
 
-**What Claude should NOT do:**
-- Create a Project called "Follow diet and workout plan" — this is not a bounded deliverable
-- Create a single Goal called "Get fit" — too vague, needs a measurable end state
-- Attach the whole protocol as a checklist under a Milestone — the protocol is ongoing, not binary
-
 ---
 
 ## Red Flags — When Claude Should Stop and Clarify
 
-Stop and ask before proposing if:
-
-- The input has no measurable success condition → ask "How will we know when this is achieved?"
-- The input could be either a Goal or a Commitment statement → ask "Is this where you're going, or a rule you're operating by?"
-- The input spans multiple domains → split into separate Goal records per domain, confirm
-- The input describes a process with no defined end → it's a Habit Arc or Stat, not a Project or Goal
-- The input is a Project that clearly contributes to something strategic but no Priority exists yet → propose the Priority first, then the Project
+- No measurable success condition → ask "How will we know when this is achieved?"
+- Could be a Goal or a Commitment statement → ask "Is this where you're going, or a rule you're operating by?"
+- Spans multiple domains → split into separate records per domain, confirm
+- Describes a process with no defined end → likely Recurring Cadence or Habit Arc, not a Project or Goal
+- Recurring Cadence input with no improvement intent → don't add a Goal; just build the template
+- Recurring Cadence input with improvement intent → build the template AND the Goal + Priority layer
+- A Project clearly contributes to something strategic but no Priority exists yet → propose the Priority first
 
 ---
 
 ## What Claude Should Always Produce
 
-When proposing a decomposition, always output:
-
-1. **A labeled structure** — Domain → Goal → Priorities → Milestones → Stats/Projects, clearly indented
-2. **Roll-up tags** — which Projects contribute to which Priorities (noted, not nested)
-3. **Record type for each item** — so the operator knows exactly what will be created in SmartSuite
-4. **Open questions** — anything ambiguous, flagged explicitly before creation
-5. **A confirmation ask** — "Does this structure look right before I create any records?"
+1. **Pattern identification first** — Strategic / Operational / Recurring Cadence
+2. **A labeled structure** — Domain → pattern-appropriate hierarchy, clearly indented
+3. **Roll-up tags** — which Projects contribute to which Priorities (noted, not nested)
+4. **Record type for each item** — so the operator knows what will be created in SmartSuite
+5. **Open questions** — anything ambiguous, flagged explicitly
+6. **A confirmation ask** — "Does this structure look right before I create any records?"
 
 ---
 
