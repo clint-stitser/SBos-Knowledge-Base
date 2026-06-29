@@ -9,7 +9,7 @@
 
 - **Date:** 2026-06-29 (session 2)
 - **Project:** S-BOS
-- **Status:** In Progress — Gate 1 PASSED; §2.5 Vision done; **Core Entities (§3) DRAFTED — awaiting Gate 2 sign-off.**
+- **Status:** In Progress — Gate 1 PASSED; §2.5 Vision done; **Core Entities (§3) drafted + access model & deep research folded in — READY for Gate 2 sign-off.**
 
 ---
 
@@ -29,10 +29,10 @@ Consolidated the two efforts (the SmartSuite/TSW work + the Supabase `sb-crm-poc
 
 ## Next Steps (in order)
 
-1. [ ] **Gate 2 sign-off** — Clint reviews Core Entities (§3, drafted from schema + 2026-06-29 research). Immediate next action.
-2. [ ] Confirm the **access model** role→permission matrix (RLS keyed off linked People/Companies; replicate Softr per-group UI perms) — feeds auth-plan + Tech Spec.
-3. [ ] Core Features → Workflows (incl. the **SP↔SB merge** into one Project model, the **bidirectional mirror** sync spec, feedback-triage/onboarding support layer) → Gate 3/4.
-4. [ ] DB Schema (reconcile live `sb-crm-poc` schema to §3 — add Loans, Time Cards, Contracts, accounting reference tables, Property-as-link, Game entities), Tech Spec, Decisions Log.
+1. [ ] **Gate 2 sign-off** — Clint reviews Core Entities (§3: drivers/polymorphic, Project hub + multi-discipline, Property-as-link, Decision Gates, Contracts, Loans, Time Cards, accounting reference layer, Budgets/Pay-Apps workflow, the Game, **and the confirmed Access model**). Immediate next action.
+2. [ ] Core Features (§4) → Workflows: Working List, Pay-App/Invoice workflow, **SP↔SB merge** into one Project model, **bidirectional-mirror** sync spec, feedback-triage/onboarding support layer → Gate 3/4.
+3. [ ] DB Schema — reconcile live `sb-crm-poc` schema to §3: add **Loans, Time Cards, Contracts, accounting reference tables, Decision Gates/Ratings, Property-as-link, Game entities, one universal Task table**; RLS policies for the Access model (entity-link + Stakeholder Bridge).
+4. [ ] Tech Spec, Decisions Log (ADRs).
 
 ---
 
