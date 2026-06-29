@@ -9,7 +9,7 @@
 
 - **Date:** 2026-06-29 (session 2)
 - **Project:** S-BOS
-- **Status:** In Progress — Gate 1 PASSED; §2.5 Vision done; **Core Entities (§3) drafted + access model & deep research folded in — READY for Gate 2 sign-off.**
+- **Status:** In Progress — Gate 1 + **Gate 2 PASSED (2026-06-29)**; §2.5 Vision + Core Entities (§3, incl. access model) locked for now. **Core Features (§4) next.**
 
 ---
 
@@ -29,8 +29,8 @@ Consolidated the two efforts (the SmartSuite/TSW work + the Supabase `sb-crm-poc
 
 ## Next Steps (in order)
 
-1. [ ] **Gate 2 sign-off** — Clint reviews Core Entities (§3: drivers/polymorphic, Project hub + multi-discipline, Property-as-link, Decision Gates, Contracts, Loans, Time Cards, accounting reference layer, Budgets/Pay-Apps workflow, the Game, **and the confirmed Access model**). Immediate next action.
-2. [ ] Core Features (§4) → Workflows: Working List, Pay-App/Invoice workflow, **SP↔SB merge** into one Project model, **bidirectional-mirror** sync spec, feedback-triage/onboarding support layer → Gate 3/4.
+1. [ ] **Core Features (§4)** — immediate next: Working List, Pay-App/Invoice workflow, Account/Authority Pyramid mini-app, Decision-Gate prioritization, the **SP↔SB merge** into one Project model → then User Workflows + Gate 3.
+2. [ ] User Workflows: **bidirectional-mirror** sync spec + feedback-triage/onboarding support layer.
 3. [ ] DB Schema — reconcile live `sb-crm-poc` schema to §3: add **Loans, Time Cards, Contracts, accounting reference tables, Decision Gates/Ratings, Property-as-link, Game entities, one universal Task table**; RLS policies for the Access model (entity-link + Stakeholder Bridge).
 4. [ ] Tech Spec, Decisions Log (ADRs).
 
@@ -58,5 +58,5 @@ Consolidated the two efforts (the SmartSuite/TSW work + the Supabase `sb-crm-poc
 ## How to Resume
 
 1. Read `S-BOS_Operating_Agreement.md`, then `memory.md`, `restart.md`, `S-BOS_Design_Context.md`.
-2. Open `S-BOS_Product_Design_Doc.md` to §3 Core Entities (drafted) + the Gate 2 block.
-3. Say "let's go" — first action is **Gate 2 sign-off** on Core Entities, then the access-model matrix + Core Features.
+2. Open `S-BOS_Product_Design_Doc.md` — §3 Core Entities + Gate 2 are ✅ locked; work begins at §4 Core Features.
+3. Say "let's go" — first action is **Core Features (§4)**, building on the locked §2.5 + §3.
