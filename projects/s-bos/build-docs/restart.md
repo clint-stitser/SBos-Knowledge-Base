@@ -7,9 +7,9 @@
 
 ## Session Info
 
-- **Date:** 2026-06-29 (session 2)
+- **Date:** 2026-06-30
 - **Project:** S-BOS
-- **Status:** In Progress — Gate 1 + **Gate 2 PASSED (2026-06-29)**; §2.5 Vision + Core Entities (§3, incl. access model) locked for now. **Core Features (§4) next.**
+- **Status:** In Progress — Gates 1 & 2 PASSED; §2.5 + §3 locked. **§4 Core Features started (screen-by-screen back-fill); §6/§9 Phase 1/2 split set.** Next: Clint layers his per-screen write-ups (+ AI/automation per page) onto §4.
 
 ---
 
@@ -29,7 +29,7 @@ Consolidated the two efforts (the SmartSuite/TSW work + the Supabase `sb-crm-poc
 
 ## Next Steps (in order)
 
-1. [ ] **Core Features (§4)** — immediate next: Working List, Pay-App/Invoice workflow, Account/Authority Pyramid mini-app, Decision-Gate prioritization, the **SP↔SB merge** into one Project model → then User Workflows + Gate 3.
+1. [ ] **§4 Core Features — layer in Clint's per-screen write-ups.** Claude pre-drafted each Phase-1 screen (Launch Pad, CRM Home, Project detail+facets, The Game, My Responsibilities, Account Pyramid, Time Card) with What/Reads-Writes/Who/Keep-change-drop + a **proposed AI/automation** line. Clint adds his own capture per screen, **especially the "New features / automations / AI integrations" section.** Then → User Workflows + Gate 3.
 2. [ ] User Workflows: **bidirectional-mirror** sync spec + feedback-triage/onboarding support layer.
 3. [ ] DB Schema — reconcile live `sb-crm-poc` schema to §3: add **Loans, Time Cards, Contracts, accounting reference tables, Decision Gates/Ratings, Property-as-link, Game entities, one universal Task table**; RLS policies for the Access model (entity-link + Stakeholder Bridge).
 4. [ ] Tech Spec, Decisions Log (ADRs).
@@ -58,5 +58,5 @@ Consolidated the two efforts (the SmartSuite/TSW work + the Supabase `sb-crm-poc
 ## How to Resume
 
 1. Read `S-BOS_Operating_Agreement.md`, then `memory.md`, `restart.md`, `S-BOS_Design_Context.md`.
-2. Open `S-BOS_Product_Design_Doc.md` — §3 Core Entities + Gate 2 are ✅ locked; work begins at §4 Core Features.
-3. Say "let's go" — first action is **Core Features (§4)**, building on the locked §2.5 + §3.
+2. Open `S-BOS_Product_Design_Doc.md` — §3 + Gate 2 ✅ locked; §4 Core Features is drafted screen-by-screen (Phase-1), §6/§9 carry the Phase 1/2 split.
+3. Say "let's go" — first action is **layering Clint's per-screen write-ups (+ AI/automation) into §4**, then User Workflows + Gate 3.
