@@ -93,10 +93,14 @@
 
 ---
 
+### Phasing + §4 method — 2026-06-30
+- **Phase 1 = People · Companies · Project Execution Framework** (+ operator surfaces: My Responsibilities/Working List, The Game, Time Card, Account Pyramid). **Phase 2 = Brokerage + Credit Desk.** Build-sequencing only — Contracts/Loans stay defined in §3. (PDD §6 Out of Scope + §9 Timeline.)
+- **§4 Core Features method = screen-by-screen back-fill.** Each Phase-1 screen documented with **What · Reads/Writes · Who · Keep/change/drop · AI & automation (proposal)**. Claude pre-drafted from the live app; **Clint layers his own per-screen write-ups + a "New features / automations / AI integrations" section on each.** Per-page AI = the Kompass assistant + Feed scoped to that surface.
+
 ## Open Items
 
-- [ ] Core Entities (PDD §3) — back-fill from schema + §2.5 Vision.
-- [ ] Capability walkthrough of `app.stitserbuilt.com` (live input).
+- [x] Core Entities (PDD §3) — done, Gate 2 passed.
+- [ ] **§4 Core Features — Clint's per-screen captures + AI/automation** layered onto Claude's drafts.
 - [ ] Bidirectional-mirror sync spec (Workflows section).
 - [ ] Strip Kevin's Rule + Misogi from TSW app files.
 - [ ] Automation rebuild approach; remote CRUD MCP host; cutover sequencing.
