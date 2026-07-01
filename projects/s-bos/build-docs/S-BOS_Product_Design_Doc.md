@@ -16,10 +16,11 @@
 | Product Vision & Architecture | 🔄 In Progress | Four pillars + Blueprint Catalog + TSW module catalog — deepens as features develop |
 | Core Entities | ✅ Done | **Signed off (Gate 2) 2026-06-29** — locked for now; deepens in later stages |
 | 🚦 Gate 2 | ✅ Done | **Approved by Clint 2026-06-29** |
-| Core Features | ⏳ Not Started | |
+| Core Features | 🔄 In Progress | Phase-1 screens back-filled (screen-by-screen); Clint layering in + AI/automation per page |
 | User Workflows | ⏳ Not Started | |
 | 🚦 Gate 3 | ⏳ Not Started | |
-| Out of Scope · Success Metrics · Tech Constraints · Timeline · Open Questions | ⏳ Not Started | |
+| Out of Scope · Timeline/Phases | 🔄 In Progress | **Phase 1/2 split set** (brokerage + credit desk → Phase 2) |
+| Success Metrics · Tech Constraints · Open Questions | ⏳ Not Started | |
 | 🚦 Gate 4 | ⏳ Not Started | |
 
 **Status scheme:** ⏳ Not Started → 🔄 In Progress → ❓ Needs Discussion → ✅ Done
@@ -193,18 +194,54 @@ Enforced in **Supabase RLS** (policy-as-code), not UI toggles. **Groups:** Custo
 > 🔎 §3 traces to the live schema + Clint's 2026-06-29 answers + the app research. **Gate 2 signed off 2026-06-29 — locked for now; entities deepen as later stages unlock.**
 
 ## 4. Core Features
-⏳ Not Started — to be worked after Gate 2.
-> **Pre-filled features captured:**
-> - **Working List** (S-BOS "My Responsibilities" ≡ TSW "Horizon") — one per-user view over the universal Task table + Notes/Comments follow-ups + GYR follow-ups + owned Goals/Priorities/Milestones (both tracks). It's a *view/feature*, not an entity.
-> - **Project Prioritization** = a *feature* via **Decision Gates/Ratings** (§3); the legacy "Project Prioritization Tool" table is **not** migrated. *(Decision 2026-06-28.)*
-> - **Pay-App / Invoice workflow** (§3 Budgets) — per-invoice audit, splits, pay-app print → sign-off → AP.
-> - **Account/Authority Pyramid** — relationship-tier development + audience-health target.
+🔄 In Progress — back-filled **screen-by-screen** from the live Softr app (2026-06-29/30). This is the **Phase-1** surface (Phase-2 brokerage / credit-desk screens deferred, §9). **🔎 = Claude's observation — Clint confirms/extends;** **AI/Automation** lines are *proposals to shape* (each = the Kompass assistant + Feed scoped to that page). Per-screen format: **What · Reads/Writes · Who · Keep/change/drop · AI & automation.**
+
+### Launch Pad (`/`)
+- **What:** app switcher — SB Production (CRM), Stitser Properties (Phase 2), links out (Gemini, NotebookLM, Sage Intacct). 🔎
+- **Reads/Writes:** none (nav). **Who:** all internal. **Keep/change/drop:** keep → becomes the authenticated, role-based landing.
+- **AI/Automation:** *proposed* — a one-line "what needs you today" digest (from the Feed) on the landing.
+
+### CRM Home — Projects · People · Companies · Formation (`/sb-crm-home`)
+- **What:** tabbed lists with filters (SB Company · Status · Department · Project Type), New Project, an **"Ask AI"** button, the Account Pyramid tab; left-nav to My Responsibilities, The Game, Time Card, Accounting, Knowledge Base, Credit Desk, Claude's Activity. 🔎
+- **Reads/Writes:** reads Projects/People/Companies; New Project writes. Columns carry Intacct Project / Sage Job ID (accounting link). **Who:** all internal (RLS-scoped). **Keep/change/drop:** keep; "Use Filters to Work" → saved views per role.
+- **AI/Automation:** *proposed* — "Ask AI" = natural-language filter/query ("show my at-risk WIP projects"); auto-surface stale / overdue / GYR-red rows; one-tap "start a project from a blueprint" (§2.5 Catalog).
+
+### Project detail + facets (`/sb-crm-projects-list-details`)
+- **What:** the hub. Header (SB Company · Status · Priority · Department · Property Record · Project Type · Property/Agency Contract) + actions (Link to Property, Create Drive Folders) + facet tabs — **Details · Decisions/Ratings · Reporting/Planning · Team · Project Drive · Schedule · Tasks/Checklists · Budget(s) & Pay App(s) · Project CRM** — + Related (parent/child) + Comments. 🔎
+- **Reads/Writes:** the project + all linked facets. **Who:** Production Staff via the Stakeholder Bridge; Management via entity link (§3 Access). **Keep/change/drop:** keep; supports multi-discipline (multiple 702s/checklists) on one parent-child schedule (§2.5, §3).
+  - *Decisions/Ratings* = go/no-go scoring (Strategic Fit → Overall → Final Decision) = prioritization.
+  - *Budget(s) & Pay App(s)* = G-702/G-703 → Pay Apps → invoices (parent/child splits) → per-invoice audit → pay-app print → Sr-Mgt sign-off → AP.
+- **AI/Automation:** *proposed* — the **Task-Level AI Assistant** ("person in the room": search Gmail/sources by project people/vendors → status → draft/send email); auto-draft the GYR/status report from recent comments; auto-populate baseline budget/schedule/checklists from a Category blueprint; invoice-compliance auto-check; "brief me on this project" from the full record.
+
+### The Game (`/the-game-homepage`)
+- **What:** Company Goals (Purpose · Metric · Target · Progress · GYR · Date) → **Situations** (value-chain fronts); second tab: Measurable Goals → Priorities. 🔎
+- **Reads/Writes:** goals/priorities/situations; progress rolls up from projects. **Who:** Management + owners. **Keep/change/drop:** keep — the strategic scoreboard (§2.5 Pillar A).
+- **AI/Automation:** *proposed* — auto-roll-up progress from contributing projects (contribution tag); Feed card when a Goal flips GYR or a target goes at-risk; "what's the one next move on this Situation?"
+
+### My Responsibilities / Working List (`/sb-my-responsibilities`) — ≡ TSW Horizon
+- **What:** the per-user working list — owned Goals · Priorities/Milestones · My Tasks (strategic) · My Project Tasks (checklists + meeting follow-ups) · Notes/Comments you're tagged in · GYR follow-ups. 🔎
+- **Reads/Writes:** the one universal Task table + notes + GYR, filtered to the user. **Who:** every user (their own). **Keep/change/drop:** keep — the daily-driver view (a *feature*, not an entity).
+- **AI/Automation:** *proposed* — Daily Horizon Scan (surface what's alive, propose the Big 3 / Hit List); auto-triage + snooze suggestions; draft replies to tagged comments.
+
+### Account / Authority Pyramid — biz-dev mini-app
+- **What:** relationship-development tool — tiers **Channel Account → Referral Partner → Top-50/Newspaper** + an **Audience-Health target** ("Authority Lock"). Tiers driven by status-as-customer / referral count / tag. 🔎
+- **Reads/Writes:** People (tiers/tags), interaction dates. **Who:** biz-dev + Management. **Keep/change/drop:** keep as an **Execution Tool** mini-app (§2.5 Pillar D).
+- **AI/Automation:** *proposed* — overdue / never-contacted outreach queue with daily targets (TSW "Stay in Flow" pull); draft the outreach message / newspaper entry; auto-tier from CRM signals.
+
+### Time Card (`/sb-time-card-form`)
+- **What:** time reporting — Cost Code · Dept Code · Project · Customer · Hours, with a 160-hr/mo coverage check + calendar view. 🔎
+- **Reads/Writes:** writes time entries; dimensions from the mirrored accounting reference tables (§3). **Who:** all staff (own); Dept Heads review. **Keep/change/drop:** keep — feeds job-costing + interco allocation.
+- **AI/Automation:** *proposed* — auto-suggest entries from calendar/activity; infer cost-code/dept/customer from the project; nudge when the month is under 160h.
+
+> **Method note:** Clint layers in his own per-screen write-ups — especially the **New features / automations / AI integrations** section on each. Claude translates them into precise §4 entries + success criteria. Phase-2 screens (brokerage, credit desk) captured when Phase 2 opens.
 
 ## 5. User Workflows
 ⏳ Not Started — incl. the migration's **bidirectional mirror** (two-way sync SmartSuite ↔ Supabase during transition; not single-source-of-truth — Clint, 2026-06-29) and the **feedback-as-triage** support model (answer / route-to-training / accept-as-fix) + MarketingSecrets-style onboarding.
 
 ## 6. Out of Scope
-⏳ Not Started. *(Accounting structure — family-trust QB + possible Intacct→QB consolidation — is a deferred input, not Phase 1.)*
+🔄 In Progress.
+- **Brokerage** (Agency/Property Contracts, contract stages, ACH match) and **Credit Desk** (loans) — **deferred to Phase 2 (§9)**; out of scope for the Phase-1 build. Their entities remain defined in §3.
+- **Accounting structure** — family-trust QB + possible Intacct→QB consolidation — a deferred input, not Phase 1.
 
 ## 7. Success Metrics
 ⏳ Not Started
@@ -213,7 +250,11 @@ Enforced in **Supabase RLS** (policy-as-code), not UI toggles. **Groups:** Custo
 ⏳ Not Started — Supabase (Postgres + Auth + Storage), Railway host, Next.js 16/React 19, Claude via remote CRUD MCP (planned).
 
 ## 9. Timeline / Phases
-⏳ Not Started — Phase 1 = Biz Dev CRM module; later phases per the 27-solution migration. Rollout: Clint → +testers → company (per-module cutover behind the bidirectional mirror).
+🔄 In Progress. *(Phasing decided 2026-06-30.)*
+- **Phase 1 — People · Companies · Project Execution Framework.** The shared backbone + the Project hub and its facets (Tasks/Checklists, Budgets & Pay Apps G-702/G-703, Schedule, Decisions/Ratings, Team, Notes/Comments, GYR, Project Drive, Project CRM), plus the cross-cutting operator surfaces: **My Responsibilities / Working List, The Game, Time Card, Account/Authority Pyramid.** This is what most internal roles touch daily.
+- **Phase 2 — Brokerage + Credit Desk.** Agency Contracts → Property Contracts → Close of Escrow (contract stages, ACH match) and the Loans / Credit Desk ledger.
+- **Note:** phasing is a **build-sequencing** decision — Contracts and Loans are already *defined* in Core Entities (§3), so Phase 1 doesn't foreclose them; only the build is deferred.
+- **Rollout (both phases):** Clint → +testers → company, per-module cutover behind the bidirectional mirror (§5).
 
 ## 10. Open Questions / Decisions Needed
 ⏳ Not Started — automation rebuild approach (103 captured via screenshots, intact); remote CRUD MCP host (Supabase Edge vs Railway); cutover sequencing.
