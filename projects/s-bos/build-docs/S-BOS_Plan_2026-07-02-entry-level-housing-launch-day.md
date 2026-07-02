@@ -3,7 +3,7 @@
 > **Status:** Active — today's working plan for Clint + Claude Code.
 > **Organizing principle:** the Entity → Category → Project → facets model is *universal* — anything built generically today (a schema, a catalog, the Dispatcher) serves every future category/vertical, not just this one. So the fastest path isn't "build Entry-Level Housing" directly — it's **build the generic layer once, then populate/activate it for this pilot.** That's the order below.
 > **Relationship to other docs:** executes the `S-BOS_Discussion_category-scoped-cutover.md` build checklist (§5) as part of Layer 1, and lays the schema groundwork the `S-BOS_Discussion_kompass-dispatch-architecture.md` Dispatcher needs. Doesn't reorder §4 Core Features — that's paused for today.
-> **Two open inputs needed from Clint (flagged inline below, not blocking the rest):** the Track 2 scheduling question that wasn't stated, and the empty "AI Integration #3" item.
+> **Scheduling scope resolved:** see `MS_Project_Style_Scheduling_Engine_Scope.md` — today builds v1 only (§1–4 of that doc); the full engine (§5: critical path, resource assignments, baselines, interactive drag-cascade) is its own future phase, not today's scope. "AI Integration #3" was a stray autonumber — ignore, no third item existed.
 
 ---
 
@@ -22,11 +22,9 @@ Do these first, in roughly this order, because everything in Layer 1 depends on 
 1. **Category record + cutover flag** — Entry-Level Housing Category exists, flagged `cutover_mode: supabase_native` (per the cutover doc). *(Prereq for everything else.)*
 2. **Blueprint/Template Catalog schema** — the generic table structure for activatable bundles (tasks, budget lines, schedule durations, roles, tool refs, skill refs), Category-anchored, RLS-scoped. *(Schema only here — populating it with real content is Layer 1, item 1.)*
 3. **Knowledge Library schema** — scoped Postgres store (RLS + pgvector), scoped by entity/category/skill/vertical. *(Schema only — population is Layer 1.)*
-4. **Project Schedule facet (dependencies, durations, start/end dates)** — this is Track 2 item 3. **⚠️ Needs Clint's unstated question answered before/while building** — flag it now (e.g., is this data-only, or does it need a Gantt-style view; what dependency types — finish-to-start only, or also start-to-start/finish-to-finish; does it need to support the multi-discipline parent-child schedule from §2.5/§3?). This facet is foundational because **both** Project activation (Layer 1) **and** the one-way SmartSuite push (Layer 1) need real schedule data to work against.
+4. **Project Schedule facet — v1 scope only** (Track 2 item 3, now fully specced in `MS_Project_Style_Scheduling_Engine_Scope.md`). Build today: a single `tasks` table where checklist items and schedule items are the same row (scheduling columns just nullable) — `duration`, `start_date`, `end_date`, `scheduling_mode` (manual/auto), `constraint_type`, `constraint_date`; a `task_dependencies` table (`predecessor_task_id`/`successor_task_id`, dependency_type FS/SS/FF/SF, `lag_days`); and the parent-child cross-project pattern (that doc's §3, Option B — a linked milestone task on the parent project, connected via `task_dependencies`, `scheduling_mode=auto`, recalculated by a simple Postgres trigger when the child task's date changes). **Do NOT build that doc's §5 today** (critical path calculation, resource assignments, baselines, constraint-type enforcement, interactive drag-to-reschedule cascade) — flagged in the doc itself as a meaningfully larger build deserving its own future phase, not an add-on to today. This facet is foundational because **both** Project activation (Layer 1) **and** the one-way SmartSuite push (Layer 1) need real schedule data to work against.
 5. **Skill/Routine/Plugin Package catalog tables + the Dispatcher invocation path** — the generic `org_id`-scoped schema from the Dispatch Architecture doc. Build the schema and the single invocation function now; the actual Anthropic wiring (code execution, Files API, Skills API) plugs into it in Layer 1 — don't wire live API calls before the schema exists, or there's nothing durable to point them at.
 6. **"Select Entities" settings screen (Surface blend)** — the toggle that lets a user show/hide personal vs. business Categories. This is fairly self-contained (routing + a settings UI over the existing Entity/Category model) — good candidate to run **in parallel** with items 2–5 if Claude Code can split attention, since it doesn't block or get blocked by the catalog/schedule/dispatcher work.
-7. **AI Integration item "3."** — ⚠️ **unknown, need Clint's input** — slot it into Layer 0 or Layer 1 once named, depending on what it turns out to be.
-
 ### Layer 1 — Populate and activate (apply the foundation to this pilot)
 
 Only makes sense once the relevant Layer 0 piece exists:
@@ -52,7 +50,11 @@ Protect in this order: **Layer 0 (all of it) → Layer 1 items 1, 2, 4, 5 → La
 
 ## Open Items Blocking Specific Steps (not the whole plan)
 
-- [ ] **Track 2 item 3's unstated question** — needed before/during Layer 0 item 4 (Schedule facet).
-- [ ] **AI Integration item "3."** — needed to slot into Layer 0 or Layer 1.
+- [x] ~~Track 2 item 3's unstated question~~ — resolved, see `MS_Project_Style_Scheduling_Engine_Scope.md`.
+- [x] ~~AI Integration item "3."~~ — resolved, stray autonumber, no item existed.
 - [ ] **The 4 chosen project names** — needed before Layer 1 item 4 (activation) and item 5 (cutover push).
 - [ ] **Which tool generates Q2 loan invoices** — needed only if Clint wants live help in this chat on Track A.
+
+## Future Phase (explicitly NOT today)
+
+- [ ] **Full MS Project-style scheduling engine** — `MS_Project_Style_Scheduling_Engine_Scope.md` §5: additional `tasks` columns (`is_critical`, `is_milestone`, `baseline_start`/`baseline_end`, `percent_complete`), new `task_resource_assignments` + `schedule_baselines` tables, and the compute layer (critical path calculation, cascading recalculation, interactive Gantt drag behavior). Scope as its own build-doc phase once v1 is live and proven.
