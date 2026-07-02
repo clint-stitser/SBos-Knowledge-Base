@@ -1,3 +1,4 @@
+
 # Product Design Doc: S-BOS
 
 > **Scope:** The S-BOS platform vision, with the **Biz Dev CRM module as Phase 1**.
@@ -196,42 +197,44 @@ Enforced in **Supabase RLS** (policy-as-code), not UI toggles. **Groups:** Custo
 ## 4. Core Features
 🔄 In Progress — back-filled **screen-by-screen** from the live Softr app (2026-06-29/30). This is the **Phase-1** surface (Phase-2 brokerage / credit-desk screens deferred, §9). **🔎 = Claude's observation — Clint confirms/extends;** **AI/Automation** lines are *proposals to shape* (each = the Kompass assistant + Feed scoped to that page). Per-screen format: **What · Reads/Writes · Who · Keep/change/drop · AI & automation.**
 
+> **Implementation note — read before building any AI/Automation line below:** these describe *what* the assistant should do on that screen — *how* it gets built is governed by `S-BOS_Discussion_kompass-dispatch-architecture.md` (Compass-owned skill/routine catalog → the single **Dispatcher** invocation path → the Feed for approval). **Claude Code must not build a direct, screen-specific integration with Claude for any item in this section** — each proposal becomes a cataloged skill or routine invoked through the Dispatcher, per that doc.
+
 ### Launch Pad (`/`)
 - **What:** app switcher — SB Production (CRM), Stitser Properties (Phase 2), links out (Gemini, NotebookLM, Sage Intacct). 🔎
 - **Reads/Writes:** none (nav). **Who:** all internal. **Keep/change/drop:** keep → becomes the authenticated, role-based landing.
-- **AI/Automation:** *proposed* — a one-line "what needs you today" digest (from the Feed) on the landing.
+- **AI/Automation** *(→ Dispatcher, see `S-BOS_Discussion_kompass-dispatch-architecture.md`):* *proposed* — a one-line "what needs you today" digest (from the Feed) on the landing.
 
 ### CRM Home — Projects · People · Companies · Formation (`/sb-crm-home`)
 - **What:** tabbed lists with filters (SB Company · Status · Department · Project Type), New Project, an **"Ask AI"** button, the Account Pyramid tab; left-nav to My Responsibilities, The Game, Time Card, Accounting, Knowledge Base, Credit Desk, Claude's Activity. 🔎
 - **Reads/Writes:** reads Projects/People/Companies; New Project writes. Columns carry Intacct Project / Sage Job ID (accounting link). **Who:** all internal (RLS-scoped). **Keep/change/drop:** keep; "Use Filters to Work" → saved views per role.
-- **AI/Automation:** *proposed* — "Ask AI" = natural-language filter/query ("show my at-risk WIP projects"); auto-surface stale / overdue / GYR-red rows; one-tap "start a project from a blueprint" (§2.5 Catalog).
+- **AI/Automation** *(→ Dispatcher, see `S-BOS_Discussion_kompass-dispatch-architecture.md`):* *proposed* — "Ask AI" = natural-language filter/query ("show my at-risk WIP projects"); auto-surface stale / overdue / GYR-red rows; one-tap "start a project from a blueprint" (§2.5 Catalog).
 
 ### Project detail + facets (`/sb-crm-projects-list-details`)
 - **What:** the hub. Header (SB Company · Status · Priority · Department · Property Record · Project Type · Property/Agency Contract) + actions (Link to Property, Create Drive Folders) + facet tabs — **Details · Decisions/Ratings · Reporting/Planning · Team · Project Drive · Schedule · Tasks/Checklists · Budget(s) & Pay App(s) · Project CRM** — + Related (parent/child) + Comments. 🔎
 - **Reads/Writes:** the project + all linked facets. **Who:** Production Staff via the Stakeholder Bridge; Management via entity link (§3 Access). **Keep/change/drop:** keep; supports multi-discipline (multiple 702s/checklists) on one parent-child schedule (§2.5, §3).
   - *Decisions/Ratings* = go/no-go scoring (Strategic Fit → Overall → Final Decision) = prioritization.
   - *Budget(s) & Pay App(s)* = G-702/G-703 → Pay Apps → invoices (parent/child splits) → per-invoice audit → pay-app print → Sr-Mgt sign-off → AP.
-- **AI/Automation:** *proposed* — the **Task-Level AI Assistant** ("person in the room": search Gmail/sources by project people/vendors → status → draft/send email); auto-draft the GYR/status report from recent comments; auto-populate baseline budget/schedule/checklists from a Category blueprint; invoice-compliance auto-check; "brief me on this project" from the full record.
+- **AI/Automation** *(→ Dispatcher, see `S-BOS_Discussion_kompass-dispatch-architecture.md`):* *proposed* — the **Task-Level AI Assistant** ("person in the room": search Gmail/sources by project people/vendors → status → draft/send email); auto-draft the GYR/status report from recent comments; auto-populate baseline budget/schedule/checklists from a Category blueprint; invoice-compliance auto-check; "brief me on this project" from the full record.
 
 ### The Game (`/the-game-homepage`)
 - **What:** Company Goals (Purpose · Metric · Target · Progress · GYR · Date) → **Situations** (value-chain fronts); second tab: Measurable Goals → Priorities. 🔎
 - **Reads/Writes:** goals/priorities/situations; progress rolls up from projects. **Who:** Management + owners. **Keep/change/drop:** keep — the strategic scoreboard (§2.5 Pillar A).
-- **AI/Automation:** *proposed* — auto-roll-up progress from contributing projects (contribution tag); Feed card when a Goal flips GYR or a target goes at-risk; "what's the one next move on this Situation?"
+- **AI/Automation** *(→ Dispatcher, see `S-BOS_Discussion_kompass-dispatch-architecture.md`):* *proposed* — auto-roll-up progress from contributing projects (contribution tag); Feed card when a Goal flips GYR or a target goes at-risk; "what's the one next move on this Situation?"
 
 ### My Responsibilities / Working List (`/sb-my-responsibilities`) — ≡ TSW Horizon
 - **What:** the per-user working list — owned Goals · Priorities/Milestones · My Tasks (strategic) · My Project Tasks (checklists + meeting follow-ups) · Notes/Comments you're tagged in · GYR follow-ups. 🔎
 - **Reads/Writes:** the one universal Task table + notes + GYR, filtered to the user. **Who:** every user (their own). **Keep/change/drop:** keep — the daily-driver view (a *feature*, not an entity).
-- **AI/Automation:** *proposed* — Daily Horizon Scan (surface what's alive, propose the Big 3 / Hit List); auto-triage + snooze suggestions; draft replies to tagged comments.
+- **AI/Automation** *(→ Dispatcher, see `S-BOS_Discussion_kompass-dispatch-architecture.md`):* *proposed* — Daily Horizon Scan (surface what's alive, propose the Big 3 / Hit List); auto-triage + snooze suggestions; draft replies to tagged comments.
 
 ### Account / Authority Pyramid — biz-dev mini-app
 - **What:** relationship-development tool — tiers **Channel Account → Referral Partner → Top-50/Newspaper** + an **Audience-Health target** ("Authority Lock"). Tiers driven by status-as-customer / referral count / tag. 🔎
 - **Reads/Writes:** People (tiers/tags), interaction dates. **Who:** biz-dev + Management. **Keep/change/drop:** keep as an **Execution Tool** mini-app (§2.5 Pillar D).
-- **AI/Automation:** *proposed* — overdue / never-contacted outreach queue with daily targets (TSW "Stay in Flow" pull); draft the outreach message / newspaper entry; auto-tier from CRM signals.
+- **AI/Automation** *(→ Dispatcher, see `S-BOS_Discussion_kompass-dispatch-architecture.md`):* *proposed* — overdue / never-contacted outreach queue with daily targets (TSW "Stay in Flow" pull); draft the outreach message / newspaper entry; auto-tier from CRM signals.
 
 ### Time Card (`/sb-time-card-form`)
 - **What:** time reporting — Cost Code · Dept Code · Project · Customer · Hours, with a 160-hr/mo coverage check + calendar view. 🔎
 - **Reads/Writes:** writes time entries; dimensions from the mirrored accounting reference tables (§3). **Who:** all staff (own); Dept Heads review. **Keep/change/drop:** keep — feeds job-costing + interco allocation.
-- **AI/Automation:** *proposed* — auto-suggest entries from calendar/activity; infer cost-code/dept/customer from the project; nudge when the month is under 160h.
+- **AI/Automation** *(→ Dispatcher, see `S-BOS_Discussion_kompass-dispatch-architecture.md`):* *proposed* — auto-suggest entries from calendar/activity; infer cost-code/dept/customer from the project; nudge when the month is under 160h.
 
 > **Method note:** Clint layers in his own per-screen write-ups — especially the **New features / automations / AI integrations** section on each. Claude translates them into precise §4 entries + success criteria. Phase-2 screens (brokerage, credit desk) captured when Phase 2 opens.
 
