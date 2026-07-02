@@ -1,7 +1,7 @@
 # MS Project-Style Scheduling Engine Scope
 
 **Status:** Decided in conversation, not yet built
-**Context:** Design discussion for the Supabase master task table that powers checklists, Gantt-style scheduling views, and cross-project linkage across S-BOS — extended to scope a full MS Project-style scheduling engine.
+**Context:** Design discussion for the Supabase master task table that powers checklists, Gantt-style scheduling views, and cross-project linkage across S-BOS — extended to scope a full MS Project-style scheduling engine, then extended again to scope budget enrichment on the same table.
 
 ---
 
@@ -143,3 +143,84 @@ recalculation) that reads/writes those tables. No fork of the task model
 itself. This is a meaningfully larger build than a basic Gantt viewer —
 closer to a small scheduling engine — and should be scoped as its own
 build-doc phase rather than an incremental add to the master task table work.
+
+---
+
+## 6. Budget enrichment on the same `tasks` table
+
+**Premise:** In underwriting, a project is made up of phases, and phases are
+made up of items/tasks. Every task therefore has both a duration (schedule)
+and a cost (budget). Since duration/dates were successfully added as
+enrichment columns on `tasks` (Sections 1 and 5), the same principle was
+tested against budget.
+
+**The complication:** Unlike duration, budget line items and schedule tasks
+don't map cleanly 1:1. A single budget line item (e.g. "Framing," $50,000)
+is often executed across multiple tasks that happen at different times
+("Frame walls" in week 3, "Frame roof" in week 4, "Framing punch list" in
+week 6). Less commonly, one task pulls from multiple line items happening
+at the same time (a "rough-in" task touching electrical, plumbing, and HVAC
+budget simultaneously). This is the same many-to-many mismatch already
+solved for predecessors in Section 2 — a relationship table, not a column,
+is the correct shape.
+
+### 6.1 Two options considered
+
+**Option 1 — Track actual dollars (spent/committed) at the budget-line-item
+level only.** Tasks link to line items to show *when* portions of the
+budget are expected to land on the calendar (a time-phased forecast), but
+real invoices and commitments are recorded against the line item as a whole,
+not split per task.
+
+**Option 2 — Track actual dollars per task.** Every invoice or committed
+cost would need to be broken down and attributed to the specific task it
+paid for (e.g., how much of the Framing invoice was for the roof
+specifically). This gives sharper per-task cost accuracy but requires cost
+data precise enough to support that split.
+
+### 6.2 Decision: Option 1
+
+**Subcontractor estimates and invoices don't come in split by task** — a
+sub bills for "Framing," not for "the roof portion of Framing." Requiring
+per-task actuals would force a level of cost-data precision that doesn't
+exist at the source, so Option 1 is the correct fit today.
+
+- **Budgeted amounts** can still be allocated across tasks (for time-phased
+  forecasting — how much budget is expected to be consumed in which week).
+- **Actual and committed amounts** are tracked and recorded at the budget
+  line item level only.
+
+**Revisit trigger:** If the estimating team builds out quantity take-off
+capacity and chooses to group/split line items at that level of detail,
+this decision should be revisited — that would be the point where cost
+data becomes precise enough to justify per-task actuals (Option 2).
+
+### 6.3 Data shape
+
+```
+budget_line_items (
+  id, project_id, name, cost_code,
+  budgeted_amount, committed_amount, actual_amount
+)
+
+task_budget_allocations (
+  id, task_id, budget_line_item_id,
+  allocated_amount   -- portion of the line item's BUDGETED amount tied to this task
+)
+```
+
+- Simple case (task = line item): one allocation row, full budgeted amount.
+- Split case (one line item, three tasks over time): three allocation rows,
+  same `budget_line_item_id`, `allocated_amount`s summing to the line item's
+  budgeted total.
+- Committed/actual dollars are recorded directly on `budget_line_items`, not
+  on the allocation rows — per the Section 6.2 decision.
+
+### 6.4 Downstream benefit (noted, not scoped for v1)
+
+Because tasks already carry `start_date`/`end_date`, summing
+`allocated_amount` grouped by task schedule dates produces a time-phased
+spend curve (budgeted cash flow by week/month) without any additional date
+fields on the budget side. This could eventually feed the GP Cash Flow
+Schedule as a computed source rather than a hand-curated one — flagged as a
+future integration point, not a v1 requirement.
