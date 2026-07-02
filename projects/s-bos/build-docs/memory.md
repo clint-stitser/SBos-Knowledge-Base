@@ -71,27 +71,13 @@
   - **Budgets & Pay Apps** (schema + pay-app skills; live tab wouldn't render): G-702 (App-for-Payment summary; multiple per multi-discipline project) → G-703 (schedule of values by cost code; estimate→baseline, baseline edits change-order-gated) → Pay Apps (PA-N, retention release, lock) → Bills & Invoices (parent/child splits) → per-invoice PM audit/compliance checklist → pay-app print → Senior Mgt sign-off → AP approval (PA Drive package: G-702/G-5 + NRS lien waiver). Change Orders→CO Line Items feed 702/703.
 - **Access model — RESOLVED 2026-06-29 (in PDD §3):** Groups = Customer/Investor/Vendor/Production Staff/Production Manager/Department Head/Senior Management (+ System Admin). RLS-enforced. Highlights: Meetings = invitees OR Sr Mgt (project meetings = all participants); private user items (tasks/journals/notes not linked to shared entity) visible to owner; CRU on Project/People/Companies + supporting tables → **Management driven by entity link, Production Staff driven by the Project Stakeholder Bridge**; baseline edits (CO to schedule/budget/scope) need Sr PM / Construction Dept Head approval; invoices/project budgets/AR-AP/project financials → Production Staff; department financials → Dept Heads + Sr Mgt; entity financials (loans, time cards, entity P&L) → Accounting Dept Head + Sr Mgt; admin (fix/structure/delete/restore) → System Admin; dashboards → per dashboard-level selection.
 
----
-
-## Conventions Established
-
-- **`scripts/db.mjs`** = single entry point for DB changes (`migrate`, `sql`, `query`, `migrate-all`).
-- **Migrations** in `sb-crm-poc/supabase/migrations/` (001–011).
-- Writes via Next.js server actions (Supabase secret key, never browser). PII gitignored, regenerable from SmartSuite. Secrets in `.env.local`.
-- **Docs separate from code:** build docs in `SBos-Knowledge-Base/projects/s-bos/build-docs/` (read/write via GitHub); code in `sb-crm-poc`.
-- **Vision summaries reference the canonical platform docs** (`projects/kompass/platform/`) rather than re-paraphrasing them — one source of truth.
-
----
-
-## Existing Artifacts (inputs to back-fill from)
-
-- **Code:** `sb-crm-poc` (live CRM POC + Automation Tracker + Migration Menu).
-- **Planning docs:** `sb-crm-poc/docs/` (atlas/, auth-plan, recovery-and-restore, formula-audit) + `kompass/docs/biz-dev-crm-poc-spec.md`.
-- **Canonical platform docs:** `kompass/platform/platform-pdd.md` + `shared/` (brain-model, intelligence-stores, operator-assistant, feed-model, …) + `research/marketingsecrets-analysis.md`.
-- **Example blueprint:** CrossMod land-dev stage-gate framework (G0–G5) — Clint's draft for the Entry-Level Housing Category.
-- **System Atlas:** Chapter 1 (9 Biz Dev CRM tables) complete.
-
----
+### Kompass Dispatch Architecture — 2026-07-02 (parallel design thread, not a §4 reorder)
+- **Full capture:** `S-BOS_Discussion_kompass-dispatch-architecture.md` (new, this session). Corresponds to **Pillar C (Kompass assistant + Feed)** and **Pillar D (Execution Tools)** from §2.5 — working out *how* Pillar C dispatches, ahead of its original sequencing. Does not reorder `restart.md` → Next Steps.
+- **Core shift:** Compass (Supabase) owns all skill/routine/plugin-package content as versioned catalog rows, scoped by `org_id`. Claude becomes a stateless compute call Compass makes (via the Messages API — code execution tool, Files API, Skills API) — not a surface people work inside. One internal **Dispatcher** invocation path serves manual triggers, scheduled routines, *and* mini-app "pings" alike (single Run Log, single permission gate).
+- **Document-generation workflows:** data-gathering stays in Compass (own DB queries, not the LLM); authoring/assembly uses Anthropic's code execution + Files API + Skills API (`/v1/skills` — no human-in-the-loop required on Anthropic's side to create/update a Skill). Catalog row stores a pointer (`skill_id` + version + template ref), not the generation logic itself. Generated files expire from Anthropic's Files API in 24 hrs — dispatcher must pull to Supabase Storage immediately.
+- **Multi-tenant/licensing decision (Realtor Kompass case):** shared Anthropic workspace for now (Option A), with the `org_id`→`skill_id` catalog table as the real tenant boundary — built so a future move to per-tenant workspaces (Option B) is a config change, not a rebuild. **BYOK (licensee brings own Anthropic API key)** is a viable third path (their billing, their data residency, true separation) — optional, not required; Clint's default shared-key model is consistent with Anthropic's Commercial Terms (which explicitly support a company's own API key powering products sold to its own customers — the publicized restrictions target personal subscription/OAuth piggybacking, a different scenario). Flagged: confirm current ToS language directly before finalizing licensing paperwork, since this area has shifted more than once recently.
+- **Review-gate workflow (adopted):** user drafts → Compass runs a private test → user confirms ready → **Clint jointly stress-tests with them** → publish (versioned, rollback-safe). Delegating publish-approval to a licensee's own admin is parked, not decided.
+- **Data residency (clarified):** Supabase is the canonical/source-of-truth store for every instruction file, template, and routine/plugin definition — this is what makes a team member's or licensee's workflow **captured company property**, not something they can walk away with. Anthropic's Skills API side holds only a secondary, execution-ready mirror of published content (not ZDR-covered, standard retention) — a runtime copy, not the vault. A stricter zero-residency-at-Anthropic alternative exists (inline instructions per call, no persisted Skill) if ever needed, at the cost of losing Skills API's native versioning convenience.
 
 ### Phasing + §4 method — 2026-06-30
 - **Phase 1 = People · Companies · Project Execution Framework** (+ operator surfaces: My Responsibilities/Working List, The Game, Time Card, Account Pyramid). **Phase 2 = Brokerage + Credit Desk.** Build-sequencing only — Contracts/Loans stay defined in §3. (PDD §6 Out of Scope + §9 Timeline.)
@@ -104,6 +90,7 @@
 - [ ] Bidirectional-mirror sync spec (Workflows section).
 - [ ] Strip Kevin's Rule + Misogi from TSW app files.
 - [ ] Automation rebuild approach; remote CRUD MCP host; cutover sequencing.
+- [ ] Kompass Dispatch Architecture open items — see `S-BOS_Discussion_kompass-dispatch-architecture.md` §7 (Dispatcher contract, catalog schema, Option A→B trigger conditions, ToS confirmation, delegated-approval decision, doc-gen build-vs-buy).
 
 ---
 
