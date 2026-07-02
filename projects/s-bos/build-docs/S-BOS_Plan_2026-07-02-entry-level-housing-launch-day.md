@@ -7,6 +7,18 @@
 
 ---
 
+## NEW DECISION — 2026-07-02: System-Wide Document Versioning
+
+**Applies to every document-bearing table built today and going forward:** Knowledge Library entries (global/entity/department/project levels), project documents (legal docs, design docs, invoices, etc.), the Document/Template Library (templates linked to project types/companies/departments), and AI-interface documents (skills, routines, prompts).
+
+- **Pattern: per-type, append-only version tables** — not one shared polymorphic table. Each parent table (`kb_entries`, `project_documents`, `templates`, `skills`, etc.) gets its own sibling `_versions` table of identical shape: `id, parent_id, version_number, created_by, created_at, commit_message` + either `content` (text/markdown docs — fully diffable) or `storage_path` (file docs like invoices/legal PDFs — supersede-and-keep, not diffable). Which column applies is determined by the parent document's file type.
+- Parent table carries `current_version_id` pointing at the live version; rollback = repoint, never delete history.
+- **`supa_audit` runs underneath as a passive backstop** on these tables — automatic trigger-based row change logging, layered under the intentional versions tables (not a replacement for them; no commit messages/rollback semantics on its own).
+- **Storage cost/retention policy for file versions is explicitly deferred** — revisit once the system is running and usage patterns are understood. Not a blocker for today's build.
+- **Build impact on today's plan:** any schema built in Layer 0 that stores documents/content (Knowledge Library, Blueprint/Template Catalog, Skill/Routine catalog) should include its `_versions` table from the start, not retrofit later. Flagged inline in Layer 0 below.
+
+---
+
 ## Track A — Q2 Loan Reconciliation (fully parallel, not sequenced below)
 
 Not a Supabase build task — Credit Desk/Loans is Phase 2, not yet built. This runs entirely on existing tools (SmartSuite Credit Desk + invoicing/document + payment) in parallel with everything else today, bounded only by Clint's own time. **Open:** which tool actually generates the invoices (QuickBooks? Direct in SmartSuite? Word/Docs?) — if it's QuickBooks or Gmail, this chat can draft/send directly, live, alongside the Claude Code session.
@@ -20,11 +32,14 @@ Not a Supabase build task — Credit Desk/Loans is Phase 2, not yet built. This 
 Do these first, in roughly this order, because everything in Layer 1 depends on at least one of them:
 
 1. **Category record + cutover flag** — Entry-Level Housing Category exists, flagged `cutover_mode: supabase_native` (per the cutover doc). *(Prereq for everything else.)*
-2. **Blueprint/Template Catalog schema** — the generic table structure for activatable bundles (tasks, budget lines, schedule durations, roles, tool refs, skill refs), Category-anchored, RLS-scoped. *(Schema only here — populating it with real content is Layer 1, item 1.)*
-3. **Knowledge Library schema** — scoped Postgres store (RLS + pgvector), scoped by entity/category/skill/vertical. *(Schema only — population is Layer 1.)*
+2. **Blueprint/Template Catalog schema** — the generic table structure for activatable bundles (tasks, budget lines, schedule durations, roles, tool refs, skill refs), Category-anchored, RLS-scoped. *(Schema only here — populating it with real content is Layer 1, item 1.)* **Include `template_versions` per the versioning decision above.**
+3. **Knowledge Library schema** — scoped Postgres store (RLS + pgvector), scoped by entity/category/skill/vertical. *(Schema only — population is Layer 1.)* **Include `kb_entry_versions` per the versioning decision above.**
 4. **Project Schedule facet — v1 scope only** (Track 2 item 3, now fully specced in `MS_Project_Style_Scheduling_Engine_Scope.md`). Build today: a single `tasks` table where checklist items and schedule items are the same row (scheduling columns just nullable) — `duration`, `start_date`, `end_date`, `scheduling_mode` (manual/auto), `constraint_type`, `constraint_date`; a `task_dependencies` table (`predecessor_task_id`/`successor_task_id`, dependency_type FS/SS/FF/SF, `lag_days`); and the parent-child cross-project pattern (that doc's §3, Option B — a linked milestone task on the parent project, connected via `task_dependencies`, `scheduling_mode=auto`, recalculated by a simple Postgres trigger when the child task's date changes). **Do NOT build that doc's §5 today** (critical path calculation, resource assignments, baselines, constraint-type enforcement, interactive drag-to-reschedule cascade) — flagged in the doc itself as a meaningfully larger build deserving its own future phase, not an add-on to today. This facet is foundational because **both** Project activation (Layer 1) **and** the one-way SmartSuite push (Layer 1) need real schedule data to work against.
-5. **Skill/Routine/Plugin Package catalog tables + the Dispatcher invocation path** — the generic `org_id`-scoped schema from the Dispatch Architecture doc. Build the schema and the single invocation function now; the actual Anthropic wiring (code execution, Files API, Skills API) plugs into it in Layer 1 — don't wire live API calls before the schema exists, or there's nothing durable to point them at.
+5. **Skill/Routine/Plugin Package catalog tables + the Dispatcher invocation path** — the generic `org_id`-scoped schema from the Dispatch Architecture doc. Build the schema and the single invocation function now; the actual Anthropic wiring (code execution, Files API, Skills API) plugs into it in Layer 1 — don't wire live API calls before the schema exists, or there's nothing durable to point them at. **Include `skill_versions` per the versioning decision above.**
 6. **"Select Entities" settings screen (Surface blend)** — the toggle that lets a user show/hide personal vs. business Categories. This is fairly self-contained (routing + a settings UI over the existing Entity/Category model) — good candidate to run **in parallel** with items 2–5 if Claude Code can split attention, since it doesn't block or get blocked by the catalog/schedule/dispatcher work.
+
+> **Note:** Project documents (legal docs, design docs, invoices) don't have a dedicated Layer 0 schema item in this plan yet — they fall under the Project Drive facet, not yet scheduled today. When that facet is built, `project_document_versions` applies per the versioning decision above.
+
 ### Layer 1 — Populate and activate (apply the foundation to this pilot)
 
 Only makes sense once the relevant Layer 0 piece exists:
@@ -58,3 +73,4 @@ Protect in this order: **Layer 0 (all of it) → Layer 1 items 1, 2, 4, 5 → La
 ## Future Phase (explicitly NOT today)
 
 - [ ] **Full MS Project-style scheduling engine** — `MS_Project_Style_Scheduling_Engine_Scope.md` §5: additional `tasks` columns (`is_critical`, `is_milestone`, `baseline_start`/`baseline_end`, `percent_complete`), new `task_resource_assignments` + `schedule_baselines` tables, and the compute layer (critical path calculation, cascading recalculation, interactive Gantt drag behavior). Scope as its own build-doc phase once v1 is live and proven.
+- [ ] **Storage cost/retention policy for file-based document versions** (invoices, legal docs, etc.) — deferred until the system is running and usage patterns are understood.
