@@ -16,3 +16,10 @@
 **What:** Layer 0 item 7 built a NEW canonical `comments` table (polymorphic `parent_type`/`parent_id` via the shared registry) rather than evolving the existing live `notes_comments` hub.
 **Why:** `notes_comments` (Biz Dev CRM) is many-to-many via junction tables (one note → many projects/people/companies) and holds live data; the universal decision is polymorphic single-parent. Reconciling them mid-session risked live-CRM data.
 **Impact / open:** Two comment stores coexist temporarily. Pending decisions (Clint): (a) migrate `notes_comments` → `comments`, and (b) whether multi-attach is preserved (a junction) or becomes multiple comment rows. Not blocking today's Layer 0.
+
+---
+
+## BD-03 · 2026-07-02 · Reconciliation
+**What:** Layer 0 item 2 added `is_template` + `blueprint_id` to tasks, check_lists, task_dependencies, project_budget_items, stakeholder_bridge, and relaxed NOT NULL on `project_budget_items.project_id` and `stakeholder_bridge.project_id`/`person_id`.
+**Why:** A Blueprint's template rows live in the same entity tables (blueprint_id set, project_id null) and copy onto a project at activation. Template budget items + roles have no project/person yet, so those columns had to be nullable.
+**Impact:** Backward-compatible (existing rows unaffected). Migration `019_blueprints.sql`. Activation copy-onto-project function deferred to Layer 1.
