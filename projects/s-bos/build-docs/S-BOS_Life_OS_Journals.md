@@ -1,6 +1,6 @@
 # S-BOS 2.0 — Life OS: The Stitser Way Journaling
 
-**Doc class:** design · **Captured:** 2026-07-04 · **Status:** built (migration 048); skill re-point pending
+**Doc class:** design · **Captured:** 2026-07-04 · **Status:** built (migration 048); skill re-pointed to Supabase; 453 historical journals imported
 
 ## Context
 The same platform runs the business *and* life (The Stitser Way): morning/evening rituals, weekly route reviews, structured "stacks" to process emotions and decisions, and the Spiraling process (real facts → raw feelings → relevant plans → results achieved) tied to goals/progress.
