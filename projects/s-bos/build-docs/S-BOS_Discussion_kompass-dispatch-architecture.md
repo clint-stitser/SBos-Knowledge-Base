@@ -81,3 +81,9 @@ For content a licensee's/team's own staff build or edit:
 - [ ] Confirm current Anthropic Commercial Terms of Service language directly (or via counsel) before finalizing Realtor Kompass licensing paperwork.
 - [ ] Decide, for Realtor Kompass and future licensees, when (if ever) their own admin gets delegated publish-approval authority.
 - [ ] Build-vs-buy call on document-generation execution: lean on Anthropic's Skills API/Code Execution (recommended) vs. self-hosting a sandboxed runner.
+
+---
+
+## 8. Related but distinct: the code-dispatch loop (built 2026-07-06)
+
+The **Dispatcher** described above is the *skill/workflow runtime* — `invoke(skill_id, context_refs, structured_input)` → a stateless Anthropic Messages API call, logged to `dispatch_runs` (see `scripts/dispatch.mjs`). Do **not** conflate it with the **code-dispatch loop** built on 2026-07-06, which is a separate system that dispatches *platform-build tasks* to **Claude Code** to write app code and open PRs: the `code_dispatches` queue + the `/portal/dev-dispatch` console + `scripts/dispatch-worker.mjs` (isolated worktree → headless `claude` → PR, never merges). Same verb ("dispatch"), different job — one runs skills at runtime, the other builds the platform. Full write-up: **`S-BOS_Self_Hosted_Build_Loop.md`** (and Build Decisions Log BD-06/BD-07).
