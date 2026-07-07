@@ -63,3 +63,19 @@ The 7 pillars (Revenue; Customer Service & Retention; Asset Maintenance & Capita
 - [ ] Build the routine-capture UI for metrics with no automated feed (reusing `routines`/`scheduled_jobs`).
 - [ ] Enforce the commitment lock on `target_value`/`target_date`/covenant edits (reason → Decision + elevated perm).
 - [ ] Asset operating-statement → `stat_logs` feed (per-entity), so asset KPIs self-populate.
+
+## 11. Two-axis refinement (2026-07-07) — Progress vs Health, fractal
+Refines §2 and §4. Every game is scored on **two independent axes**:
+- **Progress — Phases + Gates** ("achieve X → unlock Y"): standardizes qualification, gives priority/focus. Neglect it → projects float without focus.
+- **Health — Pillars** (always tended, continuously scored): the fundamentals. Neglect it → you pass gates while something breaks (the runner who trains but never sleeps/eats).
+A game is green only when **both** axes are green → surface **two GYRs** (Progress + Health).
+
+**Fractal** — both axes at every level: project (G0–G5 gates / 4 pillars), finished asset (stabilized / 7 ongoing situations), division & product-line (maturation phases: *Blueprint+KB → handoff → scale* / ongoing situations), company.
+
+**Situations, two modes:** *lifecycle* (sequential, gate-advanced — a project's status IS its situation) vs *ongoing* (parallel, perpetual, self-scoring — a stabilized asset's 7 domains). Key Situations = the priorities projects roll up to.
+
+**Vernacular adapts to context (same tables, native words):** one shared structure (goals/priorities/stat_logs/projects), but UI labels adapt to the entity/division type — construction sees "gates/pillars," asset mgmt sees "situations/covenants," a division lead sees "maturation phases."
+
+**Pillars are NOT forced on ongoing situations.** Alignment/Budget/Schedule/QC&Safety are a project/lifecycle construct. On a stabilized asset they appear only on the **recurring-cycle projects** where they apply — e.g. insurance renewal → schedule integrity (renew before expiry), checklist integrity (correct coverages present), budget integrity (premium within plan). Ongoing situations self-score on their own KPIs.
+
+Full teaching walkthrough: `S-BOS_Course_The-Game-System.md`. Foundational path: `S-BOS_Course_Platform-Fundamentals.md`.
