@@ -4,6 +4,8 @@
 
 **This is the canonical source for the Asset Management Blueprint.** If any other doc, note, or session (including Claude Code) shows a different pillar count or list, this file is the one to trust and reconcile against.
 
+> **RECONCILED 2026-07-07 (Claude Code):** The Thresholds Engine is built by **extending the existing `goals` table** (migration `069_targets_thresholds.sql`), NOT as separate `thresholds`/`thresholds_versions`/`threshold_metrics`/`threshold_scope_dimensions` tables. This follows Clint's reuse directive and is *more* consistent with Decision #2 (pillars are goals): a pillar's enforcement metrics are the target/threshold **goals under that pillar**. §4's core-table proposal is superseded below; its precedence + evaluation semantics still apply.
+
 ---
 
 ## 1. What this is
@@ -44,33 +46,16 @@ Full pillar detail (cadence, ownership, recurring tasks, tools, if-then branches
 
 **Positioning:** a sibling catalog to the Blueprint Catalog and the Kompass skill catalog — all versioned, Supabase-owned, `org_id`-scoped catalogs the Dispatcher and Kompass read as data.
 
-### Core table
-```
-thresholds (
-  id                uuid pk,
-  org_id            uuid not null,
-  metric_key        text not null,        -- fk into threshold_metrics registry
-  scope             jsonb not null,        -- {} = org default; else {"entity_id":..,"asset_type":"office",
-                                           --      "project_type":"budget_season","product_line":"..",
-                                           --      "department":"construction"}
-  operator          text not null,         -- '<','<=','>','>=','between','=','!='
-  value_low         numeric,
-  value_high        numeric,
-  unit              text,                  -- 'ratio','usd','usd_per_unit','pct','days','count'
-  severity          text not null,         -- 'info' | 'alert' | 'escalate' | 'block'
-  action            jsonb,                 -- {"create_task":true,"notify":["role:asset_mgr"],"escalate_to":"role:principal"}
-  precedence        int,                   -- explicit tiebreaker; else computed from scope specificity
-  effective_from    date,
-  effective_to      date,
-  active            boolean default true,
-  ...standard audit cols
-)
-thresholds_versions ( ... )                -- append-only, mirrors the existing _versions pattern
-```
+### Core model — REUSE `goals` (reconciled 2026-07-07; supersedes the new-table proposal)
+Realized by **extending `goals`** (migration `069_targets_thresholds.sql`) — a threshold IS a goal with an operator + severity. No new catalog tables. `goals` now carries:
+- `kind` (goal | target | threshold | covenant); `metric` + `target_unit` serve as the metric registry (no separate table).
+- `operator` (`< <= > >= between = !=`), `target_value` / `value_high` (low/high bounds), `unit` via `target_unit`.
+- `severity` (info | alert | escalate | block) and `action` jsonb (`{create_task, notify, escalate_to}`).
+- `scope` jsonb for any dimension beyond the `entity_id`/`department_id` columns (asset_type, product_line, project_type, …) — **zero schema change to add a domain**, so construction / land-dev / brokerage thresholds work as-is. The scope-dimension "registry" is the documented set of recognized `scope` keys, not a table.
+- `source` / `source_ref` / `review_status` (provenance + `pending_docs` flagging); `is_template` / `blueprint_id` (blueprint templating); `metadata`.
+- Versioning/audit via the existing `fn_audit` backstop (migration 066) — no `_versions` table for v1.
 
-### Two supporting registries (generalization mechanism)
-- **`threshold_metrics`** — key, label, unit, direction-of-good, default evaluation cadence. Asset-management metrics (DSCR, reserve_per_unit, occupancy) and non-asset-management metrics (change_order_approval, schedule_variance_days, safety_incident_count) are just rows here — zero schema change to add a new domain.
-- **`threshold_scope_dimensions`** — registry of which dimensions exist (department, project_type, product_line, entity, asset_type, and future ones). Same pattern as the `parent_types` registry already used for Comments/Tasks.
+Pillars = goals (Decision #2); each KPI = a target/threshold goal under its pillar via a nullable `parent_goal_id`; recurring cycles (Projects) contribute via `priority_contributions`. GYR rolls up leaf KPI → pillar → entity.
 
 ### Precedence resolution — "most-specific-scope-wins"
 A specificity score is computed from how many (and which) scope dimensions a row matches; the highest-specificity matching row wins. Equal-specificity ties resolve via an explicit `precedence` integer or a documented fixed dimension-priority order (proposed default: entity > asset_type > project_type > product_line > department). This mirrors Salesforce Hierarchy Custom Settings (Org → Profile → User) and Claude Code's own settings-scope resolution — an established pattern, not novel.
@@ -126,5 +111,5 @@ Stateless evaluator (matches the Kompass Dispatch model — Claude/logic invoked
 - [ ] Abstract Canyon's Edge's actual HUD 223(f) Regulatory Agreement + PCNA; confirm DSCR vintage (1.15x vs. 1.176x); overwrite §5.2 seeds.
 - [ ] **Abstract Mayberry Gardens' seller promissory note before seeding any debt-related threshold** — currently blocked, by design (Decision #7).
 - [ ] Decide Kompass's write access to the Thresholds catalog (propose vs. read-only) — not yet decided (§4).
-- [ ] Build the `thresholds`, `thresholds_versions`, `threshold_metrics`, `threshold_scope_dimensions` tables in the Claude Code session once this doc is reviewed.
+- [x] Thresholds Engine realized via the `goals` extension (migration `069_targets_thresholds.sql`), reconciled 2026-07-07 with Clint's reuse directive — NOT new tables. Remaining: `parent_goal_id` pillar linkage, the precedence resolver, and wiring the GYR health engine as the evaluator.
 - [ ] Model each Recurring Cycle (budget season, insurance renewal, investor reporting, CAM reconciliation) as an activatable Blueprint, per Decision #3.
