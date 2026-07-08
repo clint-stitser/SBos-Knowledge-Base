@@ -3,6 +3,24 @@
 **Status:** Design / not yet locked. Captured 2026-07-07.
 **Related:** [[S-BOS_Strategic_Framework]] (lifecycle vs ongoing modes), [[S-BOS_Multi-Entity_Tenancy_Model]], [[S-BOS_Discussion_asset-management-blueprint]], [[S-BOS_Actuals_Loop_and_Time_Cards]].
 
+## What Stitser Built is (anchoring org context)
+
+Stitser Built is a **real-estate platform** that owns entities and organizes work around departments. Two orthogonal layers:
+
+**Entities = legal vehicles the platform owns (two kinds):**
+- **Licensed service companies** — hold a license to perform a service and bill for it: Built (commercial general contractor), Realm (custom-home contractor). Capabilities the platform deploys onto projects.
+- **Asset / project-specific SPEs** — own a specific asset: Mayberry Gardens (office park), PC-1 Developers (subdivision), Built Investments S3 (Cal Ave). The things owned.
+
+**Departments / Divisions = how work is organized (two kinds):**
+- **Product-line / multi-functional** — construction + brokerage + development collaborate on a product line: Retail, Multi-family. Revenue-generating, cross-functional.
+- **Support functions** — Accounting, Financing, Compliance, IT. Horizontal shared services (why Accounting has many entities "underneath" — it serves the whole platform).
+
+**Operating model:** a product-line division runs a project, pulls in the licensed companies to perform the work (e.g. Built as GC), and an asset SPE owns it. Support divisions serve the whole platform. Hours flow through the **time card → billed to the entity served** (the billing spine).
+
+**Implications for the workspace model:**
+- **Entities ≠ Divisions.** Divisions/departments are the operational org (the workspace tree); entities are legal vehicles attached to that org as licensed-performers and asset-owners. This is why scope runs on **department → projects**, not the ownership `entities` tree.
+- **Maps onto Project-based vs Routine-based:** product-line divisions are mostly Project-based (lifecycle); support functions are mostly Routine-based (ongoing).
+
 ## Concept
 
 A **Workspace** is the core organizing unit *and* the primary navigation of S-BOS 2.0 — it replaces the "entity"/"company" vernacular. A workspace is a homebase that assembles four things scoped to it: **dashboards, tools, connectors, people**.
