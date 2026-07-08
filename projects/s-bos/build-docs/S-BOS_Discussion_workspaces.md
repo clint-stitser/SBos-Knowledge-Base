@@ -53,8 +53,8 @@ Level is just a label; nesting is free-form. A **division can hold companies** (
 
 - Standing in a workspace scopes Kompass to **that workspace and everything beneath it** you're a member of. Stand at the portfolio top → sees everything; stand on one project → sees just that project.
 - **Multi-activate:** business portfolio and Personal can be active at the same time for a combined view; scope = union of the active workspaces' subtrees (∩ membership for non-owners).
-- **Not yet built.** An initial scope-wiring attempt (migration 073 + `resolveScope` against the `entities` tree, filtering projects by `company_id`) was **reverted as premature** — it only bit on the one populated ownership branch. The correct approach requires the foundational work below first.
-- **Correct approach:** scope must run against **department → projects** (a division/department IS a department; projects already carry `department_id`), plus **entities linked under divisions/departments**. Only then does standing in a division scope Kompass to that division's projects.
+- **Built (migration 074, sb-crm-poc `/portal/workspaces`).** A division is defined by its **member companies** (`department_companies`); scope flows **division → member companies → their people + projects** (filtered by `company_id`). `lib/workspaces/scope.ts` resolves the dept subtree → company ids; Kompass reads the user's active workspace(s) ∩ their `department_members` grants and filters projects + people. Non-breaking (no active workspace ⇒ full portfolio). Per-person access control gates both the Workspaces UI and Kompass scope (admins see all). Membership was bootstrapped from existing `projects.department_id → company_id` tags (e.g. Retail ← Assiduity, Slide Side Junction).
+- *(An earlier attempt scoping on the `entities` ownership tree / `projects.department_id` was reverted as premature; the shipped model is company-membership-based.)*
 
 ## Workspace setup — Project-based vs Routine-based (REQUIREMENT)
 
