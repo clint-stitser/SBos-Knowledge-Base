@@ -9,7 +9,7 @@ A **Workspace** is the core organizing unit *and* the primary navigation of S-BO
 
 Levels (labels, not fixed depths):
 - **Portfolio** (e.g. Stitser Built)
-- **Division** (operating divisions of a parent — Accounting, 2nd Homes, Asset Management, Development, Brokerage)
+- **Division** (operating divisions of a parent — Accounting, 2nd Homes, Asset Management, Development, Brokerage). **"Division" and "Department" are interchangeable in S-BOS** — projects already carry a `department`/`department_id`, so a division IS a department.
 - **Company** (LLCs / investment vehicles — e.g. Built Investments Series 3)
 - **Project** (e.g. Cal Ave Studios) — *not shown in the org tree; lives on its parent workspace's dashboard*
 - **Personal** (a person's Kompass life-OS) — its own separate root; **Family** is the same row one level up (an upsell tier)
@@ -35,7 +35,8 @@ Level is just a label; nesting is free-form. A **division can hold companies** (
 
 - Standing in a workspace scopes Kompass to **that workspace and everything beneath it** you're a member of. Stand at the portfolio top → sees everything; stand on one project → sees just that project.
 - **Multi-activate:** business portfolio and Personal can be active at the same time for a combined view; scope = union of the active workspaces' subtrees (∩ membership for non-owners).
-- Built: migration 073 added `workspace_level` + `workspace_visible` to `entities`; `resolveScope()` in `/api/kompass/chat` walks each subtree and filters projects (by `company_id`) and feed (by `entity_id`). Non-breaking — no scope passed = full portfolio.
+- **Not yet built.** An initial scope-wiring attempt (migration 073 + `resolveScope` against the `entities` tree, filtering projects by `company_id`) was **reverted as premature** — it only bit on the one populated ownership branch. The correct approach requires the foundational work below first.
+- **Correct approach:** scope must run against **department → projects** (a division/department IS a department; projects already carry `department_id`), plus **entities linked under divisions/departments**. Only then does standing in a division scope Kompass to that division's projects.
 
 ## Workspace setup — Project-based vs Routine-based (REQUIREMENT)
 
