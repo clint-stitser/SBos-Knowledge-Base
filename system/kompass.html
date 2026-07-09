@@ -295,6 +295,7 @@
           <p>S-BOS is a custom-built business application designed to serve the Stitser BUILT companies. It's powered by structured databases and automations hosted on SmartSuite, our working data that lives in Google Workspace, and project schedules managed in Smartsheet.</p>
           <h3>Kompass</h3>
           <p>Kompass is a custom-built AI agent built on Claude, designed to be everyone's working partner. Its current and future skills and plugins — described throughout this document — are built to significantly reduce the friction in your work, so you can spend more time thinking, competing, and communicating.</p>
+          <p>And Kompass isn't just a tool to find things. It's a <em class="highlight">proactive execution partner</em>: it scans the situation, finds opportunities for improvement, seeks and proposes solutions — and then carries them out. It does this across the whole company: development, brokerage, asset management, the credit desk, and the personal Stitser Way life-OS. Not create-only. Not passive Q&amp;A. An agent that acts.</p>
         </div>
       </div>
     </div>
@@ -582,10 +583,60 @@
     </div>
   </section>
 
-  <!-- § 04 Safety -->
+  <!-- § 04 The execution loop -->
   <section class="k-section">
     <div class="k-section-header">
       <span class="k-section-number">§ 04</span>
+      <h2 class="k-section-title">The execution loop</h2>
+      <span class="k-section-hint">What Kompass actually does with what it sees</span>
+    </div>
+    <div class="safety-principle">
+      "It scans the situation, finds opportunities, proposes solutions — and carries them out."
+      <div class="safety-principle-sub">Kompass is a proactive execution partner — not create-only, not passive Q&amp;A</div>
+    </div>
+    <p class="k-section-intro">Two surfaces are <em>where</em> you meet Kompass. This is <em>what it does</em> once it's there. Every capability — from the smallest skill to a full audit — runs the same four-beat loop.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.9rem;margin-bottom:1.25rem;">
+      <div style="border:1px solid var(--blue);border-top:4px solid var(--orange);border-radius:4px;padding:1rem 1.1rem;background:#fff;">
+        <div style="font-family:var(--font-sub);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;color:var(--orange);">Step 01</div>
+        <div style="font-family:var(--font-head);font-weight:900;color:var(--blue);font-size:16px;margin:0.2rem 0 0.4rem;">Observe</div>
+        <p style="font-family:var(--font-sub);font-size:13px;color:var(--dark);line-height:1.5;margin:0;">Reads the full situation — the structured record <em>and</em> the scattered context around it: ledgers, documents and their text, compliance state, linked people, prior decisions.</p>
+      </div>
+      <div style="border:1px solid var(--blue);border-top:4px solid var(--orange);border-radius:4px;padding:1rem 1.1rem;background:#fff;">
+        <div style="font-family:var(--font-sub);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;color:var(--orange);">Step 02</div>
+        <div style="font-family:var(--font-head);font-weight:900;color:var(--blue);font-size:16px;margin:0.2rem 0 0.4rem;">Identify</div>
+        <p style="font-family:var(--font-sub);font-size:13px;color:var(--dark);line-height:1.5;margin:0;">Surfaces opportunities, risks, and deficiencies. Not "here is your data" — "here is what's missing, off, or worth doing about it."</p>
+      </div>
+      <div style="border:1px solid var(--blue);border-top:4px solid var(--orange);border-radius:4px;padding:1rem 1.1rem;background:#fff;">
+        <div style="font-family:var(--font-sub);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;color:var(--orange);">Step 03</div>
+        <div style="font-family:var(--font-head);font-weight:900;color:var(--blue);font-size:16px;margin:0.2rem 0 0.4rem;">Propose</div>
+        <p style="font-family:var(--font-sub);font-size:13px;color:var(--dark);line-height:1.5;margin:0;">Puts concrete solutions on the table — each with its <strong>source</strong> — and converses, so you can clarify or push back before anything is committed.</p>
+      </div>
+      <div style="border:1px solid var(--blue);border-top:4px solid var(--orange);border-radius:4px;padding:1rem 1.1rem;background:#fff;">
+        <div style="font-family:var(--font-sub);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;color:var(--orange);">Step 04</div>
+        <div style="font-family:var(--font-head);font-weight:900;color:var(--blue);font-size:16px;margin:0.2rem 0 0.4rem;">Execute</div>
+        <p style="font-family:var(--font-sub);font-size:13px;color:var(--dark);line-height:1.5;margin:0;">Carries out approved fixes, files the findings, and opens assigned, due-dated tasks for the rest — routed to a real person. Consequential or irreversible actions get confirmed first.</p>
+      </div>
+    </div>
+    <h3 style="font-family:var(--font-head);font-weight:900;color:var(--blue);font-size:17px;margin:1.4rem 0 0.5rem;">The archetype — the Credit Desk loan "Audit"</h3>
+    <p style="font-family:var(--font-sub);font-size:14px;color:var(--dark);line-height:1.6;margin:0 0 0.7rem;">The clearest example of the loop in action is the loan <strong>Audit</strong> on the Credit Desk:</p>
+    <ul style="font-family:var(--font-sub);font-size:14px;color:var(--dark);line-height:1.6;margin:0 0 0.8rem;padding-left:1.2rem;">
+      <li><strong>Scans</strong> a loan's full record — terms, the transaction ledger and its interest math, documents (including their extracted text), compliance phases, and the next-due date.</li>
+      <li><strong>Finds</strong> deficiencies — a missing maturity date, an undocumented interest payment, no executed note on file.</li>
+      <li><strong>Proposes</strong> concrete fixes <em>with their source</em>, and converses so you can clarify or push back.</li>
+      <li><strong>Carries them out</strong> — applies approved fixes to the record, files an audit-findings report, and opens assigned, due-dated tasks for whatever remains.</li>
+    </ul>
+    <div class="example-line" style="font-family:var(--font-sub);font-style:italic;color:var(--dark);padding:0.6rem 0.9rem;background:var(--light);border-left:2px solid var(--blue);border-radius:2px;margin:0 0 1rem;font-size:14px;">"Set maturity to 2028-12-31 — from the note. Log the March interest payment I found in the ledger but couldn't match to a receipt? And there's no executed note on file — want me to open a task to Andi to chase it?"</div>
+    <p style="font-family:var(--font-sub);font-size:14px;color:var(--dark);line-height:1.6;margin:0 0 1rem;">Other capabilities are the same pattern at different scopes: <strong>ecosystem-aware capture</strong> (reasons over goals, projects, and people to pick the right create / update / link action instead of always creating), <strong>auto-generated GYR project-health reports</strong>, and <strong>mass-cleanup</strong>. The audit is the archetype; the rest are variations on it.</p>
+    <div class="data-insight">
+      <span class="data-insight-label">Earned autonomy</span>
+      <span class="data-insight-text">Every capability launches in <em>Reactive</em> mode (acts only when asked), graduates to <em>Proactive</em> (surfaces the opportunity unprompted), then to <em>Scheduled</em> (runs on a cadence) — earning autonomy as it earns trust. The human stays in the loop on anything consequential.</span>
+    </div>
+  </section>
+
+  <!-- § 05 Safety -->
+  <section class="k-section">
+    <div class="k-section-header">
+      <span class="k-section-number">§ 05</span>
       <h2 class="k-section-title">How your data stays safe</h2>
       <span class="k-section-hint">Click any card for detail</span>
     </div>
@@ -614,10 +665,10 @@
     </div>
   </section>
 
-  <!-- § 05 Roles -->
+  <!-- § 06 Roles -->
   <section class="k-section">
     <div class="k-section-header">
-      <span class="k-section-number">§ 05</span>
+      <span class="k-section-number">§ 06</span>
       <h2 class="k-section-title">What changes for you</h2>
       <span class="k-section-hint">Pick your role</span>
     </div>
@@ -636,10 +687,10 @@
     </div>
   </section>
 
-  <!-- § 06 Status -->
+  <!-- § 07 Status -->
   <section class="k-section">
     <div class="k-section-header">
-      <span class="k-section-number">§ 06</span>
+      <span class="k-section-number">§ 07</span>
       <h2 class="k-section-title">Where we are</h2>
     </div>
     <div class="status-strip">
