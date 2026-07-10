@@ -23,6 +23,7 @@ Each subfolder = one Claude.ai Project. The files inside are the source-of-truth
 | Folder | Claude.ai Project | Description |
 |---|---|---|
 | `kompass/` | Kompass — S-BOS System Admin | All reference docs, protocols, and system knowledge for the Kompass agent |
+| `s-bos/` | S-BOS platform | Build docs (`build-docs/`) and the foundational platform articles (`foundations/` — start with [onboarding-start-here.md](s-bos/foundations/onboarding-start-here.md)) |
 
 ---
 
