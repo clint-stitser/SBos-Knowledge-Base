@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Status, Phases &amp; Decision Gates — S-BOS Knowledge Base</title>
-<meta name="description" content="Three separate axes of every project — where it sits (Status), how the work and money are grouped (Phase), and whether to commit the next round of capital (Decision Gate) — and why they must never be conflated.">
+<meta name="description" content="Three separate axes of every project — where it sits (Status), how the work and money are grouped (Phase), and whether to commit the next round of capital (Decision Gate) — and how a phase moves from underwriting options through the gate to execution.">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/global.css">
 <style>
@@ -24,6 +24,13 @@
   .axis-status { background:#E8EEF2; color:var(--blue); }
   .axis-gate { background:#FEF4E8; color:#b5730a; }
   .axis-phase { background:#eafaf1; color:#1c8a54; }
+  .life { display:grid; gap:12px; margin:16px 0; max-width:820px; }
+  .life .step { display:grid; grid-template-columns:auto 1fr; gap:16px; align-items:start; border:1px solid var(--mid); border-radius:8px; padding:14px 18px; background:#fff; }
+  .life .n { font-family:var(--font-head); font-weight:900; font-size:14px; color:#fff; background:var(--blue); width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; }
+  .life .step:nth-child(2) .n { background:#b5730a; }
+  .life .step:nth-child(3) .n { background:#1c8a54; }
+  .life h4 { font-family:var(--font-head); font-size:15px; margin:0 0 4px; color:var(--dark); }
+  .life p { font-family:var(--font-sub); font-size:14px; line-height:1.55; margin:0; color:var(--dark); }
 </style>
 </head>
 <body data-section="system">
@@ -134,7 +141,7 @@
     <p>Status (also called the project's <strong>Situation</strong>) is the coarse lifecycle bucket &mdash; the single answer to &ldquo;where is this in the business?&rdquo; A project is in <strong>exactly one</strong> situation at a time, and it's how leadership scans the whole portfolio at a glance.</p>
   </div>
   <ul class="bullet-list">
-    <li><strong>Biz Dev</strong> &mdash; sourcing and qualifying opportunities; not yet under contract.</li>
+    <li><strong>Biz Dev</strong> &mdash; sourcing and qualifying opportunities; not yet under contract. <em>(Has its own pipeline sub-stages &mdash; e.g. Warm 6&ndash;12 mo, Hot 0&ndash;6 mo.)</em></li>
     <li><strong>Pipeline</strong> &mdash; under contract / in diligence and capitalization; working toward a close.</li>
     <li><strong>WIP</strong> &mdash; closed and in execution (pre-con through construction).</li>
     <li><strong>Closeout &amp; Warranty</strong> &mdash; substantially complete; punch, final accounting, warranty period.</li>
@@ -199,6 +206,23 @@
 </section>
 
 <section>
+  <div class="section-label">The Lifecycle</div>
+  <div class="section-title">How a phase moves: underwriting &rarr; gate &rarr; execution</div>
+  <div class="prose">
+    <p>A phase is <strong>one identity that matures across the deal</strong>. It is not re-created at each stage &mdash; the same phase you underwrite is the one project management executes.</p>
+  </div>
+  <div class="life">
+    <div class="step"><div class="n">1</div><div><h4>Underwriting &mdash; decide what to build</h4><p>Each phase holds competing <strong>options</strong> (scope A vs B; each option carries its own cost <em>and</em> timeline). A <strong>scenario</strong> picks one option per phase and drives the numbers.</p></div></div>
+    <div class="step"><div class="n">2</div><div><h4>Decision gate &mdash; go / no-go</h4><p>A checkpoint on the next round of capital. Clearing it <strong>locks the picks</strong> and authorizes entering the next stretch of phases.</p></div></div>
+    <div class="step"><div class="n">3</div><div><h4>Execution (PM) &mdash; run the work</h4><p>The picked option becomes the real work: the phase now carries <strong>tasks (schedule) + committed budget</strong>, and the project manager executes it.</p></div></div>
+  </div>
+  <div class="callout info"><span class="lbl">Options vs base / best / worst</span> <strong>Options</strong> are discrete competing scopes you <em>pick</em> between &mdash; each its own cost + timeline. <strong>Base / best / worst</strong> is a separate <em>sensitivity</em> lens on the plan you already picked &mdash; same scope, flex the assumptions. Different tools; don't conflate them.</div>
+  <div class="prose">
+    <p>Because it's one phase throughout, a <strong>task can carry both a gate and a phase</strong>: its <em>phase</em> is the work it advances (Site Work); its <em>gate</em> is the checkpoint it serves (<span class="gc">G4</span>). Example: a CrossMod diligence task sits under the <strong>Acquisition &amp; DD</strong> phase, tagged <strong>gate <span class="gc">G0</span></strong> &mdash; gate and phase, side by side, never merged.</p>
+  </div>
+</section>
+
+<section style="background:var(--light)">
   <div class="section-label">Structure</div>
   <div class="section-title">How it rolls up</div>
   <div class="prose">
@@ -212,7 +236,7 @@
   </ul>
 </section>
 
-<section style="background:var(--light)">
+<section>
   <div class="section-label">The Rule</div>
   <div class="section-title">Reuse, don't creep</div>
   <div class="prose">
