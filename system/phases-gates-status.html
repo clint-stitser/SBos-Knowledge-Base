@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Status, Phases &amp; Decision Gates — S-BOS Knowledge Base</title>
+<meta name="description" content="Three separate axes of every project — where it sits (Status), how the work and money are grouped (Phase), and whether to commit the next round of capital (Decision Gate) — and why they must never be conflated.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/global.css">
+<style>
+  .cmp { width:100%; border-collapse:collapse; margin:22px 0; font-family:var(--font-sub); font-size:14px; max-width:840px; border:1px solid var(--mid); border-radius:6px; overflow:hidden; }
+  .cmp th { background:#2A4E63; color:#fff; text-align:left; padding:11px 15px; font-family:var(--font-head); font-size:10px; letter-spacing:.1em; text-transform:uppercase; }
+  .cmp td { padding:11px 15px; border-bottom:1px solid var(--light); vertical-align:top; line-height:1.55; color:var(--dark); }
+  .cmp tr:last-child td { border-bottom:none; }
+  .cmp tr:nth-child(even) td { background:var(--light); }
+  .callout { max-width:760px; margin:22px 0; padding:16px 20px; border-radius:4px; font-family:var(--font-sub); font-size:14px; line-height:1.6; color:var(--dark); }
+  .callout .lbl { font-family:var(--font-head); font-size:9px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; display:block; margin-bottom:5px; }
+  .callout.info { background:#E8EEF2; border-left:4px solid var(--blue); }
+  .callout.info .lbl { color:var(--blue); }
+  .callout.warn { background:#FEF4E8; border-left:4px solid var(--orange); }
+  .callout.warn .lbl { color:var(--orange); }
+  .gc { font-family:var(--font-head); font-weight:900; color:var(--blue); white-space:nowrap; }
+  .axis-tag { display:inline-block; font-family:var(--font-sub); font-weight:700; font-size:10px; letter-spacing:.08em; text-transform:uppercase; padding:2px 8px; border-radius:20px; }
+  .axis-status { background:#E8EEF2; color:var(--blue); }
+  .axis-gate { background:#FEF4E8; color:#b5730a; }
+  .axis-phase { background:#eafaf1; color:#1c8a54; }
+</style>
+</head>
+<body data-section="system">
+
+<header>
+  <a class="logo-lockup" href="../">
+    <svg class="logo-icon" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="21" cy="21" r="21" fill="rgba(255,255,255,0.15)"/>
+      <text x="21" y="28" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="22" fill="white">S</text>
+    </svg>
+    <div class="logo-text">
+      <span class="brand">Stitser Built</span>
+      <span class="sub">S-BOS Knowledge Base</span>
+    </div>
+  </a>
+  <nav class="header-nav">
+    <a class="nav-link" data-section="system"    href="../system/">System</a>
+    <a class="nav-link" data-section="workflows" href="../workflows/">Workflows</a>
+    <a class="nav-link" data-section="agents"    href="../agents/">Agents</a>
+    <a class="nav-link" data-section="roles"     href="../roles/">Roles</a>
+    <a class="nav-link" data-section="whats-new" href="../whats-new/">What's New</a>
+    <a class="nav-link" data-section="glossary"  href="../glossary/">Glossary</a>
+  </nav>
+  <button class="nav-hamburger" aria-label="Open menu">&#9776;</button>
+  <div class="header-badge">Team Resource</div>
+</header>
+
+<div class="nav-overlay">
+  <div class="nav-overlay-header">
+    <a class="logo-lockup" href="../">
+      <svg class="logo-icon" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="21" cy="21" r="21" fill="rgba(255,255,255,0.15)"/>
+        <text x="21" y="28" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="22" fill="white">S</text>
+      </svg>
+      <div class="logo-text">
+        <span class="brand">Stitser Built</span>
+        <span class="sub">S-BOS Knowledge Base</span>
+      </div>
+    </a>
+    <button class="nav-overlay-close" aria-label="Close menu">&#10005;</button>
+  </div>
+  <nav class="nav-overlay-links">
+    <a class="nav-overlay-link" data-section="system"    href="../system/">System</a>
+    <a class="nav-overlay-link" data-section="workflows" href="../workflows/">Workflows</a>
+    <a class="nav-overlay-link" data-section="agents"    href="../agents/">Agents</a>
+    <a class="nav-overlay-link" data-section="roles"     href="../roles/">Roles</a>
+    <a class="nav-overlay-link" data-section="whats-new" href="../whats-new/">What's New</a>
+    <a class="nav-overlay-link" data-section="glossary"  href="../glossary/">Glossary</a>
+  </nav>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-eyebrow">Reference · Project Framework</div>
+  <h1 class="page-hero-title">Status, Phases &amp; Decision Gates</h1>
+  <p class="page-hero-subtitle">Three things that sound alike and get constantly confused. They answer three different questions, live in three different places, and roll up differently. This is the line between them.</p>
+</div>
+
+<div class="orange-bar"></div>
+
+<div class="breadcrumb-bar">
+  <div class="breadcrumb">
+    <a href="../">Home</a>
+    <span class="sep">&#8594;</span>
+    <a href="../system/">System</a>
+    <span class="sep">&#8594;</span>
+    <span class="cur">Status, Phases &amp; Decision Gates</span>
+  </div>
+</div>
+
+<section>
+  <div class="section-label">The Big Picture</div>
+  <div class="section-title">Three axes, never one</div>
+  <div class="prose">
+    <p>Every project carries three independent attributes. They are not versions of the same thing &mdash; they are three different questions, and each gets its own field. The moment one field tries to be two of these, the system drifts. That drift is exactly what this article exists to prevent.</p>
+  </div>
+  <table class="cmp">
+    <thead>
+      <tr><th>Axis</th><th>The question it answers</th><th>Example values</th><th>Where it lives</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="axis-tag axis-status">Status</span><br>(Situation)</td>
+        <td>Where does this project sit in the business right now?</td>
+        <td>Biz Dev &rarr; Pipeline &rarr; WIP &rarr; Closeout &amp; Warranty &rarr; Asset Management &rarr; Closed</td>
+        <td>The project record</td>
+      </tr>
+      <tr>
+        <td><span class="axis-tag axis-gate">Decision Gate</span></td>
+        <td>Should we commit the next round of capital? (go / no-go)</td>
+        <td><span class="gc">G0</span> &rarr; <span class="gc">G1</span> &rarr; <span class="gc">G2a</span> &rarr; <span class="gc">G2b</span> &rarr; <span class="gc">G3</span> &rarr; <span class="gc">G4</span> &rarr; <span class="gc">G5</span> (+ Property Listing)</td>
+        <td>The Decision Gate checklists</td>
+      </tr>
+      <tr>
+        <td><span class="axis-tag axis-phase">Phase</span><br>(WBS)</td>
+        <td>How is the work &mdash; and the money &mdash; broken up?</td>
+        <td>Due Diligence, Site Work, Vertical, Closeout &hellip; (project-specific)</td>
+        <td>The budget &mdash; extended to tasks &amp; schedule</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="callout info"><span class="lbl">The one-line test</span> <b>Status</b> = <em>where</em> it is. <b>Gate</b> = <em>may we proceed</em>. <b>Phase</b> = <em>how the work is grouped</em>. If a field can't answer exactly one of those, it's on the wrong axis.</div>
+</section>
+
+<section style="padding-top:0">
+  <div class="section-label">Axis 1</div>
+  <div class="section-title">Status &mdash; the business situation</div>
+  <div class="prose">
+    <p>Status (also called the project's <strong>Situation</strong>) is the coarse lifecycle bucket &mdash; the single answer to &ldquo;where is this in the business?&rdquo; A project is in <strong>exactly one</strong> situation at a time, and it's how leadership scans the whole portfolio at a glance.</p>
+  </div>
+  <ul class="bullet-list">
+    <li><strong>Biz Dev</strong> &mdash; sourcing and qualifying opportunities; not yet under contract.</li>
+    <li><strong>Pipeline</strong> &mdash; under contract / in diligence and capitalization; working toward a close.</li>
+    <li><strong>WIP</strong> &mdash; closed and in execution (pre-con through construction).</li>
+    <li><strong>Closeout &amp; Warranty</strong> &mdash; substantially complete; punch, final accounting, warranty period.</li>
+    <li><strong>Asset Management</strong> &mdash; stabilized and held / operated as an ongoing asset.</li>
+    <li><strong>Closed</strong> &mdash; sold or otherwise fully wound down.</li>
+  </ul>
+  <div class="prose">
+    <p>Status rolls up to the division and company &mdash; a company's portfolio is simply its projects grouped by situation (&ldquo;how many are in WIP, how many still in Pipeline&rdquo;).</p>
+  </div>
+</section>
+
+<section style="background:var(--light)">
+  <div class="section-label">Axis 2</div>
+  <div class="section-title">Decision Gates &mdash; the investment ladder</div>
+  <div class="prose">
+    <p>A decision gate is a <strong>go / no-go on committing the next round of capital</strong>. It is <em>not</em> how the work is grouped &mdash; it is whether we're allowed to spend the next dollar. Gates run in a fixed ladder; you don't skip one. The canonical source is the <strong>Decision Gate Task Library</strong> (81 tasks across 8 gates).</p>
+  </div>
+  <table class="cmp">
+    <thead>
+      <tr><th>Gate</th><th>Name</th><th>What clearing it authorizes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="gc">G0</span></td><td>Initial Qualification</td><td>Kill early &mdash; or authorize pursuit of an LOI.</td></tr>
+      <tr><td><span class="gc">G1</span></td><td>LOI &amp; Contract Execution</td><td>Execute the PSA with a DD period. First hard-money exposure.</td></tr>
+      <tr><td><span class="gc">G2a</span></td><td>Go Hard on Deposit</td><td>Deposit goes non-refundable. Diligence complete.</td></tr>
+      <tr><td><span class="gc">G2b</span></td><td>Close Authorization</td><td>Capital stack confirmed. Authorize the close.</td></tr>
+      <tr><td><span class="gc">G3</span></td><td>Pre-Construction Approval</td><td>Full pre-con budget approved; permit-ready CDs.</td></tr>
+      <tr><td><span class="gc">G4</span></td><td>Construction Start (NTP)</td><td>Full capital deployed; notice to proceed.</td></tr>
+      <tr><td><span class="gc">G5</span></td><td>Mid-Construction Checkpoint</td><td>~50% complete &mdash; recast or continue.</td></tr>
+      <tr><td><span class="gc">&mdash;</span></td><td>Property Listing (Brokerage)</td><td>Enter the listing contract; marketing goes live.</td></tr>
+    </tbody>
+  </table>
+  <div class="prose">
+    <p>Each gate holds <strong>two kinds of items</strong>:</p>
+  </div>
+  <ul class="bullet-list">
+    <li><strong>Rating tasks</strong> &mdash; the decision criteria, scored <strong>0 / 1 / 2</strong> by the responsible functional lead across five elements: <em>Strategic Fit, Market / Product Fit, Financial Viability, Constructability, Jurisdictional &amp; Legal</em> (plus Operational Capacity). The scored result is the go / no-go.</li>
+    <li><strong>Pre-gate tasks</strong> &mdash; execution checklist items (Pre-Pursuit, Pre-DD, Pre-Close, Pre-Con&hellip;) that must be done <em>before</em> the gate can be called.</li>
+  </ul>
+  <div class="callout info"><span class="lbl">Who owns a gate</span> Departments own a <strong>gate window</strong> &mdash; e.g., Estimating owns <span class="gc">G0&ndash;G3</span>, then hands off. A gate is a checkpoint on the investment timeline, not a container for work.</div>
+</section>
+
+<section>
+  <div class="section-label">Axis 3</div>
+  <div class="section-title">Phases &mdash; the work breakdown</div>
+  <div class="prose">
+    <p>A phase is a chunk of the project's work &mdash; and it carries <strong>both time and money</strong>. The &ldquo;Due Diligence&rdquo; phase has DD tasks (schedule) <em>and</em> DD costs (budget). That is the entire point: a phase is the <strong>shared grouping across the schedule and the budget</strong>, so &ldquo;Due Diligence&rdquo; is one thing &mdash; not two strings that happen to match.</p>
+    <p>Phases are defined in the <strong>budgeting ecosystem</strong> (that's the source of truth), and the <em>identical</em> phase set extends to tasks and the schedule. A phase can carry competing <strong>phase options</strong> (scenarios) &mdash; two ways to do Site Work, priced side by side &mdash; with one selected as active.</p>
+    <p>Phases are <strong>project-specific</strong>: a ground-up development and a disposition don't share a phase list. And they are <strong>not</strong> the fixed gate ladder &mdash; a phase is how work is grouped, not a checkpoint.</p>
+  </div>
+</section>
+
+<section style="background:var(--light)">
+  <div class="section-label">How They Fit</div>
+  <div class="section-title">Interlocked &mdash; but never merged</div>
+  <ul class="bullet-list">
+    <li>A <strong>gate authorizes entering the next stretch of phases</strong>. <span class="gc">G3</span>/<span class="gc">G4</span> authorize the construction phases &mdash; you don't start the Vertical phase before <span class="gc">G4</span>.</li>
+    <li>Clearing a <strong>gate often flips the status</strong>. Passing <span class="gc">G2b</span> (Close) moves a project from <em>Pipeline</em> into <em>WIP</em>.</li>
+    <li>A <strong>phase never authorizes anything</strong>, and a <strong>gate never holds a budget</strong>. A budget line filed under &ldquo;G3&rdquo; is the creep &mdash; <span class="gc">G3</span> is a gate; the money belongs to a <em>phase</em>.</li>
+  </ul>
+  <div class="callout warn"><span class="lbl">Most common mistake</span> Using a gate code (<span class="gc">G3</span>) as a phase tag, or a phase name as a status. <strong>One axis per field. Always.</strong></div>
+</section>
+
+<section>
+  <div class="section-label">Structure</div>
+  <div class="section-title">How it rolls up</div>
+  <div class="prose">
+    <p><strong>task &rarr; phase &rarr; project &rarr; master project / division / company.</strong></p>
+  </div>
+  <ul class="bullet-list">
+    <li>Tasks roll up to their <strong>phase</strong> (contributing both time and money).</li>
+    <li>Phases roll up to the <strong>project</strong> (its full schedule and budget).</li>
+    <li>Projects roll up to a <strong>master project</strong>, a <strong>division</strong>, and/or a <strong>company</strong>.</li>
+    <li><strong>Status</strong> and <strong>gate</strong> roll up to portfolio dashboards &mdash; &ldquo;how many projects are in WIP,&rdquo; &ldquo;how many are stuck before <span class="gc">G2b</span>.&rdquo;</li>
+  </ul>
+</section>
+
+<section style="background:var(--light)">
+  <div class="section-label">The Rule</div>
+  <div class="section-title">Reuse, don't creep</div>
+  <div class="prose">
+    <p><strong>One phase list</strong> per project, owned by the budget and shared by the schedule and tasks. <strong>One gate catalog</strong> &mdash; the Decision Gate Task Library. <strong>One status field</strong> &mdash; the six situations. If a fourth place starts storing any of these, that is drift &mdash; consolidate it back to the source. Same discipline everywhere: reuse the existing structure before creating a new one.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Stitser <span>Built</span> &middot; S-BOS Knowledge Base</div>
+  <div class="footer-version">v1.0 &middot; Internal Use Only</div>
+</footer>
+
+<script src="../assets/js/nav.js"></script>
+</body>
+</html>
